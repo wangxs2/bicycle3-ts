@@ -1,6 +1,7 @@
 $vm_base: 1920;
 $vh_base: 540;
-
+// $vm_base: 13440;
+// $vh_base: 4320;
 // 计算vw
 @function vw($px) {
   @return ($px / $vm_base) * 100vw;
