@@ -1,10 +1,9 @@
 <template>
-  <div class="left-content">
-    <div class="left-top">
-      <left-top></left-top>
+  <div class="center-content">
+    <div class="center-top" id="mapContainer">
     </div>
-    <div class="left-bottom">
-      <left-bottom></left-bottom>
+    <div class="center-bottom">
+      <center-bottom></center-bottom>
     </div>
   </div>
 </template>

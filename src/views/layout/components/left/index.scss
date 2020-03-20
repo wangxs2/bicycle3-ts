@@ -1,0 +1,13 @@
+.left-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .left-top{
+       width: 100%;
+       @include vh2(height,149.714);
+    }
+    .left-bottom{
+        flex: 1;
+     }
+}

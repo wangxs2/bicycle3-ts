@@ -1,36 +1,46 @@
-$vm_base: 1920;
-$vh_base: 540;
-// $vm_base: 13440;
-// $vh_base: 4320;
+$vm_base:1920;
+$vh_base:617;
+// $vm_base: 13440;9.6
+// $vh_base: 4320;5.4
 // 计算vw
 @function vw($px) {
   @return ($px / $vm_base) * 100vw;
 }
-
 // 计算vh
 @function vh($px) {
   @return ($px / $vh_base) * 100vh;
 }
 
+// 针对于图片来说的
 @mixin vw2($style,$px) {
   [data-theme='default'] & {
     #{$style}: vw($px)
   }
   
-  [data-theme='mapFull'] & {
-    #{$style}: vw($px * 2)
+  [data-theme='bigFull'] & {
+    #{$style}: vw($px * 7)
   }
 }
-
 @mixin vh2($style,$px) {
   [data-theme='default'] & {
     #{$style}: vh($px)
   }
   
-  [data-theme='mapFull'] & {
-    #{$style}: vh($px * 2)
+  [data-theme='bigFull'] & {
+    #{$style}: vh($px * 7)
   }
 }
+// 针对于border来说的
+@mixin vw3($style,$px) {
+  [data-theme='default'] & {
+    #{$style}: vw($px)
+  }
+  
+  [data-theme='bigFull'] & {
+    #{$style}: vw($px * 4)
+  }
+}
+
 
 
 // 动画

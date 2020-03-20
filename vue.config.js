@@ -1,10 +1,10 @@
 const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin') //Gzip
-// const path = require('path')
+const path = require('path')
 
-// function resolve(dir) {
-//   return path.join(__dirname, '..'1, dir)
-// }
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
   lintOnSave: false,
@@ -24,9 +24,12 @@ module.exports = {
       }
     }
   },
-
+  chainWebpack: config => {
+    config.resolve.alias.set('@img', resolve('src/assets/image'))
+  },
   configureWebpack: config =>{
       //生产环境
+      
       let pluginsPro = [
         new CompressionPlugin({
           //文件开启Gzip，也可以通过服务端(如：nginx)(https://github.com/webpack-contrib/compression-webpack-plugin)
