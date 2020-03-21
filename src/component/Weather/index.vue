@@ -1,11 +1,10 @@
 <template>
   <div class="weather">
-    <div class="temp">{{weatherData.low_temp}} - {{weatherData.high_temp}}℃</div>
+    <span class="temp glabfont">{{weatherData.low_temp}} - {{weatherData.high_temp}}℃</span>
     <img :src="weatherData.img">
-    <div class="temp1">{{weatherData.desc}}</div>
-    <div class="temp1 temp3" v-if="weatherData.api">AQI {{weatherData.api}}</div>
-    <div class="temp1 temp2" v-if="weatherData.wind">风力: {{weatherData.wind}}</div>
-
+    <span class="temp1 glabfont">{{weatherData.desc}}</span>
+    <span class="temp1 temp3 glabfont" v-if="weatherData.api">AQI {{weatherData.api}}</span>
+    <span class="temp glabfont" v-if="weatherData.wind">风力: {{weatherData.wind}}</span>
   </div>
 </template>
 
@@ -57,18 +56,24 @@ export default class Weather extends Vue {
   color:rgba(101,198,252,1);
   align-items: center;
   .temp{
-    @include vw2(font-size,16);
+    @include vh2(font-size,16);
+    
   }
   .temp1{
-    @include vw2(font-size,15);
+    @include vh2(font-size,15);
+    font-family:Microsoft YaHei;
+    margin-right: vh(16.29);
   }
   img{
+    // width: 48px;
+    // height: 36px;
     @include vw2(width,26.29);
-    @include vw2(height,19.43);
-    @include vw2(margin-left,16.29);
+    @include vh2(height,19.43);
+    @include vh2(margin-left,16.29);
+    @include vw2(margin-right,7);
   }
   .temp2,.temp3{
-    @include vw2(margin-left,17);
+    @include vh2(margin-left,17);
   }
 
  

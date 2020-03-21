@@ -3,6 +3,18 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    @include vw2(font-size,18);
+   
+    color: aqua;
+    .test2{
+      @include vh2(font-size,18);
+      color: aqua;
+    }
+    .test3{
+      font-size:34px;
+      color: aqua;
+      font-stretch:ultra-expanded;
+    }
     .right-top{
        width: 100%;
        @include vh2(height,280);

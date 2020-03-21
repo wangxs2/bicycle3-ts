@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator';
-import leftTop from './components/leftTop/index.vue';
-import leftBottom from './components/leftBottom/index.vue';
+import leftTop from './components/lefttop.vue';
+import leftBottom from './components/leftbottom.vue';
 @Component({
   components: {
     leftTop,

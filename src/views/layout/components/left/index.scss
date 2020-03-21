@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    
     .left-top{
        width: 100%;
        @include vh2(height,149.714);

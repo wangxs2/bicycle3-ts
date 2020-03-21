@@ -36,6 +36,26 @@ import rightBox from "./components/right/index.vue";
 })
 export default class layout extends Vue {
   private msg: string = "我是一个小花";
+  public mounted() {
+    // if(screen.width==1920){
+    //   console.log(1)
+    //   $("#app").css({
+    //     width:"100%",
+    //     height: `617px`,
+    //     transform: "scale(1,1.75)",
+    //     transformOrigin: "0px 0px 0px",
+    //     backgroundSize: "100% 100%"
+    //   })
+    // }else{
+    //   $("#app").css({
+    //     width:"100%",
+    //     height: `1234px`,
+    //     transform: "scale(1,1.75)",
+    //     transformOrigin: "0 0 0 0",
+    //     backgroundSize: "100% 100%"
+    //   })
+    // }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -48,7 +68,7 @@ export default class layout extends Vue {
   background: #04194b;
   .header {
     width: 100%;
-    @include vh2(height, 51.143);
+    @include vh2(height,51);
     background: url("../../assets/image/header.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
@@ -68,15 +88,23 @@ export default class layout extends Vue {
     display: flex;
     justify-content: space-between;
     .left {
-      @include vw2(width, 571.43);
+      // @include vw2(width, 571.43);
+      // width: 537px;
       height: 100%;
+      @include vw2(width,571.43);
+      // background: url("../../assets/image/left.png") no-repeat;
+      background-size: 100% 100%;
     }
     .center {
       height: 100%;
       @include vw2(width, 731.43);
+      @include vw2(margin-left, 11.43);
+      @include vw2(margin-right, 11.43);
     }
     .right {
       flex: 1;
+      // background: url("../../assets/image/right.png") no-repeat;
+      background-size: 100% 100%;
     }
   }
 }

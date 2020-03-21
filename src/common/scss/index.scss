@@ -1,7 +1,7 @@
 $vm_base:1920;
 $vh_base:617;
-// $vm_base: 13440;9.6
-// $vh_base: 4320;5.4
+// $vm_base: 13440;
+// $vh_base: 4320;
 // 计算vw
 @function vw($px) {
   @return ($px / $vm_base) * 100vw;
@@ -10,7 +10,6 @@ $vh_base:617;
 @function vh($px) {
   @return ($px / $vh_base) * 100vh;
 }
-
 // 针对于图片来说的
 @mixin vw2($style,$px) {
   [data-theme='default'] & {
@@ -18,7 +17,7 @@ $vh_base:617;
   }
   
   [data-theme='bigFull'] & {
-    #{$style}: vw($px * 7)
+    #{$style}: vw($px * 2)
   }
 }
 @mixin vh2($style,$px) {
@@ -27,7 +26,7 @@ $vh_base:617;
   }
   
   [data-theme='bigFull'] & {
-    #{$style}: vh($px * 7)
+    #{$style}: vh($px * 2)
   }
 }
 // 针对于border来说的
@@ -41,6 +40,10 @@ $vh_base:617;
   }
 }
 
+//计算rem
+@function vm($px) {
+  @return ($px /1920)*10;
+}
 
 
 // 动画
