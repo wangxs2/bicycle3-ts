@@ -12,7 +12,8 @@ class MyMap {
 
   public cityPointGroup: any = new AMap.OverlayGroup(); // 市级点集合 徐汇区
   public cityBorderGroup: any = new AMap.OverlayGroup(); // 市级边界集合 徐汇区
-
+  public forbidGroup: any = new AMap.OverlayGroup(); // 禁停区集合
+  public forbidEvent: any[] = []; // 禁停区事件集合
   public areaPointGroup: any = new AMap.OverlayGroup(); // 区级点集合 街道
   public areaBorderGroup: any = new AMap.OverlayGroup(); // 区级边界集合 街道
   public mapCenter: Array<number | string> = [121.544379,31.221517]; // 默认地图中心点
@@ -60,6 +61,8 @@ class MyMap {
     // 添加图层
     this.map.add([
       this.provincePointGroup,
+      this.areaPointGroup,
+      this.forbidGroup,
     ]);
   }
 
@@ -67,6 +70,7 @@ class MyMap {
   // 向组里面添加覆盖物
   public addOverlayGroup(item: string, overlay: any): any {
     const type: string = judgeType(overlay);
+    console.log(type)
     if (type === 'object') {
       (this as any)[item].addOverlay(overlay);
     } else if (type === 'array') {
@@ -74,6 +78,34 @@ class MyMap {
     }
     return (this as any)[item];
   }
+
+
+    // 创建禁停区
+    public createForbid(data: any, flag: boolean): object {
+      const polygon: any =  new AMap.Polygon({
+        path: data.geom, // 点集合
+        fillColor: 'red', // 多边形填充颜色
+        fillOpacity: 0.2, // 填充颜色
+        strokeColor: 'red', // 线条颜色
+        strokeWeight: 2, // 线条宽度，默认为 1
+        cursor: 'pointer',
+        extData: data,
+      });
+      flag ? polygon.show() : polygon.hide();
+      return polygon;
+    }
+  
+    // 修改禁停区
+    public upDataForbid(data: any): void {
+      const target = this.forbidGroup.getOverlays().find(
+        (item: any): boolean => {
+          return item.he.extData.regionName === data.regionName;
+        },
+      );
+  
+      // target.setPath(data.geom);
+      target.setExtData(data);
+    }
 
 
   // 创建市级点
@@ -305,26 +337,28 @@ class MyMap {
 
     // 行政区域显示/隐藏控制
   public pointGroupControl(): void {
+    console.log(this.isPointInfo)
     if (!this.isPointInfo) {
       this.provincePointGroup.hide();
       this.cityPointGroup.hide();
       this.areaPointGroup.hide();
       return;
     } else {
+      this.areaPointGroup.show();
       const zoom: number = this.map.getZoom();
 
       // console.log(zoom)
-      if (zoom < 14 && zoom > 11 && this.isPointInfo) {
-        this.cityPointGroup.show();
-      } else {
-        this.cityPointGroup.hide();
-      }
+      // if (zoom < 14 && zoom > 11 && this.isPointInfo) {
+      //   this.cityPointGroup.show();
+      // } else {
+      //   this.cityPointGroup.hide();
+      // }
 
-      if (zoom > 13 && zoom < 16 && this.isPointInfo) {
-        this.areaPointGroup.show();
-      } else {
-        this.areaPointGroup.hide();
-      }
+      // if (zoom > 13 && zoom < 16 && this.isPointInfo) {
+      //   this.areaPointGroup.show();
+      // } else {
+      //   this.areaPointGroup.hide();
+      // }
     }
   }
 
@@ -339,6 +373,7 @@ class MyMap {
         new AMap.LngLat(360, 90, true),
       ],
     ];
+    
 
     // 抠图
     pathArray.push.apply(pathArray, [path]);
@@ -356,6 +391,33 @@ class MyMap {
     // polygon.setPath(pathArray)
     this.map.add(polygon);
   }
+
+  // 是否显示人员位置点
+  public isForbidGroup(flag: boolean): void {
+    flag ? this.forbidGroup.show() : this.forbidGroup.hide();
+  }
+
+  // 禁停区事件点
+  public forbidGroupEvent(callback: any): void {
+    // 事件先清除再添加
+    this.forbidEvent.forEach((item: any) => {
+      AMap.event.removeListener(item);
+    });
+
+    this.forbidEvent = [];
+
+    this.forbidEvent.push(
+      AMap.event.addListener(this.forbidGroup, 'click', (e: any) => {
+        const data: string = e.target.getExtData().regionName;
+
+        if (data) {
+          callback(data);
+        }
+      }),
+    );
+  }
+
+
 }
 
 export default MyMap;

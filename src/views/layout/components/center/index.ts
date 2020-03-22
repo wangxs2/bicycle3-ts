@@ -174,6 +174,12 @@ export default class center extends Vue {
       name: '超时未处理',
     },
   ];
+  // 显示禁停区的名称 控制显示
+  private ForbidName: string = '';
+   // 禁停区数据
+   private ForbidData: any = {};
+  // 是否显示禁停区
+  private isForbid: boolean = true;
   // 企业数据
   private enterpriseData: Array<{}> = [
     {
@@ -204,7 +210,7 @@ export default class center extends Vue {
       name: '夜间模式',
     },
     {
-      state: true,
+      state: false,
       name: '街镇信息',
     },
     {
@@ -228,6 +234,7 @@ export default class center extends Vue {
     myMap = new MyMap({ el: 'mapContainer' });
     this.getBicyClePosition();
     this.getTownBoundary();
+    this.getForbid();
     // 监听全屏事件
     fullObj.on('change', (e:any) => {
       if (e.target.className === 'center-top' && fullObj.isFullscreen) {
@@ -244,6 +251,41 @@ export default class center extends Vue {
     if (fullObj.enabled) {
       fullObj.toggle(this.$refs.fullScreenTarget);
     }
+  }
+
+   // 禁停区
+   public getForbid(): void {
+    const nowTime: string = moment().format('YYYY-MM-DD');
+    API.getForbid({
+      startTime: nowTime + ' 00:00:00',
+      endTime: nowTime + ' 23:59:59',
+    }).then((res: any) => {
+      if (res.status === 0) {
+        res.data.forEach((item: any) => {
+          item.geom = this.FormatGolygon(item.polygonGeom);
+          if (this.ForbidData[item.regionName]) {
+            // 更新
+            myMap.upDataForbid(item);
+          } else {
+            // 添加
+            myMap.addOverlayGroup(
+              'forbidGroup',
+              myMap.createForbid(
+                item,
+                this.isForbid,
+              ),
+            );
+          }
+          this.ForbidData[item.regionName] = item;
+        });
+        myMap.forbidGroupEvent((data: any) => {
+          this.ForbidName = data;
+        });
+      }
+
+      // 定时任务
+      this.timeoutEvent('getForbid');
+    });
   }
 
     /**
@@ -264,8 +306,8 @@ export default class center extends Vue {
         myMap.pointGroupControl();
         break;
       case '禁停区域':
-        // this.ForbidName = '';
-        // myMap.isForbidGroup(data.state);
+        this.ForbidName = '';
+        myMap.isForbidGroup(data.state);
         break;
       case '单车治理':
         // this.isShowLegend = data.state;

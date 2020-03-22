@@ -207,7 +207,7 @@ export default {
    * 获取禁停区数据
    */
   getForbid(params: any): Promise<{}> {
-    return http('boundary/findOrgJtRegionBoundaryAndBikeNum/' , {
+    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgJtRegionBoundaryAndBikeNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params,
     });
   },
