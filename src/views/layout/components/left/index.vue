@@ -1,9 +1,9 @@
 <template>
   <div class="left-content">
-    <div class="left-top">
+    <div class="left-topone">
       <left-top></left-top>
     </div>
-    <div class="left-bottom">
+    <div class="left-bottomone">
       <left-bottom></left-bottom>
     </div>
   </div>

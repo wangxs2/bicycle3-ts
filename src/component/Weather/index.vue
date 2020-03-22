@@ -56,24 +56,21 @@ export default class Weather extends Vue {
   color:rgba(101,198,252,1);
   align-items: center;
   .temp{
-    @include vh2(font-size,16);
+    @include vw2(font-size,16);
     
   }
   .temp1{
-    @include vh2(font-size,15);
+    @include vw2(font-size,15);
     font-family:Microsoft YaHei;
     margin-right: vh(16.29);
   }
   img{
-    // width: 48px;
-    // height: 36px;
-    @include vw2(width,26.29);
-    @include vh2(height,19.43);
-    @include vh2(margin-left,16.29);
-    @include vw2(margin-right,7);
+    width: vw(26.29);
+    height: vh(19.43);
+    margin:0 vw(7) 0 vw(16.29);
   }
   .temp2,.temp3{
-    @include vh2(margin-left,17);
+    margin-left: vw(17);
   }
 
  

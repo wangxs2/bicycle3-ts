@@ -42,7 +42,7 @@ export default {
    * @param {Date} endTime 结束时间
    */
   getPeak(startTime: string, endTime: string): Promise<{}> {
-    return http('kpHour/calOrgKeyRegionHotBicycleNum/' , {
+    return http('http://106.14.198.128:18091/sharebikesclean/kpHour/calOrgKeyRegionHotBicycleNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         startTime,
         endTime,
@@ -68,21 +68,21 @@ export default {
    * 获取区域边界及中心点坐标（高德坐标）
    */
   getDistrictBoundary(): Promise<{}> {
-    return http('boundary/findOrgBoundary/' );
+    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
    * 获取街镇边界及中心点坐标
    */
   getAreaBoundary(): Promise<{}> {
-    return http('boundary/findOrgChildBoundary/' );
+    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgChildBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
    * 单车位置（热力图）
    */
   getBicyClePosition(companyCode: string = ''): Promise<{}> {
-    return http('position/findAllOrgBikeHotGraph/' , {
+    return http('http://106.14.198.128:18091/sharebikesclean/position/findAllOrgBikeHotGraph/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         companyCode,
       },

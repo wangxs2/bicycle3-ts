@@ -48,7 +48,7 @@ export default class Weather extends Vue {
 .realtime {
   display: flex;
   color:rgba(101,198,252,1);
-  @include vh2(font-size,16);
+  @include vw2(font-size,16);
   align-items: center;
    transform: scale(1,1.6);
   -ms-transform: scale(1,1.6);

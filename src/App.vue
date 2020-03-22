@@ -20,6 +20,7 @@ html,body{
   text-align: center;
   color: #2c3e50;
 }
+//针对于城运的大屏。事实上是针对城运的单屏来说的，否则调成1,1就成了 或者自己在beforrouter里面调一下
 .glabfont{
   font-family:Microsoft YaHei;
     transform: scale(1,1.6);
