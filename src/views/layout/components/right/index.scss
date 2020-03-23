@@ -3,13 +3,15 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    @include vw2(font-size,18);
     color: aqua;
-    .right-top{
+    .right-topbig{
        width: 100%;
        height: vh(280);
+       border:vw(1) solid rgba(18,85,154,1);
     }
-    .right-bottom{
+    .right-bottombig{
         flex: 1;
+        margin-top: vh(10);
+        border:vw(1) solid rgba(18,85,154,1);
      }
 }

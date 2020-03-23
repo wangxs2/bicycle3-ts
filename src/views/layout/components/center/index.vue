@@ -90,7 +90,11 @@
 
     </div>
     <div class="center-bottom">
-      <center-bottom></center-bottom>
+       <borderBlock :msg="msgconcat"></borderBlock>
+       <div class="tableox">
+         <center-bottom></center-bottom>
+       </div>
+      <!-- <center-bottom></center-bottom> -->
     </div>
   </div>
 </template>

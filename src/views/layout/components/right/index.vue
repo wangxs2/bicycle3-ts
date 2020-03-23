@@ -1,9 +1,9 @@
 <template>
   <div class="right-content">
-    <div class="right-top">
+    <div class="right-topbig">
       <right-top></right-top>
     </div>
-    <div class="right-bottom">
+    <div class="right-bottombig">
       <right-bottom></right-bottom>
     </div>
   </div>

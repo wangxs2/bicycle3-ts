@@ -56,7 +56,7 @@ export default {
    * @param {Date} endDay 结束时间
    */
   getWorkOrderDetails(beginDay: string, endDay: string): Promise<{}> {
-    return http('bikeDispatch/dispatchList/' , {
+    return http('http://106.14.198.128:18091/sharebikesclean/bikeDispatch/dispatchList/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         beginDay,
         endDay,

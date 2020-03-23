@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import centerBottom from './components/centerBottom.vue';
+import centerBottom from './centerBottom.vue';
 import screenfull from 'screenfull';
 const fullObj: any = screenfull; // 全屏实例
 import moment from 'moment';
@@ -21,12 +21,14 @@ interface DataFormat {
   companyCode?: string; // 预警状态
 }
 
-
+import borderBlock from '@/component/borderBlock/index.vue';
 @Component({
   components: {
     centerBottom,
+    borderBlock,
   },
 })
+
 export default class center extends Vue {
   private settingShow: boolean = true; // 设置是否打开
   public pageConfig: any;
@@ -143,7 +145,7 @@ export default class center extends Vue {
 
   // 市级别 按三家企业分数据
   private cityCompanyData: any = null;
-
+  private msgconcat: string = "今日市民热线投诉工单（6条）";
   // 区级别 按三家企业分数据
   private townCompanyData: any = null;
     // 不同状态的工单数据 点击图例用

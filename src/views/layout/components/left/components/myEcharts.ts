@@ -46,7 +46,7 @@ export default class MyEcharts {
         }
       },
       textStyle: {
-        color: '#657CA8',
+        color: '#C3CAD9',
       },
       xAxis: {
         type: 'category',

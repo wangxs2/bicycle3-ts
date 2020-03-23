@@ -70,7 +70,6 @@ class MyMap {
   // 向组里面添加覆盖物
   public addOverlayGroup(item: string, overlay: any): any {
     const type: string = judgeType(overlay);
-    console.log(type)
     if (type === 'object') {
       (this as any)[item].addOverlay(overlay);
     } else if (type === 'array') {
@@ -212,7 +211,6 @@ class MyMap {
   
   // 创建区级点
   public createAreaPoint(markData: any) {
-    console.log(markData)
     if(markData.lng&&markData.lat){
       const marker: object = new AMap.Marker({
         position: new AMap.LngLat(markData.lng, markData.lat),
@@ -337,7 +335,6 @@ class MyMap {
 
     // 行政区域显示/隐藏控制
   public pointGroupControl(): void {
-    console.log(this.isPointInfo)
     if (!this.isPointInfo) {
       this.provincePointGroup.hide();
       this.cityPointGroup.hide();
@@ -346,8 +343,6 @@ class MyMap {
     } else {
       this.areaPointGroup.show();
       const zoom: number = this.map.getZoom();
-
-      // console.log(zoom)
       // if (zoom < 14 && zoom > 11 && this.isPointInfo) {
       //   this.cityPointGroup.show();
       // } else {

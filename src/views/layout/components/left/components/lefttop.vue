@@ -86,7 +86,7 @@ export default class leftTop extends Vue {
     height: 100%;
     border:vw(1) solid rgba(18,85,154,1);
     box-sizing: border-box;
-    padding: vh(12) vw(12);
+    padding: vh(8) vw(8);
     .concatlist{
       display: flex;
       align-items: center;
@@ -118,7 +118,7 @@ export default class leftTop extends Vue {
     margin-left: vw(12);
     border:vw(1) solid rgba(18,85,154,1);
     box-sizing: border-box;
-    padding: vh(12) vw(12);
+    padding: vh(8) vw(8);
   }
 }
 

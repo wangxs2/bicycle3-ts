@@ -141,7 +141,7 @@ export default class leftTop extends Vue {
     const morningEndTime = yesterday + ' 09:30:00';
     API.getPeak(morningStartTime, morningEndTime).then(
       (res: any): void => {
-        if (res.data.length) {
+        if (res.data) {
           this.disPeak(res.data, 1);
         }
       },

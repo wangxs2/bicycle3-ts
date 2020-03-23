@@ -169,5 +169,15 @@
     }
     .center-bottom{
         flex: 1;
+        overflow: hidden;
+        margin-top: vh(10);
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: vh(8) vw(8);
+        .tableox{
+          flex:1;
+          margin-top: vh(5);
+        }
      }
 }
