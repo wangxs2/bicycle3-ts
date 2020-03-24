@@ -1,5 +1,12 @@
 <template>
   <div class="right-top">
+    <!-- 弹框 -->
+    <div class="myimg" v-if="isshowimg">
+      <img class="rolesimg1" src="../../../../../assets/image/bjroles.png">
+      <div class="info-close iconfont iconguanbi" @click="isshowimg=false"></div>
+    </div>
+
+    <!-- 弹框 -->
     <borderBlock :msg="msgconcat1"></borderBlock>
     <div class="roles">
       <div class="rloes-box1">
@@ -7,14 +14,14 @@
           <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">投放报警</span>
         </div>
-        <img class="gzimg" src="../../../../../assets/image/gz1.png">
+        <img class="gzimg" @click="isshowimg=true" src="../../../../../assets/image/gz1.png">
       </div>
       <div class="rloes-box1">
         <div class="left-role">
           <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">区域预警</span>
         </div>
-        <img class="gzimg" src="../../../../../assets/image/gz2.png">
+        <!-- <img class="gzimg" src="../../../../../assets/image/gz2.png"> -->
       </div>
       <div class="rloes-box1">
         <div class="left-role">
@@ -27,29 +34,35 @@
     <div class="roles cumulative">
       <div class="rloes-box1 cumulativebox">
         <span class="ljnum glabfont">累计发现</span>
-        <span class="ljnum glabfont">22起</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum1'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
       <div class="rloes-box1 cumulativebox">
-        <span class="ljnum glabfont">累计发现</span>
-        <span class="ljnum glabfont">3起</span>
+        <span class="ljnum glabfont">本月发现</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum2'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
       <div class="rloes-box1 cumulativebox">
-        <span class="ljnum glabfont">累计发现</span>
-        <span class="ljnum glabfont">2起</span>
+        <span class="ljnum glabfont">本月发现</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum3'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
     </div>
     <div class="roles cumulative">
       <div class="rloes-box1 cumulativebox">
         <span class="ljnum glabfont">今日发现</span>
-        <span class="ljnum glabfont">22起</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum4'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
       <div class="rloes-box1 cumulativebox">
         <span class="ljnum glabfont">今日发现</span>
-        <span class="ljnum glabfont">3起</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum5'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
       <div class="rloes-box1 cumulativebox">
         <span class="ljnum glabfont">今日发现</span>
-        <span class="ljnum glabfont">2起</span>
+        <div class="scrollnumsa"><scroll-num :datanum='allnum6'></scroll-num></div>
+        <span class="ljnum glabfont">起</span>
       </div>
     </div>
     <div class="cumulative">
@@ -87,9 +100,9 @@
           <span class="gont1 glabfont">昨日街道派单排名</span>
           <img src="../../../../../assets/image/paiming.png">
           <div class="font2">
-            <span class="gont2 glabfont">花木</span>
-            <span class="gont2 glabfont">陆家嘴</span>
-            <span class="gont2 glabfont">潍坊新村</span>
+            <span class="gont2 glabfont">{{threenum[1].name!==undefined?threenum[1].name:''}}</span>
+            <span class="gont2 glabfont">{{threenum[0].name!==undefined?threenum[0].name:''}}</span>
+            <span class="gont2 glabfont">{{threenum[2].name!==undefined?threenum[2].name:''}}</span>
           </div>
         </div>
     </div>
@@ -100,33 +113,105 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
+import scrollNum from '@/component/scrollnum/index.vue';
 import Echart from './myEchart';
+import API from '@/api/index';
+
 let MyEchart1: any = null; // 自定义echarts
 @Component({
   components: {
     borderBlock,
+    scrollNum,
   },
 })
 export default class rightTop extends Vue {
   private towndata: any = 
   {
     el:"town",
-    x:["陆家嘴","潍坊新村","塘桥","金桥","曹路镇","花木","金杨新村"],
+    x:[],
+    dataY:[],
 
   };
+  
+  private allnum1: any =[0];
+  private allnum2: any =[5,3,2,7];
+  private allnum3: any =[1,4,4];
+  private allnum4: any =[0];
+  private allnum5: any =[1,5,1];
+  private allnum6: any =[6];
+   private isshowimg: boolean =false;
+  
+  private threenum: any =[];
+  private intelligentData: any ={};
   private msgconcat1: string = "智能发现";
   private msgvide1: string = "街道派单TOP10 (累计历史七天)";
   
   public mounted() {
-    MyEchart1 = new Echart();
-    MyEchart1.echartsOption(this.towndata);
-   
+    this.$nextTick(function() {
+        this.getnumEchart()
+    })
+  }
+   public created() {
+    this.getThree()
+    this.getIntelligentData()
+  }
+
+  // getIntelligent
+
+  private getIntelligentData(): void {
+    API.getIntelligent().then(
+        (res: any): void => {
+          console.log(res)
+          this.intelligentData=res
+        }
+        
+      );
+     
+    
+  }
+
+  private getThree(): void {
+    API.getTownThree().then(
+        (res: any): void => {
+          this.threenum=res
+        }
+        
+      );
+     
+    
+  }
+
+
+
+
+    // 活跃量 获取数据
+  private getnumEchart(): void {
+    API.getRightTown().then(
+        (res: any): void => {
+          // for(let key in res){
+          //   this.towndata.x.push(key)
+          //   this.towndata.dataY.push(res[key].num)
+          // }
+          res.forEach((iteam:any)=>{
+            this.towndata.x.push(iteam.name)
+            this.towndata.dataY.push(iteam.num)
+          })
+          MyEchart1 = new Echart();
+          MyEchart1.echartsOption(this.towndata);
+        }
+        
+      );
+     
+    
   }
 
 }
 
 
 </script>
+<style lang="scss">
+
+</style>
 <style scoped lang="scss">
 .right-top{
     width: 100%;
@@ -135,6 +220,24 @@ export default class rightTop extends Vue {
     flex-direction: column;
     box-sizing: border-box;
     padding: vh(8) vw(8);
+    position: relative;
+    .myimg{
+      position: absolute;
+      z-index: 10;
+      left:0;
+      top:0;
+      .rolesimg1{
+        width:vw(257.143);
+        height:vh(160);
+      }
+      .info-close{
+         position: absolute;
+          z-index: 10;
+          right:vw(6);
+          top:vh(6);
+          cursor:pointer;
+      }
+    }
     .roles{
       display:flex;
       justify-content: space-between;
@@ -170,13 +273,16 @@ export default class rightTop extends Vue {
     .cumulative{
       display:flex;
       justify-content: space-between;
-      margin-top:vh(5);
+      margin-top:vh(7);
       align-items: center;
       .cumulativebox{
         background:transparent;
         display:flex;
         justify-content:flex-start;
         align-items: center;
+        .scrollnumsa{
+          // flex:1;
+        }
         img{
           width:vw(23);
           height:vh(21);

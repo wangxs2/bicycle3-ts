@@ -1,6 +1,17 @@
 <template>
   <div class="right-bottom">
-    <borderBlock :msg="msgconcat1"></borderBlock>
+    <!-- 弹框 -->
+    <div class="myimg" v-if="isshowimg">
+      <img class="rolesimg1" src="../../../../../assets/image/role2.png">
+      <div class="info-close iconfont iconguanbi" @click="isshowimg=false"></div>
+    </div>
+
+    <!-- 弹框 -->
+    <div class="header-top">
+      <borderBlock :msg="msgconcat1"></borderBlock>
+      <div class="pfroles" @click="isshowimg=true"><span class="glabfont">评分规则</span></div>
+    </div>
+    
     <div class="echartbox">
         <div class="echart1">
           <div class="echartone" id="company"></div>
@@ -35,7 +46,7 @@ import borderBlock from '@/component/borderBlock/index.vue';
 // import echartsLiquidfill from 'echarts-liquidfill'
 import tableBottom from './tableBottom.vue';
 import Echart from './myEchart';
-let MyEchart1: any = null; // 自定义echarts
+let MyEchart3: any = null; // 自定义echarts
 @Component({
   components: {
     borderBlock,
@@ -50,13 +61,21 @@ export default class rightTop extends Vue {
 
   };
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
+  private isshowimg: boolean =false;
   private msgvide1: string = "平台监管工单";
   
   public mounted() {
-    MyEchart1 = new Echart();
-    MyEchart1.echartsOption1(this.companydata);
+    // this.$nextTick(function() {
+    //   MyEchart3 = new Echart();
+    //   MyEchart3.echartsOption1(this.companydata);
+    // })
+     MyEchart3 = new Echart();
+      MyEchart3.echartsOption1(this.companydata);
+    
    
   }
+
+  
 
 }
 
@@ -70,6 +89,39 @@ export default class rightTop extends Vue {
     flex-direction: column;
     box-sizing: border-box;
     padding: vh(8) vw(8);
+    position: relative;
+    .myimg{
+      position: absolute;
+      z-index: 10;
+      left:0;
+      top:0;
+      .rolesimg1{
+        width:vw(548.57);
+        height:vh(222.857);
+      }
+      .info-close{
+         position: absolute;
+          z-index: 10;
+          right:vw(6);
+          top:vh(6);
+          cursor:pointer;
+      }
+    }
+    .header-top{
+      display:flex;
+      justify-content: flex-start;
+      .pfroles{
+        margin-left:vw(10);
+       width:vw(48);
+        height:vh(16);
+        cursor:pointer;
+        background:rgba(0,228,255,0.1);
+        border:1px solid rgba(0,228,255,1);
+        border-radius:2px;
+        font-size:vw(10);
+        line-height:vh(16);
+      }
+    }
     .echartbox{
       display:flex;
       justify-content: space-between;

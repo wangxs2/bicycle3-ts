@@ -1,5 +1,14 @@
 <template>
   <div class="layout">
+    <!-- 弹框 -->
+    <el-dialog
+      custom-class="rightrole"
+      :visible.sync="isshowimg">
+      <div class="bigimg">
+          <img class="myimg" src="../../assets/image/bjroles.png">
+      </div>
+    </el-dialog>
+    <!-- 弹框 -->
     <div class="header">
       <weather></weather>
       <realTime></realTime>
@@ -36,6 +45,8 @@ import rightBox from "./components/right/index.vue";
 })
 export default class layout extends Vue {
   private msg: string = "我是一个小花";
+  private isshowimg: boolean = false;
+  
   public mounted() {
   }
 }

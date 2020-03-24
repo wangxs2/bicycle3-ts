@@ -97,7 +97,7 @@ export default class MyEcharts {
         name: '',
       },
       series: [{
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: params.dataY,
           type: 'bar',
           barWidth:14,
           itemStyle: {
@@ -182,7 +182,7 @@ export default class MyEcharts {
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: [88, 90, 88, 80, 70, 96, 86],
           type: 'bar',
           barWidth:10,
           itemStyle: {
@@ -198,7 +198,7 @@ export default class MyEcharts {
           },
       },
       {
-        data: [120, 100, 50, 80, 70, 160, 170],
+        data: [86, 71, 76, 80, 70, 86, 87],
         type: 'bar',
         barWidth:10,
         itemStyle: {

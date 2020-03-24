@@ -2,11 +2,13 @@
   <!-- 工单详情 -->
   <div class="table">
     <div class="table-head">
-        <div class="thead thead1"><span class="glabfont">时间</span></div>
-        <div class="thead thead2"><span class="glabfont">地址</span></div>
-        <div class="thead thead3"><span class="glabfont">描述</span></div>
-        <div class="thead thead4"><span class="glabfont">推送单位</span></div>
-        <div class="thead thead5"><span class="glabfont">状态</span></div>
+        <div class="thead thead1"><span class="glabfont">工单类型</span></div>
+        <div class="thead thead2"><span class="glabfont">时间</span></div>
+        <div class="thead thead3"><span class="glabfont">地点</span></div>
+        <div class="thead thead4"><span class="glabfont">派单部门</span></div>
+        <div class="thead thead5"><span class="glabfont">处理要求</span></div>
+        <div class="thead thead6"><span class="glabfont">接收单位</span></div>
+        <div class="thead thead7"><span class="glabfont">处理状态</span></div>
     </div>
     <div class="tablebody">
         <div class="swiper-container" id="swipertable">
@@ -16,11 +18,13 @@
                     :key="index"
                     :autoplay='5000'>
                 <div class="allData">
-                    <div class="table-foncom table-foncom1"><span class="glabfont">{{iteam.time}}</span></div>
-                    <div class="table-foncom table-foncom2"><span class="glabfont">{{iteam.dir}}</span></div>
-                    <div class="table-foncom table-foncom3"><span class="glabfont">{{iteam.des}}</span></div>
-                    <div class="table-foncom table-foncom4"><span class="glabfont">{{iteam.org}}</span></div>
-                    <div class="table-foncom table-foncom5"><span :class="iteam.status==2?'ycl':'clz'" class="glabfont">{{iteam.status}}</span></div>
+                    <div class="table-foncom table-foncom1"><span class="glabfont">{{iteam.type}}</span></div>
+                    <div class="table-foncom table-foncom2"><span class="glabfont">{{iteam.dispatchTime}}</span></div>
+                    <div class="table-foncom table-foncom3"><span class="glabfont">{{iteam.handleAddr}}</span></div>
+                    <div class="table-foncom table-foncom4"><span class="glabfont">{{iteam.name}}</span></div>
+                    <div class="table-foncom table-foncom5"><span class="glabfont">{{iteam.method}}</span></div>
+                     <div class="table-foncom table-foncom6"><span class="glabfont">{{iteam.dispatchReceive}}</span></div>
+                    <div class="table-foncom table-foncom7"><span class="glabfont">{{iteam.status}}</span></div>
 
                 </div>
 
@@ -73,36 +77,11 @@
         .format('YYYY-MM-DD');
 
       const endTime: string = moment().format('YYYY-MM-DD');
-      API.getWorkOrderDetails(startTime, endTime).then(
+      API.getRightTable().then(
         (res: any): void => {
           // 时间倒序
-          const sortData: Array<{}> = res.sort((x: any, y: any) => {
-            if (x.dispatchTime > y.dispatchTime) {
-              return -1;
-            } else if (x.dispatchTime < y.dispatchTime) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-
-          // 取十条
-          let data: Array<{}> = sortData.slice(0, 10);
-          data = data.map(
-            (item: any, index: number): object => {
-              return {
-                index,
-                time: moment(item.dispatchTime).format('YYYY-MM-DD HH:mm'),
-                dir: item.handleAddr,
-                des: '共享单车乱停乱放',
-                org: item.orgName,
-                status: item.status === 2 ? '已处理' : '处理中',
-              };
-            },
-          );
-
-          console.log(data)
-          this.findVisible=data
+        
+          this.findVisible=res
         }
       );
     }
@@ -139,18 +118,24 @@
           height: 100%;
         }
         .thead1 {
-            width:20%;
+            width:15%;
         }
         .thead2 {
-            width:40%;
-        }
-        .thead3 {
-          width:20%;
-        }
-         .thead4 {
             width:10%;
         }
+        .thead3 {
+          width:25%;
+        }
+         .thead4 {
+            width:20%;
+        }
         .thead5 {
+          width:10%;
+        }
+         .thead6 {
+            width:10%;
+        }
+        .thead7 {
           width:10%;
         }
     }
@@ -187,33 +172,26 @@
                         padding:vh(0) 0;
                     }
                     .table-foncom1{
-                        width: 20%;
+                        width: 10%;
                     }
                     .table-foncom2{
-                        width: 40%;
+                        width: 15%;
                     }
                     .table-foncom3{
-                        width: 20%;
+                        width: 25%;
                     }
                     .table-foncom4{
-                        width: 10%;
+                        width: 20%;
                     }
                     .table-foncom5{
                         width:10%;
-                        .ycl{
-                          width:90%;
-                          height:vh(14);
-                          line-height:vh(14);
-                          background: url("../../../../../assets/image/yichuli.png") no-repeat;
-                          background-size: 100% 100%;
-                        }
-                        .clz{
-                          width:90%;
-                          height:vh(14);
-                          line-height:vh(14);
-                          background: url("../../../../../assets/image/clz.png") no-repeat;
-                          background-size: 100% 100%;
-                        }
+                        
+                    }
+                    .table-foncom6{
+                        width: 10%;
+                    }
+                    .table-foncom7{
+                        width: 10%;
                     }
                     
                 }

@@ -17,6 +17,8 @@ class MyMap {
   public cityBorderGroup: any = new AMap.OverlayGroup(); // 市级边界集合 徐汇区
   public forbidGroup: any = new AMap.OverlayGroup(); // 禁停区集合
   public forbidEvent: any[] = []; // 禁停区事件集合
+  public forbidEvent1: any[] = []; // 禁停区事件集合
+  public forbidEvent2: any[] = []; // 禁停区事件集合
   public areaPointGroup: any = new AMap.OverlayGroup(); // 区级点集合 街道
   public areaBorderGroup: any = new AMap.OverlayGroup(); // 区级边界集合 街道
   public mapCenter: Array<number | string> = [121.544379,31.221517]; // 默认地图中心点
@@ -523,13 +525,13 @@ class MyMap {
   // 禁停区事件点
   public forbidGroupEvent1(callback: any): void {
     // 事件先清除再添加
-    this.forbidEvent.forEach((item: any) => {
+    this.forbidEvent1.forEach((item: any) => {
       AMap.event.removeListener(item);
     });
 
-    this.forbidEvent = [];
+    this.forbidEvent1 = [];
 
-    this.forbidEvent.push(
+    this.forbidEvent1.push(
       AMap.event.addListener(this.virusGroup, 'click', (e: any) => {
         console.log(e)
         const data: string = e.target.getExtData().regionName;
@@ -544,13 +546,13 @@ class MyMap {
    // 禁停区事件点
    public forbidGroupEvent2(callback: any): void {
     // 事件先清除再添加
-    this.forbidEvent.forEach((item: any) => {
+    this.forbidEvent2.forEach((item: any) => {
       AMap.event.removeListener(item);
     });
 
-    this.forbidEvent = [];
+    this.forbidEvent2 = [];
 
-    this.forbidEvent.push(
+    this.forbidEvent2.push(
       AMap.event.addListener(this.keyareaGroup, 'click', (e: any) => {
         console.log(e)
         const data: string = e.target.getExtData().regionName;

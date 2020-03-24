@@ -18,7 +18,7 @@ export default class BorderBlock extends Vue {
 
 <style lang="scss" scoped>
 .quadrangle {
-  width: 100%;
+  // width: 100%;
   display: flex;
   .boederh{
     display: flex;

@@ -106,7 +106,6 @@
             },
           );
 
-          console.log(data)
           this.findVisible=data
         }
       );

@@ -1,0 +1,120 @@
+{
+    "sumActiveRate": 0.5656,
+    "companyBikeNum": [
+        149066,
+        33590
+    ],
+    "sumCollectBicycleNum": 76430,
+    "companyName": [
+        "摩拜",
+        "哈啰"
+    ],
+    "orgId": [
+        1048
+    ],
+    "sumActiveNum": 60081,
+    "sumStreetBicycleNum": 106226,
+    "companyCollectBicycleNum": [
+        66516,
+        9914
+    ],
+    "sumBicycleNum": 182656,
+    "companyActiveNum": [
+        44842,
+        15239
+    ],
+    "streetBicycleNum": [
+        82550,
+        23676
+    ],
+    "yearNum": [
+        {
+            "activeNum": 5930,
+            "bikeNum": 15665,
+            "collectNum": 0,
+            "createTime": "2019-04",
+            "streetNum": 15665
+        },
+        {
+            "activeNum": 19991,
+            "bikeNum": 60784,
+            "collectNum": 0,
+            "createTime": "2019-05",
+            "streetNum": 60784
+        },
+        {
+            "activeNum": 21732,
+            "bikeNum": 56146,
+            "collectNum": 0,
+            "createTime": "2019-06",
+            "streetNum": 56146
+        },
+        {
+            "activeNum": 26027,
+            "bikeNum": 53466,
+            "collectNum": 0,
+            "createTime": "2019-07",
+            "streetNum": 53466
+        },
+        {
+            "activeNum": 29620,
+            "bikeNum": 59341,
+            "collectNum": 0,
+            "createTime": "2019-08",
+            "streetNum": 59341
+        },
+        {
+            "activeNum": 29665,
+            "bikeNum": 58941,
+            "collectNum": 0,
+            "createTime": "2019-09",
+            "streetNum": 58941
+        },
+        {
+            "activeNum": 25607,
+            "bikeNum": 52919,
+            "collectNum": 2723,
+            "createTime": "2019-10",
+            "streetNum": 50196
+        },
+        {
+            "activeNum": 2414,
+            "bikeNum": 55360,
+            "collectNum": 16947,
+            "createTime": "2019-11",
+            "streetNum": 38412
+        },
+        {
+            "activeNum": 14118,
+            "bikeNum": 123638,
+            "collectNum": 46123,
+            "createTime": "2019-12",
+            "streetNum": 77515
+        },
+        {
+            "activeNum": 56612,
+            "bikeNum": 124066,
+            "collectNum": 51185,
+            "createTime": "2020-01",
+            "streetNum": 72881
+        },
+        {
+            "activeNum": 57008,
+            "bikeNum": 114063,
+            "collectNum": 45840,
+            "createTime": "2020-02",
+            "streetNum": 68223
+        },
+        {
+            "activeNum": 28933,
+            "bikeNum": 68968,
+            "collectNum": 28733,
+            "createTime": "2020-03",
+            "streetNum": 40235
+        }
+    ],
+    "companyActiveRate": [
+        0.5432,
+        0.6436
+    ]
+}

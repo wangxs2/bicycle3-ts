@@ -260,7 +260,6 @@ export default class center extends Vue {
     },
   ];
   public mounted() {
-    console.log(virsuData)
     myMap = new MyMap({ el: 'mapContainer' });
     this.getBicyClePosition();
     this.getVirus();
@@ -312,7 +311,6 @@ export default class center extends Vue {
           this.ForbidData[item.regionName] = item;
         });
         myMap.forbidGroupEvent((data: any) => {
-          console.log(data)
           this.ForbidName = data;
         });
       }
@@ -343,7 +341,6 @@ export default class center extends Vue {
       this.ForbidData[item.regionName] = item;
     });
     myMap.forbidGroupEvent1((data: any) => {
-      console.log(data)
       this.ForbidName = data;
     });
   }
@@ -351,7 +348,6 @@ export default class center extends Vue {
   // 重点区
   public getkeyarea(): void {
     API.getKeyAreas().then((res: any) => {
-      console.log(res.data)
       res.data.forEach((item: any) => {
         item.geom = this.FormatGolygon(item.polygonGeom);
         myMap.addOverlayGroup(
@@ -365,7 +361,6 @@ export default class center extends Vue {
       });
 
       myMap.forbidGroupEvent2((data: any) => {
-        console.log(data)
         this.ForbidName = data;
         
       });
@@ -575,7 +570,6 @@ export default class center extends Vue {
       data.sheetStatus === 3
     ) {
       if (type === 1) {
-        console.log(data)
         // 工单详情的图片数组
         detailsImgs = data.dispatchPhotoURLs.map((item: any) => {
           return {

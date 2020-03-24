@@ -124,7 +124,7 @@ export default {
   // 重点区域的数据 http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1000&areaId=1057
 
   getKeyAreas(): Promise<{}> {
-    return http('http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1000&areaId=1057');
+    return http('http://106.14.198.128:18181/sharebikesclean//countJieZhen/getAreaPointMsg1?regionId=1000');
   },
 
   /**
@@ -138,6 +138,12 @@ export default {
       },
     });
   },
+
+  // 智能发现 /platform/foundList?orgId=1057
+  getIntelligent(): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/platform/foundList?orgId=1057');
+  },
+  
 
   /**
    * 企业处置率
@@ -216,6 +222,18 @@ export default {
     return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgJtRegionBoundaryAndBikeNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params,
     });
+  },
+
+  // 获取右边街道钱10 http://106.14.198.128:18181/sharebikesclean/dispatch/getLastSenvenRank
+  getRightTown(): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/dispatch/getLastSenvenRank');
+  },
+  getTownThree(): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/dispatch/selectLastDayDispatchRank');
+  },
+  //右边的工单http://106.14.198.128:18181/sharebikesclean/dispatch/getRecentDisMsg
+  getRightTable(): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/dispatch/getRecentDisMsg');
   },
 
   /**
