@@ -80,6 +80,7 @@ export default class layout extends Vue {
     }
     .right {
       flex: 1;
+      width: vw(571.4);
       // background: url("../../assets/image/right.png") no-repeat;
       background-size: 100% 100%;
     }

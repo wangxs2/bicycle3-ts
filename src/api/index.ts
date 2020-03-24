@@ -33,7 +33,7 @@ export default {
    * 获取重点区域的活跃度
    */
   getKeyArea(): Promise<{}> {
-    return http('position/findChildOrgActiveRange/' );
+    return http('http://106.14.198.128:18091/sharebikesclean/position/findChildOrgActiveRange/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
@@ -111,7 +111,7 @@ export default {
     type: string = '',
     sheetStatus: string = '',
   ): Promise<{}> {
-    return http('bikeDispatch/findBikeDispatchByAreaIdAndDate/' , {
+    return http('http://106.14.198.128:18091/sharebikesclean/bikeDispatch/findBikeDispatchByAreaIdAndDate/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         startDate,
         endDate,

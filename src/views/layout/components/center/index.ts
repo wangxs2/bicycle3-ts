@@ -1,4 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
+import slideshow from '@/component/slideshow/index.vue';
 import centerBottom from './centerBottom.vue';
 import screenfull from 'screenfull';
 const fullObj: any = screenfull; // 全屏实例
@@ -26,6 +27,7 @@ import borderBlock from '@/component/borderBlock/index.vue';
   components: {
     centerBottom,
     borderBlock,
+    slideshow,
   },
 })
 
@@ -138,6 +140,20 @@ export default class center extends Vue {
   private bicyActiveData: any = {};
   private cityPointData: any = {}; // 市级点数据
   private areaPointData: any = {}; // 区级点数据
+
+    // 工单轮播配置
+    private workOrderDisposeOptions: any = null;
+
+  // 治理轮循
+  private roundRobinData: any[] = [];
+
+  // 工单数据
+  private workOrderObjData: any = {};
+
+  // 工单处理数据
+  private workOrderDisposeData: any = null;
+   // 点覆盖添加的顺序
+   private pointMarkerIndex: number = 0;
   // 当前选中区域的单车区域数据
   private nowBicyTrendData: any = null;
   private selectEnterpriseCode: string = 'all'; // 选择的企业编码
@@ -178,6 +194,9 @@ export default class center extends Vue {
   ];
   // 显示禁停区的名称 控制显示
   private ForbidName: string = '';
+
+  // 是否显示工单详情
+  private isShowWorkOrderDispose: boolean = false;
    // 禁停区数据
    private ForbidData: any = {};
   // 是否显示禁停区
@@ -237,6 +256,7 @@ export default class center extends Vue {
     this.getBicyClePosition();
     this.getTownBoundary();
     this.getForbid();
+    this.getAreaIdAndDate();
     // 监听全屏事件
     fullObj.on('change', (e:any) => {
       if (e.target.className === 'center-top' && fullObj.isFullscreen) {
@@ -312,8 +332,8 @@ export default class center extends Vue {
         myMap.isForbidGroup(data.state);
         break;
       case '单车治理':
-        // this.isShowLegend = data.state;
-        // myMap.isWorkGroup(data.state);
+        this.isShowLegend = data.state;
+        myMap.isWorkGroup(data.state);
         break;
       case '治理轮循':
         // this.$nextTick(function() {
@@ -466,6 +486,291 @@ export default class center extends Vue {
         b = new Date(b[0]);
         return a > b ? -1 : a < b ? 1 : 0;
       });
+    });
+  }
+
+
+   /**
+   * 处理显示工单详情
+   * @param {String} code 工单编码
+   * @param {Number} type 返回类型 1工单详情 2治理轮循
+   */
+  private disposeWorkOrderDetails(code: string, type: number) {
+    const data: any = this.workOrderObjData[code];
+
+    const statusData: any = this.judgeStatus(code, data.sheetStatus); // 格式状态
+
+    let detailsTexts: any = [
+      {
+        key: statusData.isDespatch ? '派单时间' : '自检时间',
+        val: moment(data.dispatchTime).format('YYYY-MM-DD HH:mm:ss'),
+      },
+      {
+        key: statusData.isDespatch ? '地点' : '自检地点',
+        val: data.handleAddr,
+      },
+      {
+        key: statusData.isDespatch ? '处理单位' : '自检单位',
+        val: statusData.isDespatch ? data.dispatchReceive : data.dispatchOrgName,
+      },
+    ];
+
+    let detailsImgs: any[] = [];
+    let roundRobinimg: any = null;
+
+    if (
+      data.sheetStatus === -1 ||
+      data.sheetStatus === 0 ||
+      data.sheetStatus === 1 ||
+      data.sheetStatus === 3
+    ) {
+      if (type === 1) {
+        console.log(data)
+        // 工单详情的图片数组
+        detailsImgs = data.dispatchPhotoURLs.map((item: any) => {
+          return {
+            text: '派单照片',
+            url: 'http://106.14.198.128:18088/' + item,
+          };
+        });
+
+        if (data.sheetStatus === -1) {
+          // detailsTexts.push({
+          //   key: '超时时长',
+          //   val: new Date(data.voList[data.voList.length - 1].handleTime).Format('yyyy-MM-dd hh:mm:ss')
+          // })
+        }
+      } else {
+        // 治理轮循的图片单张
+        roundRobinimg = 'http://106.14.198.128:18088/' + data.dispatchPhotoURLs[0];
+      }
+    } else if (data.sheetStatus === 2 || data.sheetStatus === 4) {
+      const addDetailsTexts = [
+        {
+          key: '处理时间',
+          val: moment(data.voList[data.voList.length - 1].handleTime).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
+        },
+        {
+          key: '整理数',
+          val: data.arrangeNum,
+        },
+        {
+          key: '清运数',
+          val: data.cleanNum,
+        },
+      ];
+      detailsTexts = [...detailsTexts, ...addDetailsTexts];
+
+      if (type === 1) {
+        // 工单详情的图片数组
+        detailsImgs = [];
+        let dispatchReceive = '';
+        data.voList.forEach((item: any) => {
+          dispatchReceive = statusData.isDespatch
+            ? item.dispatchReceive
+            : item.dispatchOrgName;
+          item.dispatchBeforePhotoURLs.forEach((beforeItem: any) => {
+            detailsImgs.push({
+              text: `${dispatchReceive}处理前`,
+              url: 'http://106.14.198.128:18088/' + beforeItem,
+            });
+          });
+          item.dispatchAfterPhotoURLs.forEach((afterItem: any) => {
+            detailsImgs.push({
+              text: `${dispatchReceive}处理后`,
+              url: 'http://106.14.198.128:18088/' + afterItem,
+            });
+          });
+        });
+      } else {
+        // 治理轮循的图片单张
+        roundRobinimg =
+        'http://106.14.198.128:18088/' +
+          data.voList[data.voList.length - 1].dispatchAfterPhotoURLs[0];
+      }
+    }
+
+    if (type === 1) {
+      // 工单详情格式数据
+      this.workOrderDisposeData = {
+        nowStatus: statusData.nowStatus, // 当前状态
+        despatchStatus: statusData.despatchStatus, // 处理的状态
+        classTimestamp: `container${Date.now()}`,
+        detailsImgs, // 处理照片
+        detailsTexts, // 处理记录
+      };
+
+      this.$nextTick(function() {
+        this.workOrderDisposeOptions = {
+          autoplay: true, // 可选选项，自动滑动
+          simulateTouch: false,
+          loop: detailsImgs.length > 1,
+        };
+        this.isShowWorkOrderDispose = true;
+      });
+    } else {
+      return {
+        nowStatus: statusData.nowStatus, // 当前状态
+        despatchStatus: statusData.despatchStatus, // 处理的状态
+        roundRobinimg, // 处理照片
+        detailsTexts, // 处理记录
+      };
+    }
+  }
+
+
+   /**
+   * 获取指定街道/区单车治理情况
+   */
+  private getAreaIdAndDate(): void {
+    const startTime: string = moment().format('YYYY-MM-DD');
+    // let startTime = '2019-03-18'
+
+    API.getAreaIdAndDate(startTime, startTime).then(
+      (res: any): void => {
+        if (res.status === 0) {
+          // 数据处理
+          this.refreshPointData(res.data);
+          // 分拣不同状态工单
+          this.sortOutWorkOrder(res.data);
+          // 重置事件
+          myMap.workGroupEvent((code: string) => {
+            this.isShowWorkOrderDispose = false;
+            this.disposeWorkOrderDetails(code, 1);
+          });
+
+          // 定时刷新
+          this.timeoutEvent('getAreaIdAndDate');
+        }
+      },
+    );
+  }
+
+
+    /**
+   * 判断工单状态
+   * @param {String} code 工单编号
+   * @param {Number} status 工单状态
+   * @return {Object} 对应工单的状态
+   */
+  private judgeStatus(code: string, status: number): any {
+    let icon: any = null;
+    let nowStatus: string = '';
+    let despatchStatus: string = '';
+    let isDespatch: boolean = false;
+    // 自检
+    if (code.includes('-CHECK-')) {
+      isDespatch = false;
+      switch (status) {
+        case 1:
+          // 处理中
+          nowStatus = '自检-处理中';
+          despatchStatus = '企业处理中';
+          icon = this.legendData[0].icon;
+          break;
+        case 2:
+          // 已处理
+          nowStatus = '自检完成';
+          despatchStatus = '企业自检完毕';
+          icon = this.legendData[0].icon;
+          break;
+      }
+    } else {
+      // 督办
+      // if (code.includes('-DISPATCH-'))
+      isDespatch = true;
+      switch (status) {
+        case -1:
+          // 超时
+          nowStatus = '超时未处理';
+          despatchStatus = '已推送街镇城运分中心,企业';
+          icon = this.legendData[4].icon;
+          break;
+        case 0:
+          // 未处理
+          nowStatus = '已派单';
+          despatchStatus = '已推送街镇城运分中心,企业';
+          icon = this.legendData[1].icon;
+          break;
+        case 1:
+          // 处理中
+          nowStatus = '处理中';
+          despatchStatus = '企业处理中';
+          icon = this.legendData[2].icon;
+          break;
+        case 2:
+          // 已处理
+          nowStatus = '已处理';
+          despatchStatus = '企业处理完毕';
+          icon = this.legendData[3].icon;
+          break;
+        case 3:
+          // 重新派单
+          nowStatus = '已派单';
+          despatchStatus = '已推送街镇城运分中心,企业';
+          icon = this.legendData[1].icon;
+          break;
+        case 4:
+          // 已完成
+          nowStatus = '已处理';
+          despatchStatus = '企业处理完毕';
+          icon = this.legendData[3].icon;
+          break;
+      }
+    }
+
+    return { icon, nowStatus, despatchStatus, isDespatch };
+  }
+
+
+
+  /**
+   * 无闪动刷新点
+   */
+  private refreshPointData(data: any): void {
+    let workOrderObjItem: any = {};
+    let icon: any = null;
+
+    data.forEach((item: any, index: number) => {
+      workOrderObjItem = this.workOrderObjData[item.sheetCode];
+
+      if (workOrderObjItem) {
+        // 工单存在 判断状态
+        if (item.sheetStatus !== workOrderObjItem.sheetStatus) {
+          // 状态改变了重新赋值
+          for (const key of Object.keys(item)) {
+            this.workOrderObjData[item.sheetCode][key] = item[key];
+          }
+          // 改变图标
+          icon = this.judgeStatus(item.sheetCode, item.sheetStatus).icon;
+          myMap.updateWorkPoint(workOrderObjItem.addIndex, icon);
+
+          // 治理轮循 修改数据
+          this.roundRobinData[
+            workOrderObjItem.addIndex
+          ] = this.disposeWorkOrderDetails(item.sheetCode, 2);
+        }
+      } else {
+        // 工单不存在
+        item.addIndex = this.pointMarkerIndex; // 记录添加顺序
+
+        this.workOrderObjData[item.sheetCode] = item;
+        icon = this.judgeStatus(item.sheetCode, item.sheetStatus).icon;
+
+        myMap.addOverlayGroup(
+          'workOrderGroup',
+          myMap.createWorkPoint(item, icon),
+        ); // 直接添加
+
+        // 治理轮循 添加数据
+        this.roundRobinData.push(
+          this.disposeWorkOrderDetails(item.sheetCode, 2),
+        );
+
+        this.pointMarkerIndex++;
+      }
     });
   }
 

@@ -87,6 +87,43 @@
     </transition>
     <!-- 工单图例 E -->
 
+    <!-- 工单详情 S -->
+    <transition name="fade">
+      <div class="workOrder-details" v-if="isShowWorkOrderDispose">
+        <div
+          class="workOrder-details-close iconfont iconguanbi"
+          @click="isShowWorkOrderDispose = false"
+        ></div>
+        <div class="details-status">{{workOrderDisposeData.nowStatus}}</div>
+        <div class="imgs">
+          <slideshow
+            v-if="isShowWorkOrderDispose"
+            parendClassName="workOrder-details"
+            :options="workOrderDisposeOptions"
+          >
+            <div
+              class="swiper-slide"
+              v-for="(item,index) in workOrderDisposeData.detailsImgs"
+              :key="index"
+            >
+              <div class="img-item">
+                <img :src="item.url">
+                <div class="img-watermark">{{item.text}}</div>
+              </div>
+            </div>
+          </slideshow>
+        </div>
+        <div class="details-text">
+          <p v-for="(item,index) in workOrderDisposeData.detailsTexts" :key="index">
+            <span>{{item.key}}：</span>
+            <span>{{item.val}}</span>
+          </p>
+        </div>
+        <div class="dispose-status">{{workOrderDisposeData.despatchStatus}}</div>
+      </div>
+    </transition>
+    <!-- 工单详情 E -->
+
 
     </div>
     <div class="center-bottom">

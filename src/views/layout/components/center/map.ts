@@ -11,6 +11,8 @@ class MyMap {
   public provinceBorderGroup: any = new AMap.OverlayGroup(); // 省级边界集合 上海市
 
   public cityPointGroup: any = new AMap.OverlayGroup(); // 市级点集合 徐汇区
+  public workOrderGroup: any = new AMap.OverlayGroup(); // 工单集合
+  public workEvent: any[] = []; // 工单集合的事件
   public cityBorderGroup: any = new AMap.OverlayGroup(); // 市级边界集合 徐汇区
   public forbidGroup: any = new AMap.OverlayGroup(); // 禁停区集合
   public forbidEvent: any[] = []; // 禁停区事件集合
@@ -60,6 +62,7 @@ class MyMap {
 
     // 添加图层
     this.map.add([
+      this.workOrderGroup,
       this.provincePointGroup,
       this.areaPointGroup,
       this.forbidGroup,
@@ -190,7 +193,21 @@ class MyMap {
     );
   }
 
-
+ // 创建工单
+ public createWorkPoint(data: any, icon: string): object {
+  const marker: object = new AMap.Marker({
+    position: new AMap.LngLat(data.lng, data.lat),
+    offset: new AMap.Pixel(-11, -11),
+    topWhenClick: true,
+    icon: new AMap.Icon({
+      size: new AMap.Size(22, 22),
+      image: icon,
+      imageSize: new AMap.Size(22, 22),
+    }), // 添加 Icon 图标 URL
+    extData: { code: data.sheetCode },
+  });
+  return marker;
+}
 
   // 创建区级 边界
   public createAreaBorder(path: Array<[]>, name: string): object {
@@ -322,6 +339,43 @@ class MyMap {
       );
       this.isHeatMap(false);
     }
+
+
+    // 工单事件
+  public workGroupEvent(callback: any): void {
+    // 事件先清除再添加
+    this.workEvent.forEach((item: any) => {
+      AMap.event.removeListener(item);
+    });
+
+    this.workEvent = [];
+
+    this.workEvent.push(
+      AMap.event.addListener(this.workOrderGroup, 'click', (e: any) => {
+        console.log(e.target.getExtData().code)
+        const code: string = e.target.getExtData().code;
+
+        if (code) {
+          callback(code);
+        }
+      }),
+    );
+  }
+
+    // 修改工单状态
+  public updateWorkPoint(index: number, icon: string): void {
+    // this.workOrderGroup.getOverlays()[index].setIcon(icon);
+    this.workOrderGroup.getOverlays()[index].setIcon(new AMap.Icon({
+      size: new AMap.Size(22, 22),
+      image: icon,
+      imageSize: new AMap.Size(22, 22),
+    }));
+  }
+
+    // 显示/隐藏 工单
+  public isWorkGroup(flag: boolean): void {
+    flag ? this.workOrderGroup.show() : this.workOrderGroup.hide();
+  }
   
     // 显示/隐藏 热力图
     public isHeatMap(flag: boolean): void {

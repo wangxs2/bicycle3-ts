@@ -6,21 +6,21 @@
         <span style="color:#ffffff" class="nametit glabfont">{{iteam.name}}</span>
         <div class="jianju">
           <div class="telju">
-            <img src="" alt="" srcset="">
+            <img src="../../../../../assets/image/loader.png">
             <span class="glabfont">{{iteam.concat1}}</span>
           </div>
-          <div style="text-align:left">
-            <img src="" alt="" srcset="">
+          <div class="telju" style="text-align:left">
+            <img src="../../../../../assets/image/tel.png">
               <span class="glabfont">{{iteam.tel1}}</span>
           </div>
         </div>
         <div style="text-align:left" class="jianju">
           <div class="telju">
-            <img src="" alt="" srcset="">
+            <img src="../../../../../assets/image/loader.png">
             <span class="glabfont">{{iteam.concat2}}</span>
           </div>
-          <div>
-            <img src="" alt="" srcset="">
+          <div class="telju">
+            <img src="../../../../../assets/image/tel.png">
               <span class="glabfont">{{iteam.tel2}}</span>
           </div>
         </div>
@@ -28,6 +28,12 @@
     </div>
     <div class="video-box">
       <borderBlock :msg="msgvide"></borderBlock>
+      <div class="active-box"></div>
+       <rank-block1 :rank-data='activeRange'
+                    :gradient-ramp="['#6ad4ff','#5a60ff']"
+                    block-tit=''
+                    font-color="#20c0fe">
+        </rank-block1>
     </div>
     
     <!-- <div class=></div> -->
@@ -37,14 +43,22 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import borderBlock from '@/component/borderBlock/index.vue';
+import rankBlock1 from '@/component/rankBlock1/index.vue';
+import { refinedCal, cloneObj } from '@/libs/util.ts';
+import API from '@/api/index';
 @Component({
   components: {
    borderBlock,
+   rankBlock1
   }
 })
 export default class leftTop extends Vue {
   private msgconcat: string = "指挥体系";
    private msgvide: string = "街镇活跃排名TOP10"; 
+   // 街镇数据
+  private townData: Array<{}> = [];
+   // 重点区排名数据
+  private activeRange: Array<{}> = [];
    private shudata: any = [
      {
        id:1,
@@ -71,7 +85,32 @@ export default class leftTop extends Vue {
        tel2:"123456",
      },
    ];
+  public created() {
+    this.getKeyArea();
+  }
   public mounted() {
+  }
+
+  // 获取重点区域排名
+  private getKeyArea(): void {
+    API.getKeyArea().then(
+      (res: any): void => {
+        if (res.status === 0) {
+          this.townData = cloneObj(res.activeRange);
+          res.activeRange = res.activeRange.slice(0, 10);
+          this.activeRange = res.activeRange.map(
+            (item: any, index: number): object => {
+              item.percentage = refinedCal(`${item.activeRate}*100`, -1) + '%';
+              item.index = index + 1;
+              item.name = item.orgName;
+              item.img = require(`@img/topten/${index+1}.png`),
+              item.describe = item.percentage;
+              return item;
+            },
+          );
+        }
+      },
+    );
   }
 }
 </script>
@@ -104,7 +143,14 @@ export default class leftTop extends Vue {
       .jianju{
         margin-left: vw(11);
         .telju{
+          display: flex;
+          align-items: center;
           margin-bottom: vh(5);
+          img{
+            margin-right: vw(2);
+            width: vw(9);
+            height: vh(9);
+          }
         }
       }
     }
@@ -119,6 +165,12 @@ export default class leftTop extends Vue {
     border:vw(1) solid rgba(18,85,154,1);
     box-sizing: border-box;
     padding: vh(8) vw(8);
+    display: flex;
+    flex-direction: column;
+    .active-box{
+      flex:1;
+      box-sizing:border-box;
+    }
   }
 }
 

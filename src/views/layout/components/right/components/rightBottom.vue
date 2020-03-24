@@ -6,25 +6,34 @@
           <div class="echartone" id="company"></div>
         </div>
         <div class="right-list">
-          <span class="gont1 glabfont">昨日街道派单排名</span>
+          <span class="gont1 glabfont">企业工单处置昨日得分</span>
           <img src="../../../../../assets/image/paiming.png">
-          <div>
-            <span class="gont2 glabfont">花木</span>
-            <span class="gont2 glabfont">陆家嘴</span>
-            <span class="gont2 glabfont">潍坊新村</span>
+          <div class="">
+
+          </div>
+          <div class="numde">
+            <span class="gont2 glabfont">哈罗</span>
+            <span class="gont2 glabfont">摩拜</span>
           </div>
         </div>
+    </div>
+    <borderBlock :msg="msgvide1"></borderBlock>
+    <div class="tableboxwork">
+      <tableBottom></tableBottom>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
+// import echartsLiquidfill from 'echarts-liquidfill'
+import tableBottom from './tableBottom.vue';
 import Echart from './myEchart';
 let MyEchart1: any = null; // 自定义echarts
 @Component({
   components: {
     borderBlock,
+    tableBottom
   },
 })
 export default class rightTop extends Vue {
@@ -35,7 +44,7 @@ export default class rightTop extends Vue {
 
   };
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
-  private msgvide1: string = "街道派单TOP10 (累计历史七天)";
+  private msgvide1: string = "平台监管工单";
   
   public mounted() {
     MyEchart1 = new Echart();
@@ -60,7 +69,7 @@ export default class rightTop extends Vue {
       justify-content: space-between;
       width: 100%;
       height: vh(105);
-      border: 1px solid red;
+      margin-top:vh(5);
       .echart1{
         width:70%;
         height:100%;
@@ -71,7 +80,6 @@ export default class rightTop extends Vue {
       }
       .right-list{
         flex:1;
-        border:1px solid red;
         display: flex;
         flex-direction: column; 
         justify-content: center;
@@ -92,6 +100,10 @@ export default class rightTop extends Vue {
         }
       }
       // margin-top:vh(18);
+    }
+    .tableboxwork{
+      flex:1;
+      margin-top:vh(6)
     }
   
 }

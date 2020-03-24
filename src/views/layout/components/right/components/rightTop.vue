@@ -4,21 +4,21 @@
     <div class="roles">
       <div class="rloes-box1">
         <div class="left-role">
-          <img src="" alt="" srcset="">
+          <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">投放报警</span>
         </div>
-        <img src="" alt="" srcset="">
+        <img class="gzimg" src="../../../../../assets/image/gz1.png">
       </div>
       <div class="rloes-box1">
         <div class="left-role">
-          <img src="" alt="" srcset="">
+          <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">区域预警</span>
         </div>
-        <img src="" alt="" srcset="">
+        <img class="gzimg" src="../../../../../assets/image/gz2.png">
       </div>
       <div class="rloes-box1">
         <div class="left-role">
-          <img src="" alt="" srcset="">
+          <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">违规停放</span>
         </div>
         <img src="" alt="" srcset="">
@@ -54,21 +54,21 @@
     </div>
     <div class="cumulative">
       <div class="cumulativebox">
-        <img src="">
+        <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
           <span class="yujingfont glabfont">2020-03-07 17:51:30</span>
           <span style="margin-top:0.5vh" class="yujingfont glabfont">哈罗 连续5天每天增量200辆以上</span>
         </div>
       </div>
       <div class=" cumulativebox">
-        <img src="">
+        <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
           <span class="yujingfont glabfont">2020-03-07 17:51:12</span>
           <span style="margin-top:0.5vh" class="yujingfont glabfont">潍坊新村街道 上限预警</span>
         </div>
       </div>
       <div class="cumulativebox">
-        <img src="">
+        <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
           <span class="yujingfont glabfont">2020-03-07 08:00:00</span>
           <span style="margin-top:0.5vh" class="yujingfont glabfont">陆家嘴环路禁区  禁停区违停</span>
@@ -86,7 +86,7 @@
         <div class="right-list">
           <span class="gont1 glabfont">昨日街道派单排名</span>
           <img src="../../../../../assets/image/paiming.png">
-          <div>
+          <div class="font2">
             <span class="gont2 glabfont">花木</span>
             <span class="gont2 glabfont">陆家嘴</span>
             <span class="gont2 glabfont">潍坊新村</span>
@@ -149,10 +149,21 @@ export default class rightTop extends Vue {
         .left-role{
           display:flex;
           justify-content: flex-start;
+          align-items: center;
+          .lbimg{
+            width:vw(12);
+            height:vh(12);
+            margin:0 vw(4);
+          }
           .rolefont{
             color:#65C6FC;
             font-size:vw(10);
           }
+        }
+        .gzimg{
+          width:vw(57);
+          height:vh(15);
+          margin-right:vw(4);
         }
       }
     }
@@ -204,10 +215,8 @@ export default class rightTop extends Vue {
       }
       .right-list{
         flex:1;
-        border:1px solid red;
         display: flex;
         flex-direction: column; 
-        justify-content: center;
         align-items: center;
         span{
           color:#ffffff;
@@ -215,10 +224,14 @@ export default class rightTop extends Vue {
         img{
           width: vw(100);
           height: vh(50);
-          margin:vh(5) 0;
+          // margin:vh(5) 0;
         }
         .gont1{
           font-size: vw(11);
+          margin-bottom:vh(16)
+        }
+        .font2{
+          margin-top:vh(10)
         }
         .gont2{
           font-size: vw(10);

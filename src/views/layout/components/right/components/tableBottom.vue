@@ -9,7 +9,7 @@
         <div class="thead thead5"><span class="glabfont">状态</span></div>
     </div>
     <div class="tablebody">
-        <div class="swiper-container" id="swiper1">
+        <div class="swiper-container" id="swipertable">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"
                     v-for="(iteam,index) in findVisible"
@@ -51,7 +51,7 @@
     }
 
     private initSwipertable(): void {
-       this.swipertable = new Swiper("#swiper1", {
+       this.swipertable = new Swiper("#swipertable", {
                 loop: true, // 循环模式选项
                 direction: 'vertical',
                 slidesPerView: 2,
@@ -60,12 +60,7 @@
                 autoplay: true,
                 //preventLinksPropagation: false,  // 阻止点击事件冒泡
                 observer: true, //修改swiper自己或子元素时，自动初始化swiper
-                observeParents: true, //修改swiper的父元素时，自动初始化swiper
-                // onSlideChangeEnd: (swiper :any)=>{
-                // 　　　swiper.update();  
-                //    this.swipertable.startAutoplay();
-                // 　　   this.swipertable.reLoop();  
-                // },
+                observeParents: true //修改swiper的父元素时，自动初始化swiper
 
             });
 
@@ -209,14 +204,14 @@
                           width:90%;
                           height:vh(14);
                           line-height:vh(14);
-                          background: url("../../../../assets/image/yichuli.png") no-repeat;
+                          background: url("../../../../../assets/image/yichuli.png") no-repeat;
                           background-size: 100% 100%;
                         }
                         .clz{
                           width:90%;
                           height:vh(14);
                           line-height:vh(14);
-                          background: url("../../../../assets/image/clz.png") no-repeat;
+                          background: url("../../../../../assets/image/clz.png") no-repeat;
                           background-size: 100% 100%;
                         }
                     }
