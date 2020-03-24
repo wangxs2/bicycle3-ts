@@ -3,7 +3,7 @@
     <div class="center-top" id="mapContainer" ref="fullScreenTarget">
       <!-- 全屏按钮 S -->
       <div class="full-screen-btn" @click="fullScreen">
-        <i class="iconfont icon-quanping1"></i>
+        <img src="../../../../assets/image/qunping.png">
       </div>
       <!-- 全屏按钮 E -->
 
@@ -41,6 +41,12 @@
       </div>
     </transition>
     <!-- 设置内容 E -->
+
+     <!-- 禁停区详情 S --> 
+    <transition name="fade">
+      <forbid-info v-if="ForbidName !== ''" @close="ForbidName = ''" :params="ForbidData[ForbidName]"></forbid-info>
+    </transition>
+    <!-- 禁停区详情 E -->
 
     <!-- 工单图例 S -->
     <transition name="fade">

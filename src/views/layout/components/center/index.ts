@@ -1,7 +1,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import slideshow from '@/component/slideshow/index.vue';
 import centerBottom from './centerBottom.vue';
+import forbidInfo from './forbidInfo.vue';
 import screenfull from 'screenfull';
+const virsuData = require('./virsu.json');
 const fullObj: any = screenfull; // 全屏实例
 import moment from 'moment';
 import MyMap from './map';
@@ -20,6 +22,7 @@ interface DataFormat {
   activeRate?: number; // 活跃率
   warningFlag?: number; // 预警状态
   companyCode?: string; // 预警状态
+  [call: string]: any,
 }
 
 import borderBlock from '@/component/borderBlock/index.vue';
@@ -28,11 +31,13 @@ import borderBlock from '@/component/borderBlock/index.vue';
     centerBottom,
     borderBlock,
     slideshow,
+    forbidInfo
   },
 })
 
 export default class center extends Vue {
   private settingShow: boolean = true; // 设置是否打开
+  private Forbidtype: number = 0; // 加载次数
   public pageConfig: any;
   // 是否显示图例
   private isShowLegend: boolean = true;
@@ -132,17 +137,20 @@ export default class center extends Vue {
   // 定时器保存
   private timeoutObjs: any = {};
   private loadNum: number = 0; // 加载次数
+
+
+
   // 打开弹窗记录街镇名称
   private openTownName: string = '';
-    // 单车曲线是否展示
-    private isBicyTrend: boolean = false
+  // 单车曲线是否展示
+  private isBicyTrend: boolean = false
   // 十五天单车曲线数据
   private bicyActiveData: any = {};
   private cityPointData: any = {}; // 市级点数据
   private areaPointData: any = {}; // 区级点数据
 
-    // 工单轮播配置
-    private workOrderDisposeOptions: any = null;
+  // 工单轮播配置
+  private workOrderDisposeOptions: any = null;
 
   // 治理轮循
   private roundRobinData: any[] = [];
@@ -152,8 +160,8 @@ export default class center extends Vue {
 
   // 工单处理数据
   private workOrderDisposeData: any = null;
-   // 点覆盖添加的顺序
-   private pointMarkerIndex: number = 0;
+  // 点覆盖添加的顺序
+  private pointMarkerIndex: number = 0;
   // 当前选中区域的单车区域数据
   private nowBicyTrendData: any = null;
   private selectEnterpriseCode: string = 'all'; // 选择的企业编码
@@ -164,13 +172,13 @@ export default class center extends Vue {
   private msgconcat: string = "今日市民热线投诉工单（6条）";
   // 区级别 按三家企业分数据
   private townCompanyData: any = null;
-    // 不同状态的工单数据 点击图例用
+  // 不同状态的工单数据 点击图例用
   private sheetWorkOrder: any[] = [];
   private legendData: Array<{ icon: any; name: string }> = [
-    {
-      icon: require(`../../../../assets/image/icon_1@3x.png`),
-      name: '防疫重点区',
-    },
+    // {
+    //   icon: require(`../../../../assets/image/icon_1@3x.png`),
+    //   name: '防疫重点区',
+    // },
     {
       icon: require(`../../../../assets/image/icon_1@3x.png`),
       name: '自检',
@@ -197,8 +205,8 @@ export default class center extends Vue {
 
   // 是否显示工单详情
   private isShowWorkOrderDispose: boolean = false;
-   // 禁停区数据
-   private ForbidData: any = {};
+  // 禁停区数据
+  private ForbidData: any = {};
   // 是否显示禁停区
   private isForbid: boolean = true;
   // 企业数据
@@ -243,22 +251,25 @@ export default class center extends Vue {
       name: '单车治理',
     },
     {
-      state: false,
+      state: true,
       name: '重点区违停',
     },
     {
-      state: false,
+      state: true,
       name: '防疫重点区',
     },
   ];
   public mounted() {
+    console.log(virsuData)
     myMap = new MyMap({ el: 'mapContainer' });
     this.getBicyClePosition();
+    this.getVirus();
+    this.getkeyarea()
     this.getTownBoundary();
     this.getForbid();
     this.getAreaIdAndDate();
     // 监听全屏事件
-    fullObj.on('change', (e:any) => {
+    fullObj.on('change', (e: any) => {
       if (e.target.className === 'center-top' && fullObj.isFullscreen) {
         window.document.documentElement.setAttribute('data-theme', 'mapFull');
       } else {
@@ -268,15 +279,15 @@ export default class center extends Vue {
       this.$Bus.$emit('updateScreen');
     });
   }
-   // 全屏
-   public fullScreen(): void {
+  // 全屏
+  public fullScreen(): void {
     if (fullObj.enabled) {
       fullObj.toggle(this.$refs.fullScreenTarget);
     }
   }
 
-   // 禁停区
-   public getForbid(): void {
+  // 禁停区
+  public getForbid(): void {
     const nowTime: string = moment().format('YYYY-MM-DD');
     API.getForbid({
       startTime: nowTime + ' 00:00:00',
@@ -287,7 +298,7 @@ export default class center extends Vue {
           item.geom = this.FormatGolygon(item.polygonGeom);
           if (this.ForbidData[item.regionName]) {
             // 更新
-            myMap.upDataForbid(item);
+            myMap.upDataForbid(item,1);
           } else {
             // 添加
             myMap.addOverlayGroup(
@@ -301,6 +312,7 @@ export default class center extends Vue {
           this.ForbidData[item.regionName] = item;
         });
         myMap.forbidGroupEvent((data: any) => {
+          console.log(data)
           this.ForbidName = data;
         });
       }
@@ -310,9 +322,64 @@ export default class center extends Vue {
     });
   }
 
-    /**
-   * 选择设置项
-   */
+  //防疫区
+
+  public getVirus(): void {
+    virsuData.forEach((item: any) => {
+      item.geom = this.FormatGolygon(item.polygonGeom);
+      if (this.ForbidData[item.regionName]) {
+        // 更新
+        myMap.upDataForbid(item,2);
+      } else {
+        // 添加
+        myMap.addOverlayGroup(
+          'virusGroup',
+          myMap.createVirus(
+            item,
+            this.isForbid,
+          ),
+        );
+      }
+      this.ForbidData[item.regionName] = item;
+    });
+    myMap.forbidGroupEvent1((data: any) => {
+      console.log(data)
+      this.ForbidName = data;
+    });
+  }
+
+  // 重点区
+  public getkeyarea(): void {
+    API.getKeyAreas().then((res: any) => {
+      console.log(res.data)
+      res.data.forEach((item: any) => {
+        item.geom = this.FormatGolygon(item.polygonGeom);
+        myMap.addOverlayGroup(
+          'keyareaGroup',
+          myMap.creatkeyarea(
+            item,
+            this.isForbid,
+          ),
+        );
+        this.ForbidData[item.regionName] = item;
+      });
+
+      myMap.forbidGroupEvent2((data: any) => {
+        console.log(data)
+        this.ForbidName = data;
+        
+      });
+
+      // 定时任务
+      // this.timeoutEvent('getForbid');
+    });
+  }
+
+
+
+  /**
+ * 选择设置项
+ */
   private selectSetItem(data: any): void {
     data.state = !data.state;
 
@@ -335,30 +402,13 @@ export default class center extends Vue {
         this.isShowLegend = data.state;
         myMap.isWorkGroup(data.state);
         break;
-      case '治理轮循':
-        // this.$nextTick(function() {
-        //   this.roundRobinOptions = {
-        //     autoplay: true, // 可选选项，自动滑动
-        //     simulateTouch: false,
-        //     observer: true, // 修改swiper自己或子元素时，自动初始化swiper
-        //     observeParents: true, // 修改swiper的父元素时，自动初始化swiper
-        //     $isPage: true,
-        //     $isNav: true,
-        //     pagination: {
-        //       el: '.workOrders .swiper-pagination',
-        //       clickable: true,
-        //     },
-        //     navigation: {
-        //       nextEl: '.workOrders .swiper-button-next',
-        //       prevEl: '.workOrders .swiper-button-prev',
-        //     },
-        //     loop: true,
-        //   };
-        //   this.isShowRoundRobinData = data.state;
-        // });
+      case '防疫重点区':
+        this.ForbidName = '';
+        myMap.isvirusGroup(data.state);
         break;
-      case '蓝牙嗅探':
-        // myMap.isStationPoint(data.state);
+      case '重点区违停':
+        this.ForbidName = '';
+        myMap.iskeyareaGroup(data.state);
         break;
       case '人员位置':
         // this.isShowStaffLegend = data.state;
@@ -374,16 +424,16 @@ export default class center extends Vue {
    * 选择图例获取 对应状态工单
    */
   private showLegendTable(index: number | string) {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       this.selectLegend = index;
       this.isShowLegendTab = true;
     });
   }
 
 
-   /**
-   * 分拣不同状态的工单
-   */
+  /**
+  * 分拣不同状态的工单
+  */
   private sortOutWorkOrder(res: any): void {
     // 判断工单的类型
     let item: any[] = [];
@@ -490,11 +540,11 @@ export default class center extends Vue {
   }
 
 
-   /**
-   * 处理显示工单详情
-   * @param {String} code 工单编码
-   * @param {Number} type 返回类型 1工单详情 2治理轮循
-   */
+  /**
+  * 处理显示工单详情
+  * @param {String} code 工单编码
+  * @param {Number} type 返回类型 1工单详情 2治理轮循
+  */
   private disposeWorkOrderDetails(code: string, type: number) {
     const data: any = this.workOrderObjData[code];
 
@@ -587,7 +637,7 @@ export default class center extends Vue {
       } else {
         // 治理轮循的图片单张
         roundRobinimg =
-        'http://106.14.198.128:18088/' +
+          'http://106.14.198.128:18088/' +
           data.voList[data.voList.length - 1].dispatchAfterPhotoURLs[0];
       }
     }
@@ -602,7 +652,7 @@ export default class center extends Vue {
         detailsTexts, // 处理记录
       };
 
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.workOrderDisposeOptions = {
           autoplay: true, // 可选选项，自动滑动
           simulateTouch: false,
@@ -621,9 +671,9 @@ export default class center extends Vue {
   }
 
 
-   /**
-   * 获取指定街道/区单车治理情况
-   */
+  /**
+  * 获取指定街道/区单车治理情况
+  */
   private getAreaIdAndDate(): void {
     const startTime: string = moment().format('YYYY-MM-DD');
     // let startTime = '2019-03-18'
@@ -649,12 +699,12 @@ export default class center extends Vue {
   }
 
 
-    /**
-   * 判断工单状态
-   * @param {String} code 工单编号
-   * @param {Number} status 工单状态
-   * @return {Object} 对应工单的状态
-   */
+  /**
+ * 判断工单状态
+ * @param {String} code 工单编号
+ * @param {Number} status 工单状态
+ * @return {Object} 对应工单的状态
+ */
   private judgeStatus(code: string, status: number): any {
     let icon: any = null;
     let nowStatus: string = '';
@@ -777,19 +827,21 @@ export default class center extends Vue {
   // 定时刷新任务
   public timeoutEvent(call: any, time: number = 600000): void {
     // 先清除之前的请求
+    // 先清除之前的请求
+
     if (this.timeoutObjs[call]) {
       clearTimeout(this.timeoutObjs[call]);
       this.timeoutObjs[call] = null;
     }
 
     this.timeoutObjs[call] = setTimeout(() => {
-      this.timeoutObjs[call]();
+      this[call]();
     }, time);
   }
-   /**
-   * 单车位置 热力图
-   * @param {String} companyCode 单车企业编码
-   */
+  /**
+  * 单车位置 热力图
+  * @param {String} companyCode 单车企业编码
+  */
   private getBicyClePosition(companyCode?: string): void {
     API.getBicyClePosition(companyCode === 'all' ? '' : companyCode).then(
       (res: any): void => {
@@ -801,9 +853,9 @@ export default class center extends Vue {
   }
 
 
-   /**
-   * 获取中心点 边界
-   */
+  /**
+  * 获取中心点 边界
+  */
   private getTownBoundary(): void {
     Promise.all([API.getDistrictBoundary(), API.getAreaBoundary()]).then(
       (res: any) => {
@@ -851,8 +903,8 @@ export default class center extends Vue {
   }
 
 
-   // 处理数据 按企业分
-   private disCompanyData(
+  // 处理数据 按企业分
+  private disCompanyData(
     city: DataFormat[],
     town: DataFormat[],
   ): any[] {
@@ -900,8 +952,8 @@ export default class center extends Vue {
     return [cityData, townData];
   }
 
-   // 处理市的数据
-   private disCityData(key: string): void {
+  // 处理市的数据
+  private disCityData(key: string): void {
     const CityData: DataFormat = this.cityCompanyData[key];
 
     // 有修改 没有就添加
@@ -927,17 +979,17 @@ export default class center extends Vue {
     myMap.initShade(border);
   }
 
-   // 处理区级边界
-   private disAreaBorder(AreaData: DataFormat[]): void {
+  // 处理区级边界
+  private disAreaBorder(AreaData: DataFormat[]): void {
     let border: Array<[]> = []; // 边界
     const overlays: Array<{}> = []; // 覆盖物集合
     AreaData.forEach(
       (item: DataFormat, index: number): void => {
-        if(item.polygonGeom!==undefined){
+        if (item.polygonGeom !== undefined) {
           border = this.FormatGolygon(item.polygonGeom);
           overlays.push(myMap.createAreaBorder(border, item.name));
         }
-        
+
       },
     );
 
@@ -947,7 +999,7 @@ export default class center extends Vue {
   // 处理区级点
   private disAreaData(key: string): void {
     const data: any[] = this.townCompanyData[key];
-    
+
     data.forEach((item: any) => {
       if (this.areaPointData[item.name]) {
         myMap.upDateAreaPoint(item.name, item);
@@ -962,8 +1014,8 @@ export default class center extends Vue {
     myMap.AreaPointEvent(this.openFifteenWin);
   }
 
-   // 打开街镇 十五天趋势弹窗
-   private openFifteenWin(name: string): void {
+  // 打开街镇 十五天趋势弹窗
+  private openFifteenWin(name: string): void {
     const fifteenData: any = (this as any).bicyActiveData[name];
     this.openTownName = fifteenData.name = name;
 
@@ -981,5 +1033,5 @@ export default class center extends Vue {
     return arrGroup(polygonGeom, 2);
   }
 
-  
+
 }

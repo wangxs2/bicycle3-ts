@@ -7,9 +7,15 @@
         </div>
         <div class="right-list">
           <span class="gont1 glabfont">企业工单处置昨日得分</span>
-          <img src="../../../../../assets/image/paiming.png">
-          <div class="">
-
+          <div class="fractionBox">
+            <div class="imgfraction1">
+              <span class="fonsinum1">89</span>
+              <span class="fonsinum2">分</span>
+            </div>
+            <div class="imgfraction1 imgfraction2">
+              <span class="fonsinum1">93</span>
+              <span class="fonsinum2">分</span>
+            </div>
           </div>
           <div class="numde">
             <span class="gont2 glabfont">哈罗</span>
@@ -84,6 +90,44 @@ export default class rightTop extends Vue {
         flex-direction: column; 
         justify-content: center;
         align-items: center;
+        .fractionBox{
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 vw(20);
+          .imgfraction1{
+            width: vw(50.8);
+            height: vh(50.9);
+            background: url("../../../../../assets/image/-s-image_1.png");
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: vh(11);
+            margin-bottom: vh(5);
+            .fonsinum1{
+              font-size: vw(21);
+              color:rgba(255,255,255,1);
+            }
+            .fonsinum2{
+              font-size: vw(10);
+              color:rgba(255,255,255,1);
+            }
+
+          }
+          .imgfraction2{
+            background: url("../../../../../assets/image/-s-image_2.png");
+            background-size: 100% 100%;
+          }
+        }
+        .numde{
+           display: flex;
+          justify-content: space-between;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 vw(35);
+        }
         span{
           color:#ffffff;
         }

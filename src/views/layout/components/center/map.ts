@@ -9,7 +9,8 @@ class MyMap {
   public heatmap: any = null; // 热力图
   public provincePointGroup: any = new AMap.OverlayGroup(); // 省级点集合 上海市
   public provinceBorderGroup: any = new AMap.OverlayGroup(); // 省级边界集合 上海市
-
+  public virusGroup: any = new AMap.OverlayGroup(); // 防疫重点区
+  public keyareaGroup: any = new AMap.OverlayGroup(); // 重点区违停
   public cityPointGroup: any = new AMap.OverlayGroup(); // 市级点集合 徐汇区
   public workOrderGroup: any = new AMap.OverlayGroup(); // 工单集合
   public workEvent: any[] = []; // 工单集合的事件
@@ -66,6 +67,8 @@ class MyMap {
       this.provincePointGroup,
       this.areaPointGroup,
       this.forbidGroup,
+      this.virusGroup,
+      this.keyareaGroup,
     ]);
   }
 
@@ -81,6 +84,37 @@ class MyMap {
     return (this as any)[item];
   }
 
+  //重点区违停
+  
+
+  public creatkeyarea(data: any, flag: boolean): object {
+    const polygon: any =  new AMap.Polygon({
+      path: data.geom, // 点集合
+      fillColor: 'red', // 多边形填充颜色
+      fillOpacity: 0.2, // 填充颜色
+      strokeColor: 'yellow', // 线条颜色
+      strokeWeight: 2, // 线条宽度，默认为 1
+      cursor: 'pointer',
+      extData: data,
+    });
+    flag ? polygon.show() : polygon.hide();
+    return polygon;
+  }
+
+    // 创建防疫区
+    public createVirus(data: any, flag: boolean): object {
+      const polygon: any =  new AMap.Polygon({
+        path: data.geom, // 点集合
+        fillColor: 'red', // 多边形填充颜色
+        fillOpacity: 0.2, // 填充颜色
+        strokeColor: '#00fcff', // 线条颜色
+        strokeWeight: 2, // 线条宽度，默认为 1
+        cursor: 'pointer',
+        extData: data,
+      });
+      flag ? polygon.show() : polygon.hide();
+      return polygon;
+    }
 
     // 创建禁停区
     public createForbid(data: any, flag: boolean): object {
@@ -98,8 +132,17 @@ class MyMap {
     }
   
     // 修改禁停区
-    public upDataForbid(data: any): void {
-      const target = this.forbidGroup.getOverlays().find(
+    public upDataForbid(data: any,type:number): void {
+      let group
+      console.log(type)
+      if(type==1){
+        group=this.forbidGroup
+      }else if(type==2){
+        group=this.virusGroup
+      }else{
+        group=this.keyareaGroup
+      }
+      const target = group.getOverlays().find(
         (item: any): boolean => {
           return item.he.extData.regionName === data.regionName;
         },
@@ -446,6 +489,16 @@ class MyMap {
     flag ? this.forbidGroup.show() : this.forbidGroup.hide();
   }
 
+   // 是否显示人员位置点
+   public isvirusGroup(flag: boolean): void {
+    flag ? this.virusGroup.show() : this.virusGroup.hide();
+  }
+
+   // 是否显示人员位置点
+   public iskeyareaGroup(flag: boolean): void {
+    flag ? this.keyareaGroup.show() : this.keyareaGroup.hide();
+  }
+
   // 禁停区事件点
   public forbidGroupEvent(callback: any): void {
     // 事件先清除再添加
@@ -457,6 +510,49 @@ class MyMap {
 
     this.forbidEvent.push(
       AMap.event.addListener(this.forbidGroup, 'click', (e: any) => {
+        console.log(e)
+        const data: string = e.target.getExtData().regionName;
+
+        if (data) {
+          callback(data);
+        }
+      }),
+    );
+  }
+
+  // 禁停区事件点
+  public forbidGroupEvent1(callback: any): void {
+    // 事件先清除再添加
+    this.forbidEvent.forEach((item: any) => {
+      AMap.event.removeListener(item);
+    });
+
+    this.forbidEvent = [];
+
+    this.forbidEvent.push(
+      AMap.event.addListener(this.virusGroup, 'click', (e: any) => {
+        console.log(e)
+        const data: string = e.target.getExtData().regionName;
+
+        if (data) {
+          callback(data);
+        }
+      }),
+    );
+  }
+
+   // 禁停区事件点
+   public forbidGroupEvent2(callback: any): void {
+    // 事件先清除再添加
+    this.forbidEvent.forEach((item: any) => {
+      AMap.event.removeListener(item);
+    });
+
+    this.forbidEvent = [];
+
+    this.forbidEvent.push(
+      AMap.event.addListener(this.keyareaGroup, 'click', (e: any) => {
+        console.log(e)
         const data: string = e.target.getExtData().regionName;
 
         if (data) {
