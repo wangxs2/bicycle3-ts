@@ -224,7 +224,10 @@ export default class leftTop extends Vue {
       display: flex;
       box-sizing: border-box;
     margin: vh(6.1) vw(0);
+    display: flex;
+        justify-content: space-between;
       .sign1{
+        
         box-sizing: border-box;
         padding: vh(6) vw(14);
         padding-right: vw(25);
@@ -253,12 +256,13 @@ export default class leftTop extends Vue {
       }
       .sign3{
         box-sizing: border-box;
-        padding: vh(10.9) vw(0) vh(7.8) vw(0);
+        padding: vh(10.9) vw(10) vh(7.8) vw(10);
         border:vw(1) solid rgba(12,58,111,1);
         border-radius:0px vw(9) vw(9) vw(9);
         margin-left: vw(11.4);
         display: flex;
         justify-content: space-between;
+        flex:1;
         .sign3-left{
           display: flex;
           align-items: center;

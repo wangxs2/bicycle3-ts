@@ -100,7 +100,7 @@
           class="workOrder-details-close iconfont iconguanbi"
           @click="isShowWorkOrderDispose = false"
         ></div>
-        <div class="details-status">{{workOrderDisposeData.nowStatus}}</div>
+        <div class="details-status"><span class="glabfont">{{workOrderDisposeData.nowStatus}}</span></div>
         <div class="imgs">
           <slideshow
             v-if="isShowWorkOrderDispose"
@@ -114,18 +114,18 @@
             >
               <div class="img-item">
                 <img :src="item.url">
-                <div class="img-watermark">{{item.text}}</div>
+                <div class="img-watermark"><span class="glabfont">{{item.text}}</span></div>
               </div>
             </div>
           </slideshow>
         </div>
         <div class="details-text">
-          <p v-for="(item,index) in workOrderDisposeData.detailsTexts" :key="index">
-            <span>{{item.key}}：</span>
-            <span>{{item.val}}</span>
+          <p style="text-align:left;margin-bottom:0.5vh" v-for="(item,index) in workOrderDisposeData.detailsTexts" :key="index">
+            <span class="glabfont">{{item.key}}：</span>
+            <span class="glabfont">{{item.val}}</span>
           </p>
         </div>
-        <div class="dispose-status">{{workOrderDisposeData.despatchStatus}}</div>
+        <div class="dispose-status"><span class="glabfont">{{workOrderDisposeData.despatchStatus}}</span></div>
       </div>
     </transition>
     <!-- 工单详情 E -->

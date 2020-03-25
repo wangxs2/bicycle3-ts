@@ -33,7 +33,7 @@ export default {
    * 获取重点区域的活跃度
    */
   getKeyArea(): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/position/findChildOrgActiveRange/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
+    return http('http://106.14.198.128:18181/sharebikesclean/position/findChildOrgActiveRange/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
@@ -42,7 +42,7 @@ export default {
    * @param {Date} endTime 结束时间
    */
   getPeak(startTime: string, endTime: string): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/kpHour/calOrgKeyRegionHotBicycleNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
+    return http('http://106.14.198.128:18181/sharebikesclean/kpHour/calOrgKeyRegionHotBicycleNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         startTime,
         endTime,
@@ -56,7 +56,7 @@ export default {
    * @param {Date} endDay 结束时间
    */
   getWorkOrderDetails(beginDay: string, endDay: string): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/bikeDispatch/dispatchList/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
+    return http('http://106.14.198.128:18181/sharebikesclean/bikeDispatch/dispatchList/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         beginDay,
         endDay,
@@ -68,21 +68,21 @@ export default {
    * 获取区域边界及中心点坐标（高德坐标）
    */
   getDistrictBoundary(): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
+    return http('http://106.14.198.128:18181/sharebikesclean/boundary/findOrgBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
    * 获取街镇边界及中心点坐标
    */
   getAreaBoundary(): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgChildBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
+    return http('http://106.14.198.128:18181/sharebikesclean/boundary/findOrgChildBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
   /**
    * 单车位置（热力图）
    */
   getBicyClePosition(companyCode: string = ''): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/position/findAllOrgBikeHotGraph/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
+    return http('http://106.14.198.128:18181/sharebikesclean/position/findAllOrgBikeHotGraph/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         companyCode,
       },
@@ -111,7 +111,7 @@ export default {
     type: string = '',
     sheetStatus: string = '',
   ): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/bikeDispatch/findBikeDispatchByAreaIdAndDate/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
+    return http('http://106.14.198.128:18181/sharebikesclean/bikeDispatch/findBikeDispatchByAreaIdAndDate/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params: {
         startDate,
         endDate,
@@ -219,7 +219,7 @@ export default {
    * 获取禁停区数据
    */
   getForbid(params: any): Promise<{}> {
-    return http('http://106.14.198.128:18091/sharebikesclean/boundary/findOrgJtRegionBoundaryAndBikeNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
+    return http('http://106.14.198.128:18181/sharebikesclean/boundary/findOrgJtRegionBoundaryAndBikeNum/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' , {
       params,
     });
   },

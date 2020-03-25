@@ -337,6 +337,8 @@ export default class rightTop extends Vue {
           margin-bottom:vh(16)
         }
         .font2{
+          display:flex;
+          justify-content: space-between;
           margin-top:vh(10)
         }
         .gont2{

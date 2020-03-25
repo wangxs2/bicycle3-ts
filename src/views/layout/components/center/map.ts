@@ -194,7 +194,7 @@ class MyMap {
   public setContent(row: any, state: number = -1): string {
     return `<div class="adminPoint" style="font-size:16px;font-weight:bold;background-color: ${this.getColor(
       state,
-    )};opacity: 0.8;color:#ffffff; height: 130px; width: 130px; border-radius: 50%;">
+    )};opacity: 0.8;color:#ffffff;width:130px;height:208px;border-radius: 50%;">
         <div style="width:100%;
                     height:100%;
                     display:flex;
@@ -242,12 +242,12 @@ class MyMap {
  public createWorkPoint(data: any, icon: string): object {
   const marker: object = new AMap.Marker({
     position: new AMap.LngLat(data.lng, data.lat),
-    offset: new AMap.Pixel(-11, -11),
+    offset: new AMap.Pixel(-11.5, -18.4),
     topWhenClick: true,
     icon: new AMap.Icon({
-      size: new AMap.Size(22, 22),
+      size: new AMap.Size(23,36.8),
       image: icon,
-      imageSize: new AMap.Size(22, 22),
+      imageSize: new AMap.Size(23,36.8),
     }), // 添加 Icon 图标 URL
     extData: { code: data.sheetCode },
   });

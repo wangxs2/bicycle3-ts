@@ -31,9 +31,10 @@ export default class MyEcharts {
     const option: any = {
       color:params.color,
       grid: {
-        top: '30',
-        bottom: '20',
+        top: '40',
+        bottom: '30',
         right:"8",
+        left:"84",
       },
       tooltip: {
         trigger: 'axis',
@@ -42,17 +43,24 @@ export default class MyEcharts {
         show: true,
         right : '8',
         textStyle:{
-          color:"#C3CAD9"
+          color:"#C3CAD9",
+          fontSize : 20    //更改坐标轴文字大小
         }
       },
       textStyle: {
         color: '#C3CAD9',
+        fontSize : 20     //更改坐标轴文字大小
       },
       xAxis: {
         type: 'category',
         nameTextStyle: {
           verticalAlign: 'bottom',
           color: '#C3CAD9',
+          fontSize : 20 
+        },
+        axisLabel: {
+          show:true,
+          fontSize : 20   //调整数值改变倾斜的幅度（范围-90到90）
         },
         axisLine: {
           lineStyle: {
@@ -77,6 +85,10 @@ export default class MyEcharts {
           lineStyle: {
             color: '#12559A',
           },
+        },
+        axisLabel: {
+          show:true,
+          fontSize : 20   //调整数值改变倾斜的幅度（范围-90到90）
         },
         axisTick: {
           show: false,

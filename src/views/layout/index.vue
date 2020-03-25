@@ -59,6 +59,10 @@ export default class layout extends Vue {
   display: flex;
   flex-direction: column;
   background: #04194b;
+    .adminPoint{
+        width: vw(230) !important;
+        height: vh(230) !important;
+      }
   .header {
     width: 100%;
     height: vh(51);
@@ -88,6 +92,7 @@ export default class layout extends Vue {
       @include vw2(width, 731.43);
       @include vw2(margin-left, 11.43);
       @include vw2(margin-right, 11.43);
+     
     }
     .right {
       flex: 1;

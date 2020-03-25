@@ -20,12 +20,12 @@
           <span class="gont1 glabfont">企业工单处置昨日得分</span>
           <div class="fractionBox">
             <div class="imgfraction1">
-              <span class="fonsinum1">89</span>
-              <span class="fonsinum2">分</span>
+              <span class="fonsinum1 glabfont">89</span>
+              <span class="fonsinum2 glabfont">分</span>
             </div>
             <div class="imgfraction1 imgfraction2">
-              <span class="fonsinum1">93</span>
-              <span class="fonsinum2">分</span>
+              <span class="fonsinum1 glabfont">93</span>
+              <span class="fonsinum2 glabfont">分</span>
             </div>
           </div>
           <div class="numde">
@@ -45,7 +45,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
 // import echartsLiquidfill from 'echarts-liquidfill'
 import tableBottom from './tableBottom.vue';
-import Echart from './myEchart';
+import Echart2 from './myEchart1';
 let MyEchart3: any = null; // 自定义echarts
 @Component({
   components: {
@@ -58,6 +58,8 @@ export default class rightTop extends Vue {
   {
     el:"company",
     x:["03-04","03-05","03-06","03-07","03-08","03-09","03-10"],
+    data1:[88, 90, 88, 80, 70, 96, 86],
+    data2:[88, 90, 88, 80, 70, 96, 86],
 
   };
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
@@ -65,14 +67,20 @@ export default class rightTop extends Vue {
   private msgvide1: string = "平台监管工单";
   
   public mounted() {
-    // this.$nextTick(function() {
-    //   MyEchart3 = new Echart();
-    //   MyEchart3.echartsOption1(this.companydata);
-    // })
-     MyEchart3 = new Echart();
-      MyEchart3.echartsOption1(this.companydata);
     
-   
+    this.$nextTick(function() {
+        this.getnumEchart()
+    })
+  }
+
+   private getnumEchart(): void {
+        MyEchart3 = new Echart2();
+        MyEchart3.echartsOption1(this.companydata);
+    
+  }
+  public created(){
+    // MyEchart3 = new Echart2();
+    // MyEchart3.echartsOption1(this.companydata);
   }
 
   

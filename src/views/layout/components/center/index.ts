@@ -169,7 +169,7 @@ export default class center extends Vue {
 
   // 市级别 按三家企业分数据
   private cityCompanyData: any = null;
-  private msgconcat: string = "今日市民热线投诉工单（6条）";
+  private msgconcat: string = "今日市民热线投诉工单";
   // 区级别 按三家企业分数据
   private townCompanyData: any = null;
   // 不同状态的工单数据 点击图例用
@@ -239,7 +239,7 @@ export default class center extends Vue {
       name: '夜间模式',
     },
     {
-      state: false,
+      state: true,
       name: '街镇信息',
     },
     {
@@ -969,7 +969,7 @@ export default class center extends Vue {
     // 边界 遮罩
     const border: Array<[]> = this.FormatGolygon(cityData.polygonGeom);
 
-    myMap.setZoomAndCenter(cityData.gisLevel, center);
+    myMap.setZoomAndCenter(14, center);
     myMap.initShade(border);
   }
 
@@ -1001,7 +1001,7 @@ export default class center extends Vue {
         this.areaPointData[item.name] = item;
         myMap
           .addOverlayGroup('areaPointGroup', myMap.createAreaPoint(item))
-          .hide();
+          .show();
       }
     });
 

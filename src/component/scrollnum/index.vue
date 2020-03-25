@@ -6,16 +6,16 @@
              v-for="(iteam,index) in datanum"
              :key="index">
           <ul :class="iteam==0?'anmationgun':iteam==1?'anmationgun1':iteam==2?'anmationgun2':iteam==3?'anmationgun3':iteam==4?'anmationgun4':iteam==5?'anmationgun5':iteam==6?'anmationgun6':iteam==7?'anmationgun7':iteam==8?'anmationgun8':'anmationgun9'">
-            <li>0</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
+            <li><span class="glabfont">0</span></li>
+            <li><span class="glabfont">1</span></li>
+            <li><span class="glabfont">2</span></li>
+            <li><span class="glabfont">3</span></li>
+            <li><span class="glabfont">4</span></li>
+            <li><span class="glabfont">5</span></li>
+            <li><span class="glabfont">6</span></li>
+            <li><span class="glabfont">7</span></li>
+            <li><span class="glabfont">8</span></li>
+            <li><span class="glabfont">9</span></li>
           </ul>
         </div>
 
@@ -62,7 +62,7 @@ $sumnum: 10s;
       .gundong {
         width: vw(17);
         height: vh(23);
-        border:1px solid #1A4483;
+        border:vh(1) solid #1A4483;
         // border-image:linear-gradient(0deg, rgba(36,196,255,1), rgba(0,87,194,1)) 10 10;
         font-size: vw(18);
         text-align: center;
