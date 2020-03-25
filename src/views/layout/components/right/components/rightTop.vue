@@ -328,8 +328,8 @@ export default class rightTop extends Vue {
           color:#ffffff;
         }
         img{
-          width: vw(100);
-          height: vh(50);
+          width: vw(106);
+          height: vh(53);
           // margin:vh(5) 0;
         }
         .gont1{
