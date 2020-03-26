@@ -5,33 +5,33 @@
      <div class="sign-top">
        <div class="sign1">
          <span class="tit glabfont">运营量(辆)</span>
-         <span class="num glabfont">106226</span>
+         <span class="num glabfont">{{signsData.sumStreetBicycleNum}}</span>
        </div>
        <div class="sign1 sign2">
          <span class="tit glabfont">活跃量(辆)</span>
-         <span style="color:#1EE5AE" class="num glabfont">60081</span>
+         <span style="color:#1EE5AE" class="num glabfont">{{signsData.sumActiveNum}}</span>
        </div>
        <div class="sign3">
          <div class="sign3-left">
            <img src="../../../../../assets/image/07mobike@3x.png">
            <div class="titnum">
              <span class="tit glabfont">运营量(辆)</span>
-             <span class="num glabfont">82550</span>
+             <span class="num glabfont">{{signsData.companyBikeNum[0]}}</span>
            </div>
            <div class="titnum">
              <span class="tit glabfont">活跃量(辆)</span>
-             <span style="color:#1EE5AE" class="num glabfont">44842</span>
+             <span style="color:#1EE5AE" class="num glabfont">{{signsData.companyActiveNum[0]}}</span>
            </div>
          </div>
          <div class="sign3-left sign3-right">
             <img src="../../../../../assets/image/03hellobike@3x.png">
            <div class="titnum">
              <span class="tit glabfont">运营量(辆)</span>
-             <span class="num glabfont">23676</span>
+             <span class="num glabfont">{{signsData.companyBikeNum[1]}}</span>
            </div>
            <div class="titnum">
              <span class="tit glabfont">活跃量(辆)</span>
-             <span style="color:#1EE5AE" class="num glabfont">15239</span>
+             <span style="color:#1EE5AE" class="num glabfont">{{signsData.companyActiveNum[1]}}</span>
            </div>
          </div>
        </div>
@@ -87,6 +87,7 @@ export default class leftTop extends Vue {
   private msgconcat: string = "运行体征";
   private msgmoring: string = "早高峰区域TOP10"; 
   private msgevening: string = "晚高峰区域TOP10"; 
+  private signsData: any = {};
   private activeRange: Array<{}> = [];
     // 早高峰排名数据
   private morningTop: Array<{}> = [];
@@ -127,18 +128,26 @@ export default class leftTop extends Vue {
   }
   public created() {
      this.getPeakRanking();
+     this.getnumEchart()
   }
 
-    // 活跃量 获取数据
+
+
+    // 运行体征 获取数据
   private getnumEchart(): void {
-    echareData.yearNum.forEach((iteam:any)=>{
-      this.shudata.x.push(iteam.createTime)
-      this.shudata.line[0].data.push(iteam.bikeNum)
-      this.shudata.line[1].data.push(iteam.activeNum)
-    })
-    const echData: any=this.shudata
-    MyEchart = new Echart();
-    MyEchart.echartsOption(echData);
+    API.getActiveNum().then(
+      (res: any): void => {
+        this.signsData = cloneObj(res);
+        this.signsData.yearNum.forEach((iteam:any)=>{
+          this.shudata.x.push(iteam.createTime)
+          this.shudata.line[0].data.push(iteam.bikeNum)
+          this.shudata.line[1].data.push(iteam.activeNum)
+        })
+        const echData: any=this.shudata
+        MyEchart = new Echart();
+        MyEchart.echartsOption(echData);
+      },
+    );
     
   }
    // 早晚高峰 获取数据

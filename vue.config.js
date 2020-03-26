@@ -10,7 +10,7 @@ module.exports = {
   lintOnSave: false,
   publicPath: './', // 部署项目路径
   devServer: {
-    port: 8083, // 端口号
+    port: 8213, // 端口号
     open: false, //配置自动启动浏览器
     proxy: {
       '/kindnessplatform': {

@@ -959,7 +959,7 @@ export default class center extends Vue {
         .addOverlayGroup('cityPointGroup', myMap.createCityPoint(CityData))
         .hide();
     }
-    myMap.CityPointEvent();
+    // myMap.CityPointEvent();
   }
 
   // 处理市级边界
@@ -986,14 +986,12 @@ export default class center extends Vue {
 
       },
     );
-
     myMap.addOverlayGroup('areaBorderGroup', overlays).hide();
   }
 
   // 处理区级点
   private disAreaData(key: string): void {
     const data: any[] = this.townCompanyData[key];
-
     data.forEach((item: any) => {
       if (this.areaPointData[item.name]) {
         myMap.upDateAreaPoint(item.name, item);

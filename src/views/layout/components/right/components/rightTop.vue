@@ -100,9 +100,9 @@
           <span class="gont1 glabfont">昨日街道派单排名</span>
           <img src="../../../../../assets/image/paiming.png">
           <div class="font2">
-            <span class="gont2 glabfont">{{threenum[1].name!==undefined?threenum[1].name:''}}</span>
-            <span class="gont2 glabfont">{{threenum[0].name!==undefined?threenum[0].name:''}}</span>
-            <span class="gont2 glabfont">{{threenum[2].name!==undefined?threenum[2].name:''}}</span>
+            <span class="gont2 glabfont">{{topnum1}}</span>
+            <span class="gont2 glabfont">{{topnum2}}</span>
+            <span class="gont2 glabfont">{{topnum3}}</span>
           </div>
         </div>
     </div>
@@ -115,6 +115,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
 import scrollNum from '@/component/scrollnum/index.vue';
 import Echart from './myEchart';
+import { refinedCal, cloneObj } from '@/libs/util.ts';
 import API from '@/api/index';
 
 let MyEchart1: any = null; // 自定义echarts
@@ -134,7 +135,7 @@ export default class rightTop extends Vue {
   };
   
   private allnum1: any =[0];
-  private allnum2: any =[5,3,2,7];
+  private allnum2: any =[5,7,0,0];
   private allnum3: any =[1,4,4];
   private allnum4: any =[0];
   private allnum5: any =[1,5,1];
@@ -142,6 +143,9 @@ export default class rightTop extends Vue {
    private isshowimg: boolean =false;
   
   private threenum: any =[];
+  private topnum1: string ="";
+  private topnum2: string ="";
+  private topnum3: string ="";
   private intelligentData: any ={};
   private msgconcat1: string = "智能发现";
   private msgvide1: string = "街道派单TOP10 (累计历史七天)";
@@ -162,7 +166,17 @@ export default class rightTop extends Vue {
     API.getIntelligent().then(
         (res: any): void => {
           console.log(res)
-          this.intelligentData=res
+          // this.intelligentData=res
+          // const str1:string=this.intelligentData[0].allNum
+          // const str2:string=this.intelligentData[1].allNum
+          // const str3:string=this.intelligentData[2].allNum
+          // console.log(str1)
+          // this.allnum1=(str1).split("")
+          // this.allnum2=(str1).split("")
+          // this.allnum3=(str3).split("")
+          // this.intelligentData
+          // this.allnum1=this.intelligentData
+          // var array=nums.split("");
         }
         
       );
@@ -173,7 +187,11 @@ export default class rightTop extends Vue {
   private getThree(): void {
     API.getTownThree().then(
         (res: any): void => {
-          this.threenum=res
+          this.threenum=cloneObj(res)
+          this.topnum1=this.threenum[1].shortName
+          this.topnum2=this.threenum[0].shortName
+          this.topnum3=this.threenum[2].shortName
+          
         }
         
       );
@@ -193,7 +211,7 @@ export default class rightTop extends Vue {
           //   this.towndata.dataY.push(res[key].num)
           // }
           res.forEach((iteam:any)=>{
-            this.towndata.x.push(iteam.name)
+            this.towndata.x.push(iteam.shortName)
             this.towndata.dataY.push(iteam.num)
           })
           MyEchart1 = new Echart();
@@ -328,8 +346,8 @@ export default class rightTop extends Vue {
           color:#ffffff;
         }
         img{
-          width: vw(106);
-          height: vh(53);
+          width: vw(131);
+          height: vh(58);
           // margin:vh(5) 0;
         }
         .gont1{

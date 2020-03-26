@@ -71,6 +71,11 @@ export default {
     return http('http://106.14.198.128:18181/sharebikesclean/boundary/findOrgBoundary/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
 
+  // 获取左侧运行体征（活跃数和活跃量）
+  getActiveNum(){
+    return http('http://106.14.198.128:18181/sharebikesclean/platform/getBikeNum?orgId=1057' );
+  },
+
   /**
    * 获取街镇边界及中心点坐标
    */
