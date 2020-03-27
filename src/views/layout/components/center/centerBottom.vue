@@ -44,29 +44,23 @@
     private swipertable:any | null=null;
     private findVisible: any =[];
     public created() {
-      this.getWorkOrder();
+      
     }
     public mounted() {
       this.initSwipertable();
+      this.getWorkOrder();
     }
 
     private initSwipertable(): void {
        this.swipertable = new Swiper("#swiper1", {
                 loop: true, // 循环模式选项
                 direction: 'vertical',
-                slidesPerView: 2,
-                slidesPerGroup: 2,
                 mousewheel: true,
-                autoplay: true,
-                //preventLinksPropagation: false,  // 阻止点击事件冒泡
+                autoplay: {
+                  delay: 5000, // 切换时间
+                },
                 observer: true, //修改swiper自己或子元素时，自动初始化swiper
                 observeParents: true, //修改swiper的父元素时，自动初始化swiper
-                // onSlideChangeEnd: (swiper :any)=>{
-                // 　　　swiper.update();  
-                //    this.swipertable.startAutoplay();
-                // 　　   this.swipertable.reLoop();  
-                // },
-
             });
 
     }
@@ -92,7 +86,7 @@
           });
 
           // 取十条
-          let data: Array<{}> = sortData.slice(0, 10);
+          let data: Array<{}> = sortData;
           data = data.map(
             (item: any, index: number): object => {
               return {
@@ -146,7 +140,7 @@
             width:20%;
         }
         .thead2 {
-            width:40%;
+            width:30%;
         }
         .thead3 {
           width:20%;
@@ -155,7 +149,7 @@
             width:10%;
         }
         .thead5 {
-          width:10%;
+          width:20%;
         }
     }
     .tablebody{
@@ -194,7 +188,7 @@
                         width: 20%;
                     }
                     .table-foncom2{
-                        width: 40%;
+                        width: 30%;
                     }
                     .table-foncom3{
                         width: 20%;
@@ -203,7 +197,7 @@
                         width: 10%;
                     }
                     .table-foncom5{
-                        width:10%;
+                        width:20%;
                         .ycl{
                           width:90%;
                           height:vh(14);

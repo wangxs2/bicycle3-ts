@@ -33,7 +33,7 @@ export default class MyEcharts {
     const option: any = {
       grid: {
         top: '20',
-        bottom: '55',
+        bottom: '38',
         right:"8",
         left:"60",
       },

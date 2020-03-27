@@ -98,6 +98,7 @@ export default class rightTop extends Vue {
     box-sizing: border-box;
     padding: vh(8) vw(8);
     position: relative;
+    overflow:hidden;
     .myimg{
       position: absolute;
       z-index: 10;
@@ -206,7 +207,8 @@ export default class rightTop extends Vue {
       // margin-top:vh(18);
     }
     .tableboxwork{
-      flex:1;
+      width:100%;
+      height:vh(94);
       margin-top:vh(6)
     }
   

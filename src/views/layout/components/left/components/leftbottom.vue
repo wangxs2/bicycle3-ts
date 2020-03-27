@@ -123,6 +123,7 @@ export default class leftTop extends Vue {
   
   public mounted() {
     this.$nextTick(function() {
+      this.getPeakRanking();
         this.getnumEchart()
     })
   }

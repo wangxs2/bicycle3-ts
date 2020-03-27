@@ -11,12 +11,11 @@
         <div class="thead thead7"><span class="glabfont">处理状态</span></div>
     </div>
     <div class="tablebody">
-        <div class="swiper-container" id="swipertable">
+        <div class="swiper-container righttable" id="swipertable">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"
                     v-for="(iteam,index) in findVisible"
-                    :key="index"
-                    :autoplay='5000'>
+                    :key="index">
                 <div class="allData">
                     <div class="table-foncom table-foncom1"><span class="glabfont">{{iteam.type}}</span></div>
                     <div class="table-foncom table-foncom2"><span class="glabfont">{{iteam.dispatchTime}}</span></div>
@@ -48,40 +47,41 @@
     private swipertable:any | null=null;
     private findVisible: any =[];
     public created() {
-      this.getWorkOrder();
+        this.getWorkData();
+      
     }
     public mounted() {
-      this.initSwipertable();
     }
 
-    private initSwipertable(): void {
-       this.swipertable = new Swiper("#swipertable", {
-                loop: true, // 循环模式选项
-                direction: 'vertical',
-                slidesPerView: 2,
-                slidesPerGroup: 2,
-                mousewheel: true,
-                autoplay: true,
-                //preventLinksPropagation: false,  // 阻止点击事件冒泡
-                observer: true, //修改swiper自己或子元素时，自动初始化swiper
-                observeParents: true //修改swiper的父元素时，自动初始化swiper
+    private initsatable(): void {
+      setTimeout(()=>{
+        this.swipertable = new Swiper("#swipertable", {
+            loop: true, // 循环模式选项
+            autoplay: {
+              delay: 5000, // 切换时间
+              disableOnInteraction: false
+            },
+            direction: 'vertical',
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            mousewheel: true,
+            observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true, // 修改swiper的父元素时，自动初始化swiper
+        });
 
-            });
-
+      },300)
+      
     }
 
-    public getWorkOrder(): void {
+    public getWorkData(): void {
     // 昨天
-      const startTime: string = moment()
-        .subtract(1, 'days')
-        .format('YYYY-MM-DD');
-
-      const endTime: string = moment().format('YYYY-MM-DD');
       API.getRightTable().then(
         (res: any): void => {
           // 时间倒序
-        
           this.findVisible=res
+          this.$nextTick(() => {
+             this.initsatable();
+           });
         }
       );
     }
@@ -118,16 +118,16 @@
           height: 100%;
         }
         .thead1 {
-            width:15%;
-        }
-        .thead2 {
             width:10%;
         }
+        .thead2 {
+            width:15%;
+        }
         .thead3 {
-          width:25%;
+          width:30%;
         }
          .thead4 {
-            width:20%;
+            width:15%;
         }
         .thead5 {
           width:10%;
@@ -140,7 +140,7 @@
         }
     }
     .tablebody{
-        flex:1;
+        width:100%;
         height:vh(76);
         border:1px solid rgba(9,28,93,1);
         overflow:hidden;
@@ -148,17 +148,22 @@
           color:#ffffff;
           font-size:vw(10);
         }
-        .swiper-container{
+        .righttable{
             width:100%;
             height:vh(76);
             color:#BDD3FF;
             overflow:hidden;
+            // .swiper-wrapper{
+            //   width:100%;
+            //   height:100%;
+            //   overflow:hidden;
+            // }
             .swiper-slide {
                 width: 100%;
                 height: vh(38) !important;
                 .allData{
                     width: 100%;
-                    height: vh(37);
+                    height: vh(38);
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
@@ -178,10 +183,10 @@
                         width: 15%;
                     }
                     .table-foncom3{
-                        width: 25%;
+                        width: 30%;
                     }
                     .table-foncom4{
-                        width: 20%;
+                        width: 15%;
                     }
                     .table-foncom5{
                         width:10%;

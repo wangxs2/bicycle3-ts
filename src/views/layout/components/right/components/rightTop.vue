@@ -69,22 +69,27 @@
       <div class="cumulativebox">
         <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
-          <span class="yujingfont glabfont">2020-03-07 17:51:30</span>
-          <span style="margin-top:0.5vh" class="yujingfont glabfont">哈罗 连续5天每天增量200辆以上</span>
+          <span v-if="allowList1.length==0" class="noyuData glabfont">暂无数据</span>
+          <rank-block2 :rank-data='allowList1'
+                    :gradient-ramp="['#6ad4ff','#5a60ff']"
+                    font-color="#20c0fe">
+          </rank-block2>
         </div>
       </div>
       <div class=" cumulativebox">
         <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
-          <span class="yujingfont glabfont">2020-03-07 17:51:12</span>
-          <span style="margin-top:0.5vh" class="yujingfont glabfont">潍坊新村街道 上限预警</span>
+          <span v-if="allowList2.length==0" class="glabfont">暂无数据</span>
+          <rank-block2 :rank-data='allowList2'>
+          </rank-block2>
         </div>
       </div>
       <div class="cumulativebox">
         <img src="../../../../../assets/image/bj.png">
         <div class="yujing">
-          <span class="yujingfont glabfont">2020-03-07 08:00:00</span>
-          <span style="margin-top:0.5vh" class="yujingfont glabfont">陆家嘴环路禁区  禁停区违停</span>
+          <span v-if="allowList3.length==0" class="glabfont">暂无数据</span>
+          <rank-block2 :rank-data='allowList3'>
+          </rank-block2>
         </div>
       </div>
       
@@ -114,6 +119,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
 import scrollNum from '@/component/scrollnum/index.vue';
+import rankBlock2 from '@/component/rankBlock2/index.vue';
 import Echart from './myEchart';
 import { refinedCal, cloneObj } from '@/libs/util.ts';
 import API from '@/api/index';
@@ -123,6 +129,7 @@ let MyEchart1: any = null; // 自定义echarts
   components: {
     borderBlock,
     scrollNum,
+    rankBlock2,
   },
 })
 export default class rightTop extends Vue {
@@ -135,11 +142,11 @@ export default class rightTop extends Vue {
   };
   
   private allnum1: any =[0];
-  private allnum2: any =[5,7,0,0];
-  private allnum3: any =[1,4,4];
+  private allnum2: any =[0];
+  private allnum3: any =[];
   private allnum4: any =[0];
-  private allnum5: any =[1,5,1];
-  private allnum6: any =[6];
+  private allnum5: any =[];
+  private allnum6: any =[];
    private isshowimg: boolean =false;
   
   private threenum: any =[];
@@ -147,6 +154,9 @@ export default class rightTop extends Vue {
   private topnum2: string ="";
   private topnum3: string ="";
   private intelligentData: any ={};
+  private allowList1: any ={};
+  private allowList2: any ={};
+  private allowList3: any ={};
   private msgconcat1: string = "智能发现";
   private msgvide1: string = "街道派单TOP10 (累计历史七天)";
   
@@ -166,14 +176,27 @@ export default class rightTop extends Vue {
     API.getIntelligent().then(
         (res: any): void => {
           console.log(res)
-          // this.intelligentData=res
-          // const str1:string=this.intelligentData[0].allNum
-          // const str2:string=this.intelligentData[1].allNum
-          // const str3:string=this.intelligentData[2].allNum
-          // console.log(str1)
-          // this.allnum1=(str1).split("")
-          // this.allnum2=(str1).split("")
-          // this.allnum3=(str3).split("")
+          this.intelligentData=res
+          const str1:string=String(this.intelligentData[0].allNum)
+          const str2:string=String(this.intelligentData[1].allNum)
+          const str3:string=String(this.intelligentData[2].allNum)
+          const str4:string=String(this.intelligentData[0].todayNum)
+          const str5:string=String(this.intelligentData[1].todayNum)
+          const str6:string=String(this.intelligentData[2].todayNum)
+          this.allnum1=(str1).split("")
+          this.allnum2=(str2).split("")
+          this.allnum3=(str3).split("")
+          this.allnum4=(str4).split("")
+          this.allnum5=(str5).split("")
+          this.allnum6=(str6).split("")
+          //报警播报
+          this.allowList1=this.intelligentData[0].list
+          this.allowList2=this.intelligentData[1].list
+          this.allowList3=this.intelligentData[2].list
+          this.allowList3.forEach((item:any,index:number)=>{
+            item.id=index+1
+          })
+          console.log(this.allowList3)
           // this.intelligentData
           // this.allnum1=this.intelligentData
           // var array=nums.split("");
@@ -183,6 +206,12 @@ export default class rightTop extends Vue {
      
     
   }
+
+    // 格式累计这些数字
+  // private FormatNumber(polygon: string): Array<[]> {
+   
+  // }
+
 
   private getThree(): void {
     API.getTownThree().then(
@@ -238,6 +267,7 @@ export default class rightTop extends Vue {
     flex-direction: column;
     box-sizing: border-box;
     padding: vh(8) vw(8);
+    padding-bottom: vh(4);
     position: relative;
     .myimg{
       position: absolute;
@@ -313,11 +343,13 @@ export default class rightTop extends Vue {
         .yujing{
           display: flex;
           flex-direction: column;
-          .yujingfont{
-            font-style:italic;
+          width:vw(145);
+          height:vh(23);
+          justify-content:center;
+          .noyuData{
             font-size:vw(10);
-            color:rgba(254,254,254,1);
             text-align:left;
+            line-height:vh(23);
           }
         }
       }
@@ -355,7 +387,10 @@ export default class rightTop extends Vue {
           margin-bottom:vh(16)
         }
         .font2{
+          width: 100%;
           display:flex;
+          box-sizing: border-box;
+          padding: 0 vw(10);
           justify-content: space-between;
           margin-top:vh(10)
         }

@@ -258,6 +258,10 @@ export default class center extends Vue {
       state: true,
       name: '防疫重点区',
     },
+    {
+      state: true,
+      name:"收集区"
+    }
   ];
   public mounted() {
     myMap = new MyMap({ el: 'mapContainer' });
@@ -267,6 +271,7 @@ export default class center extends Vue {
     this.getTownBoundary();
     this.getForbid();
     this.getAreaIdAndDate();
+    this.getCollectData()
     // 监听全屏事件
     fullObj.on('change', (e: any) => {
       if (e.target.className === 'center-top' && fullObj.isFullscreen) {
@@ -317,6 +322,33 @@ export default class center extends Vue {
 
       // 定时任务
       this.timeoutEvent('getForbid');
+    });
+  }
+
+  // 收集区
+  public getCollectData(): void {
+    API.getCollect().then((res: any) => {
+        res.data.forEach((item: any) => {
+          item.geom = this.FormatGolygon(item.polygonGeom);
+          if (this.ForbidData[item.regionName]) {
+            // 更新
+            myMap.upDataForbid(item,3);
+          } else {
+            // 添加
+            myMap.addOverlayGroup(
+              'collectGroup',
+              myMap.createCollect(
+                item,
+                this.isForbid,
+              ),
+            );
+          }
+          this.ForbidData[item.regionName] = item;
+        });
+        myMap.forbidGroupEvent3((data: any) => {
+          this.ForbidName = data;
+        });
+      // 定时任务
     });
   }
 
@@ -405,9 +437,9 @@ export default class center extends Vue {
         this.ForbidName = '';
         myMap.iskeyareaGroup(data.state);
         break;
-      case '人员位置':
-        // this.isShowStaffLegend = data.state;
-        // myMap.isStaffGroup(data.state);
+      case '收集区':
+        this.ForbidName = '';
+        myMap.iscollectGroup(data.state);
         break;
       case '预警播报':
         // this.isEarlyWarning = data.state;

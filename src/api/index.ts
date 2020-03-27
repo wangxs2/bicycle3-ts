@@ -132,6 +132,12 @@ export default {
     return http('http://106.14.198.128:18181/sharebikesclean//countJieZhen/getAreaPointMsg1?regionId=1000');
   },
 
+  //收集区的数据 http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1003&areaId=1057
+
+  getCollect(): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1003&areaId=1057');
+  },
+
   /**
    * 工单数据
    * @param {String} countType week周，month月

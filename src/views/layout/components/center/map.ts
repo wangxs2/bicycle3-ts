@@ -10,6 +10,7 @@ class MyMap {
   public provincePointGroup: any = new AMap.OverlayGroup(); // 省级点集合 上海市
   public provinceBorderGroup: any = new AMap.OverlayGroup(); // 省级边界集合 上海市
   public virusGroup: any = new AMap.OverlayGroup(); // 防疫重点区
+  public collectGroup: any = new AMap.OverlayGroup(); // 收集区
   public keyareaGroup: any = new AMap.OverlayGroup(); // 重点区违停
   public cityPointGroup: any = new AMap.OverlayGroup(); // 市级点集合 徐汇区
   public workOrderGroup: any = new AMap.OverlayGroup(); // 工单集合
@@ -19,6 +20,7 @@ class MyMap {
   public forbidEvent: any[] = []; // 禁停区事件集合
   public forbidEvent1: any[] = []; // 禁停区事件集合
   public forbidEvent2: any[] = []; // 禁停区事件集合
+  public forbidEvent3: any[] = []; // 收集事件集合
   public areaPointGroup: any = new AMap.OverlayGroup(); // 区级点集合 街道
   public areaBorderGroup: any = new AMap.OverlayGroup(); // 区级边界集合 街道
   public mapCenter: Array<number | string> = [121.544379,31.221517]; // 默认地图中心点
@@ -72,6 +74,7 @@ class MyMap {
       this.forbidGroup,
       this.virusGroup,
       this.keyareaGroup,
+      this.collectGroup,
     ]);
   }
 
@@ -119,6 +122,21 @@ class MyMap {
       return polygon;
     }
 
+       // 创建收集区
+       public createCollect(data: any, flag: boolean): object {
+        const polygon: any =  new AMap.Polygon({
+          path: data.geom, // 点集合
+          fillColor: 'red', // 多边形填充颜色
+          fillOpacity: 0.2, // 填充颜色
+          strokeColor: '#ff8a3e', // 线条颜色
+          strokeWeight: 2, // 线条宽度，默认为 1
+          cursor: 'pointer',
+          extData: data,
+        });
+        flag ? polygon.show() : polygon.hide();
+        return polygon;
+      }
+
     // 创建禁停区
     public createForbid(data: any, flag: boolean): object {
       const polygon: any =  new AMap.Polygon({
@@ -141,6 +159,8 @@ class MyMap {
         group=this.forbidGroup
       }else if(type==2){
         group=this.virusGroup
+      }else if(type==3){
+        group=this.collectGroup
       }else{
         group=this.keyareaGroup
       }
@@ -499,6 +519,10 @@ class MyMap {
    public iskeyareaGroup(flag: boolean): void {
     flag ? this.keyareaGroup.show() : this.keyareaGroup.hide();
   }
+   // 是否显示人员位置点
+   public iscollectGroup(flag: boolean): void {
+    flag ? this.collectGroup.show() : this.collectGroup.hide();
+  }
 
   // 禁停区事件点
   public forbidGroupEvent(callback: any): void {
@@ -549,6 +573,23 @@ class MyMap {
     this.forbidEvent2 = [];
     this.forbidEvent2.push(
       AMap.event.addListener(this.keyareaGroup, 'click', (e: any) => {
+        const data: string = e.target.getExtData().regionName;
+        if (data) {
+          callback(data);
+        }
+      }),
+    );
+  }
+
+  // 禁停区事件点
+  public forbidGroupEvent3(callback: any): void {
+    // 事件先清除再添加
+    this.forbidEvent3.forEach((item: any) => {
+      AMap.event.removeListener(item);
+    });
+    this.forbidEvent3 = [];
+    this.forbidEvent3.push(
+      AMap.event.addListener(this.collectGroup, 'click', (e: any) => {
         const data: string = e.target.getExtData().regionName;
         if (data) {
           callback(data);
