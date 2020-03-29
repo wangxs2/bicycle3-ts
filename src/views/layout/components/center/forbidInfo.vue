@@ -3,12 +3,11 @@
     <div class="info-close iconfont iconguanbi" @click="close"></div>
     <div class="info-tit">
       <!-- <img src="@img/icon_forbid@3x.png"> -->
-      <span>区域名称：{{params.regionName}}</span>
+      <span class="glabfont">{{params.regionTypeName}}：{{params.regionName}}</span>
     </div>
+    <div class="bick-num" style="text-align:left"><span class="glabfont">区域内车辆数：{{params.sumBicycle}}</span></div>
 
-    <div class="bick-num">区域内车辆数：{{params.bicycleNum}}</div>
-
-    <div class="bick-company-num">
+    <!-- <div class="bick-company-num">
       <div class="company-num" v-for="item in companyBikeList" :key="item.companyCode">
         <img :src="item.imgSrc">
         <span>{{item.companyName}}：{{item.companyBikeNum}}</span>
@@ -32,7 +31,7 @@
           </div>
         </transition-group>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -124,12 +123,11 @@ export default class ForbidInfo extends Vue {
   position: absolute;
   @include vw2(top, 150);
   @include vw2(left, 304);
-  @include vw2(width, 260);
+  // @include vw2(width, 260);
   z-index: 10;
   background: rgba(11, 28, 61, 0.7);
   border: 1px solid rgba(153, 204, 255, 0.25);
-  @include vw2(padding, 10);
-  @include vw2(padding-top, 0);
+  padding:vh(4) vw(30);
   box-sizing: border-box;
   color: #fff;
   .info-close {
@@ -137,19 +135,16 @@ export default class ForbidInfo extends Vue {
     color: #fff;
     position: absolute;
     z-index: 10;
-    @include vw2(right, 10);
-    @include vw2(top, 10);
-    @include vw2(width, 9);
-    @include vw2(height, 9);
+    @include vw2(right,4);
+    @include vw2(top,4);
     text-align: center;
-    @include vw2(line-height, 9);
-    @include vw2(font-size, 10);
+    @include vw2(font-size,18);
   }
   .info-tit {
     display: flex;
     justify-content: center;
     align-items: center;
-    @include vw2(font-size, 10);
+    font-size:vw(15);
     @include vw2(padding-top, 10);
     @include vw2(padding-bottom, 10);
     box-sizing: border-box;
@@ -177,13 +172,13 @@ export default class ForbidInfo extends Vue {
   }
   .bick-num {
     text-align: center;
-    @include vw2(font-size, 9);
+    font-size:vw(15);
     line-height: 4em;
   }
   .bick-company-num {
     width: 100%;
     display: flex;
-    @include vw2(font-size, 9);
+    @include vw2(font-size, 10);
     line-height: 2.5em;
     flex-wrap: wrap;
     .company-num {

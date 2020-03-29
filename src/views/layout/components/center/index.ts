@@ -300,6 +300,8 @@ export default class center extends Vue {
       if (res.status === 0) {
         res.data.forEach((item: any) => {
           item.geom = this.FormatGolygon(item.polygonGeom);
+          item.regionTypeName = "禁停区";
+          item.sumBicycle=item.bicycleNum
           if (this.ForbidData[item.regionName]) {
             // 更新
             myMap.upDataForbid(item,1);

@@ -171,7 +171,7 @@
                 height: vh(38) !important;
                 .allData{
                     width: 100%;
-                    height: vh(37);
+                    height: vh(38);
                     display: flex;
                     justify-content: space-between;
                     align-items: center;

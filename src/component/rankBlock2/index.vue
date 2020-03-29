@@ -9,7 +9,7 @@
              v-for="item in ranking"
              :key="item.id">
           <span class="glabfont">{{item.discoverTime}}</span>
-           <span style="margin-top:0.3vh" class="glabfont">{{item.detail}} {{item.name}}</span>
+           <span style="margin-top:0.3vh" class="shenglue glabfont">{{item.detail}} {{item.name}}</span>
         </div>
       </transition-group>
     </div>
@@ -119,6 +119,14 @@ export default class RankBlock extends Vue {
       align-items:flex-start;
       justify-content:flex-start;
       box-sizing:border-box;
+      .shenglue{
+        width:vw(125);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        text-align:left;
+      }
       span{
          font-size:vw(10);
          color:rgba(218,240,255,1);

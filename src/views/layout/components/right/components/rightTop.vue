@@ -1,12 +1,39 @@
 <template>
   <div class="right-top">
-    <!-- 弹框 -->
+    <!-- 规则弹框 -->
     <div class="myimg" v-if="isshowimg">
       <img class="rolesimg1" src="../../../../../assets/image/bjroles.png">
       <div class="info-close iconfont iconguanbi" @click="isshowimg=false"></div>
     </div>
 
-    <!-- 弹框 -->
+    <!-- 规则弹框 -->
+    <!-- 表格的弹框 -->
+    <div class="mytable" v-if="isshowtable">
+      <div class="info-close iconfont iconguanbi" @click="isshowtable=false"></div>
+      <div class="table-tit"><span class="glabfont">预警播报列表</span></div>
+      <div class="tabscroll">
+        <table cellspacing="0" cellpadding="0">
+            <thead>
+              <tr>
+                <th><span class="glabfont">序号</span></th>
+                <th><span class="glabfont">预警时间</span></th>
+                <th><span class="glabfont">区域名称</span></th>
+                <th><span class="glabfont">详情</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item,index) in dataTable" :key="index">
+                <td><span class="glabfont">{{index+1}}</span></td>
+                <td><span class="glabfont">{{item.discoverTime}}</span></td>
+                <td><span class="glabfont">{{item.name}}</span></td>
+                <td><span class="glabfont">{{item.detail}}</span></td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 表格的弹框 -->
     <borderBlock :msg="msgconcat1"></borderBlock>
     <div class="roles">
       <div class="rloes-box1">
@@ -42,7 +69,7 @@
         <div class="scrollnumsa"><scroll-num :datanum='allnum2'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
       </div>
-      <div class="rloes-box1 cumulativebox">
+      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList3)">
         <span class="ljnum glabfont">本月发现</span>
         <div class="scrollnumsa"><scroll-num :datanum='allnum3'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
@@ -54,7 +81,7 @@
         <div class="scrollnumsa"><scroll-num :datanum='allnum4'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
       </div>
-      <div class="rloes-box1 cumulativebox">
+      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList2)">
         <span class="ljnum glabfont">今日发现</span>
         <div class="scrollnumsa"><scroll-num :datanum='allnum5'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
@@ -147,9 +174,10 @@ export default class rightTop extends Vue {
   private allnum4: any =[0];
   private allnum5: any =[];
   private allnum6: any =[];
-   private isshowimg: boolean =false;
-  
+  private isshowimg: boolean =false;
+  private isshowtable: boolean =false;
   private threenum: any =[];
+  private dataTable: any =[];
   private topnum1: string ="";
   private topnum2: string ="";
   private topnum3: string ="";
@@ -175,8 +203,8 @@ export default class rightTop extends Vue {
   private getIntelligentData(): void {
     API.getIntelligent().then(
         (res: any): void => {
-          console.log(res)
           this.intelligentData=res
+          console.log(res)
           const str1:string=String(this.intelligentData[0].allNum)
           const str2:string=String(this.intelligentData[1].allNum)
           const str3:string=String(this.intelligentData[2].allNum)
@@ -196,7 +224,6 @@ export default class rightTop extends Vue {
           this.allowList3.forEach((item:any,index:number)=>{
             item.id=index+1
           })
-          console.log(this.allowList3)
           // this.intelligentData
           // this.allnum1=this.intelligentData
           // var array=nums.split("");
@@ -226,6 +253,12 @@ export default class rightTop extends Vue {
       );
      
     
+  }
+
+
+  private showtableData(data:any): void {
+    this.isshowtable=true
+   this.dataTable=data
   }
 
 
@@ -269,6 +302,67 @@ export default class rightTop extends Vue {
     padding: vh(8) vw(8);
     padding-bottom: vh(4);
     position: relative;
+    .mytable{
+      position: absolute;
+      z-index: 10;
+      left:0;
+      top:vh(100);
+      width:100%;
+      height:vh(440);
+      background:rgba(12,58,111,1);
+      border:1px solid rgba(50,134,217,1);
+      .info-close{
+         position: absolute;
+          z-index: 10;
+          right:vw(6);
+          top:vh(6);
+          cursor:pointer;
+      }
+      .table-tit{
+        font-size:vw(11);
+        color:#fff;
+        text-align:left;
+        margin:vh(7.5);
+      }
+     .tabscroll{
+       width:100%;
+       height:90%;
+       overflow:hidden;
+       overflow-y:scroll;
+       box-sizing:border-box;
+       padding:vh(10) vw(16);
+      }
+      .tabscroll::-webkit-scrollbar {
+          display: none; //Safari and Chrome
+          -ms-overflow-style: none; //IE 10+
+          overflow: -moz-scrollbars-none; //Firefox
+          width: 0 !important 
+      }
+      table{
+        width:100%;
+        color:#fff;
+        font-size:vw(10);
+        border:vw(1) solid rgba(50,134,217,1);
+        
+        thead{
+          th{
+            padding:vh(7.5) vw(8);
+            border:vw(1) solid rgba(50,134,217,1);
+          }
+            box-shadow: rgba(12,58,111,0.6) 0 0 vw(10) vw(4) inset;
+
+        }
+        tbody{
+          td{
+            padding:vh(7.5) vw(8);
+            border:vw(1) solid rgba(50,134,217,1);
+            border-top:none;
+            border-left:none;
+          }
+        }
+        
+      }
+    }
     .myimg{
       position: absolute;
       z-index: 10;

@@ -16,7 +16,7 @@
            <img src="../../../../../assets/image/07mobike@3x.png">
            <div class="titnum">
              <span class="tit glabfont">运营量(辆)</span>
-             <span class="num glabfont">{{signsData.companyBikeNum[0]}}</span>
+             <span class="num glabfont">{{signsData.streetBicycleNum[0]}}</span>
            </div>
            <div class="titnum">
              <span class="tit glabfont">活跃量(辆)</span>
@@ -27,7 +27,7 @@
             <img src="../../../../../assets/image/03hellobike@3x.png">
            <div class="titnum">
              <span class="tit glabfont">运营量(辆)</span>
-             <span class="num glabfont">{{signsData.companyBikeNum[1]}}</span>
+             <span class="num glabfont">{{signsData.streetBicycleNum[1]}}</span>
            </div>
            <div class="titnum">
              <span class="tit glabfont">活跃量(辆)</span>
@@ -76,7 +76,7 @@ import API from '@/api/index';
 const echareData = require('./echaredata.json');
 import { refinedCal, cloneObj } from '@/libs/util.ts';
 moment.locale('zh-cn');
-let MyEchart: any = null; // 自定义echarts
+let MyEchartleft: any = null; // 自定义echarts
 @Component({
   components: {
    borderBlock,
@@ -99,7 +99,7 @@ export default class leftTop extends Vue {
        el:"peak",
        x:[],
        line:[{
-            name: '总数',
+            name: '活跃数',
             type: 'line',
             stack: '总量',
             symbolSize : 8,
@@ -111,7 +111,7 @@ export default class leftTop extends Vue {
             data: []
         },
         {
-            name: '活跃数',
+            name: '总数',
             type: 'line',
             symbolSize : 8,
             stack: '总量',
@@ -120,22 +120,22 @@ export default class leftTop extends Vue {
        color:["#FFDB5C","#1EE5AE"],
        
      };
-  
-  public mounted() {
-    this.$nextTick(function() {
-      this.getPeakRanking();
-        this.getnumEchart()
-    })
-  }
   public created() {
-     this.getPeakRanking();
-     this.getnumEchart()
+    this.getleftEchart()
+    setTimeout(()=>{
+      this.getPeakRanking();
+    },500)
   }
+  public mounted() {
+    
+    
+  }
+ 
 
 
 
     // 运行体征 获取数据
-  private getnumEchart(): void {
+  private getleftEchart(): void {
     API.getActiveNum().then(
       (res: any): void => {
         this.signsData = cloneObj(res);
@@ -144,9 +144,13 @@ export default class leftTop extends Vue {
           this.shudata.line[0].data.push(iteam.bikeNum)
           this.shudata.line[1].data.push(iteam.activeNum)
         })
-        const echData: any=this.shudata
-        MyEchart = new Echart();
-        MyEchart.echartsOption(echData);
+        // const echData: any=this.shudata
+        console.log(this.shudata)
+        this.$nextTick(function() {
+          MyEchartleft = new Echart();
+          MyEchartleft.echartsOption(this.shudata);
+        })
+        
       },
     );
     
@@ -165,7 +169,7 @@ export default class leftTop extends Vue {
     const morningEndTime = yesterday + ' 09:30:00';
     API.getPeak(morningStartTime, morningEndTime).then(
       (res: any): void => {
-        if (res.data) {
+        if (res.data.length>0) {
           this.disPeak(res.data, 1);
         }
       },
@@ -176,7 +180,7 @@ export default class leftTop extends Vue {
     const eveningEndTime = yesterday + ' 18:30:00';
     API.getPeak(eveningStartTime, eveningEndTime).then(
       (res: any): void => {
-        if (res.data) {
+        if (res.data.length>0) {
           this.disPeak(res.data, 2);
         }
       },
