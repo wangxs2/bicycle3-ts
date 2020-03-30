@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import layout from "../views/layout/index.vue";
+import test from "../views/test.vue"
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: layout,
   },
+  {
+    path:'/test',
+    name:'test',
+    component: test,
+  }
 ];
 
 const router = new VueRouter({
