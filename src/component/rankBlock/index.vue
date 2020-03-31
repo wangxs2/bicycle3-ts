@@ -41,19 +41,14 @@ interface PropData {
 export default class RankBlock extends Vue {
   @Prop()
   private rankData!: PropData[]; // 原始数据
-
   @Prop()
   private fontColor!: string; // 颜色
-
   @Prop()
   private blockTit!: string; // 标题
-
   @Prop()
   private gradientRamp!: string[]; // 渐变色
-
   // 分组数据
   private groupData: any[] = [];
-
   // 当前数据
   private ranking: any[] = [];
 

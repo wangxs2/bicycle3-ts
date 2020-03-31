@@ -141,8 +141,8 @@ export default class leftTop extends Vue {
         this.signsData = cloneObj(res);
         this.signsData.yearNum.forEach((iteam:any)=>{
           this.shudata.x.push(iteam.createTime)
-          this.shudata.line[0].data.push(iteam.bikeNum)
-          this.shudata.line[1].data.push(iteam.activeNum)
+          this.shudata.line[1].data.push(iteam.bikeNum)
+          this.shudata.line[0].data.push(iteam.activeNum)
         })
         // const echData: any=this.shudata
         console.log(this.shudata)

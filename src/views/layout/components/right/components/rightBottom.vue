@@ -20,17 +20,17 @@
           <span class="gont1 glabfont">企业工单处置昨日得分</span>
           <div class="fractionBox">
             <div class="imgfraction1">
-              <span class="fonsinum1 glabfont">89</span>
-              <span class="fonsinum2 glabfont">分</span>
+              <water-pond :score="80" :imgBg="imgBg1" :borderColor="borderColor1"></water-pond>
+              <!-- <span class="fonsinum1 glabfont">89</span>
+              <span class="fonsinum2 glabfont">分</span> -->
             </div>
-            <div class="imgfraction1 imgfraction2">
-              <span class="fonsinum1 glabfont">93</span>
-              <span class="fonsinum2 glabfont">分</span>
+            <div class="imgfraction1">
+              <water-pond :score="80" :imgBg="imgBg2" :borderColor="borderColor2"></water-pond>
             </div>
           </div>
           <div class="numde">
-            <span class="gont2 glabfont">哈罗</span>
             <span class="gont2 glabfont">摩拜</span>
+            <span class="gont2 glabfont">哈啰</span>
           </div>
         </div>
     </div>
@@ -43,6 +43,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
+import waterPond from '@/component/waterLevelPond/index.vue';
 // import echartsLiquidfill from 'echarts-liquidfill'
 import tableBottom from './tableBottom.vue';
 import Echart2 from './myEchart1';
@@ -50,7 +51,8 @@ let MyEchart3: any = null; // 自定义echarts
 @Component({
   components: {
     borderBlock,
-    tableBottom
+    tableBottom,
+    waterPond
   },
 })
 export default class rightTop extends Vue {
@@ -65,6 +67,10 @@ export default class rightTop extends Vue {
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
   private isshowimg: boolean =false;
   private msgvide1: string = "平台监管工单";
+  private imgBg1:any=require("../../../../../assets/water1.png");
+  private imgBg2:any=require("../../../../../assets/water2.png");
+  private borderColor1: string = "#FFC955";
+  private borderColor2: string = "#36D7FF";
   
   public mounted() {
     
@@ -160,8 +166,8 @@ export default class rightTop extends Vue {
           .imgfraction1{
             width: vw(50.8);
             height: vh(50.9);
-            background: url("../../../../../assets/image/-s-image_1.png");
-            background-size: 100% 100%;
+            // background: url("../../../../../assets/image/-s-image_1.png");
+            // background-size: 100% 100%;
             display: flex;
             justify-content: center;
             align-items: center;
