@@ -20,12 +20,14 @@
           <span class="gont1 glabfont">企业工单处置昨日得分</span>
           <div class="fractionBox">
             <div class="imgfraction1">
-              <water-pond :score="80" :imgBg="imgBg1" :borderColor="borderColor1"></water-pond>
-              <!-- <span class="fonsinum1 glabfont">89</span>
+              <waterPond :score="score1" :imgBg="imgBg1" :borderColor="borderColor1"></waterPond>
+              <!-- <span class="fonsinum1 glabfont">52</span>
               <span class="fonsinum2 glabfont">分</span> -->
             </div>
             <div class="imgfraction1">
-              <water-pond :score="80" :imgBg="imgBg2" :borderColor="borderColor2"></water-pond>
+              <waterPond :score="48" :imgBg="imgBg2" :borderColor="borderColor2"></waterPond>
+              <!-- <span class="fonsinum1 glabfont">48</span>
+              <span class="fonsinum2 glabfont">分</span> -->
             </div>
           </div>
           <div class="numde">
@@ -60,10 +62,11 @@ export default class rightTop extends Vue {
   {
     el:"company",
     x:["03-04","03-05","03-06","03-07","03-08","03-09","03-10"],
-    data1:[88, 90, 88, 80, 70, 96, 86],
-    data2:[88, 90, 88, 80, 70, 96, 86],
+    data1:[50, 58, 49, 50, 54, 49, 47],
+    data2:[42, 49, 52, 47, 49, 46, 49],
 
   };
+  private score1: number=0;
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
   private isshowimg: boolean =false;
   private msgvide1: string = "平台监管工单";
@@ -76,6 +79,7 @@ export default class rightTop extends Vue {
     
     this.$nextTick(function() {
         this.getnumEchart()
+        this.score1=52
     })
   }
 

@@ -2,7 +2,7 @@
   <!-- 工单详情 -->
   <div class="table">
     <div class="table-head">
-        <div class="thead thead1"><span class="glabfont">工单类型</span></div>
+        <div class="thead thead1"><span class="glabfont">派单方式</span></div>
         <div class="thead thead2"><span class="glabfont">时间</span></div>
         <div class="thead thead3"><span class="glabfont">地点</span></div>
         <div class="thead thead4"><span class="glabfont">派单部门</span></div>

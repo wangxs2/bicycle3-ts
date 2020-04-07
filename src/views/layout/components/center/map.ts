@@ -166,7 +166,7 @@ class MyMap {
       }
       const target = group.getOverlays().find(
         (item: any): boolean => {
-          return item.Qe.extData.regionName === data.regionName;
+          return item.getExtData().regionName === data.regionName;
         },
       );
   
@@ -246,13 +246,13 @@ class MyMap {
     );
     this.CpointEvent.push(
       AMap.event.addListener(this.cityPointGroup, 'mousemove', (e: any) => {
-        const tagNode = e.target.Qe.contentDom.children[0];
+        const tagNode = e.target.getContentDom().children[0];
         tagNode.style.backgroundColor = this.getColor(1000);
       }),
     );
     this.CpointEvent.push(
       AMap.event.addListener(this.cityPointGroup, 'mouseout', (e: any) => {
-        const tagNode = e.target.Qe.contentDom.children[0];
+        const tagNode = e.target.getContentDom().children[0];
         tagNode.style.backgroundColor = this.getColor(-1);
       }),
     );
@@ -332,13 +332,14 @@ class MyMap {
       AMap.event.addListener(this.areaPointGroup, 'mousemove', (e: any) => {
         const name: string = e.target.getExtData().name;
         if (nameFlag !== name) {
-          const tagNode = e.target.Qe.contentDom.children[0];
+          // console.log(e.target.getContentDom())
+          const tagNode = e.target.getContentDom().children[0];
           // 显示边界
           this.areaBorderGroup
             .getOverlays()
             .find(
               (item: any): boolean => {
-                return item.Qe.extData.name === name;
+                return item.getExtData().name === name;
               },
             )
             .show();
@@ -353,13 +354,13 @@ class MyMap {
         const params: any = e.target.getExtData();
         const name: string = params.name;
         const state: number = params.state;
-        const tagNode = e.target.Qe.contentDom.children[0];
+        const tagNode = e.target.getContentDom().children[0];
         // 隐藏边界
         this.areaBorderGroup
           .getOverlays()
           .find(
             (item: any): boolean => {
-              return item.Qe.extData.name === name;
+              return item.getExtData().name === name;
             },
           )
           .hide();
@@ -373,7 +374,7 @@ class MyMap {
   public upDateAreaPoint(name: string, markData: any): void {
     const Evnet = this.areaPointGroup.getOverlays().find(
       (item: any): boolean => {
-        return item.Qe.extData.name === name;
+        return item.getExtData().name === name;
       },
     );
 

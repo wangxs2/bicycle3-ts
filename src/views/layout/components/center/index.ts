@@ -179,10 +179,10 @@ export default class center extends Vue {
     //   icon: require(`../../../../assets/image/icon_1@3x.png`),
     //   name: '防疫重点区',
     // },
-    {
-      icon: require(`../../../../assets/image/icon_1@3x.png`),
-      name: '自检',
-    },
+    // {
+    //   icon: require(`../../../../assets/image/icon_1@3x.png`),
+    //   name: '自检',
+    // },
     {
       icon: require(`../../../../assets/image/icon_2@3x.png`),
       name: '已派单',
@@ -195,10 +195,10 @@ export default class center extends Vue {
       icon: require(`../../../../assets/image/icon_4@3x.png`),
       name: '已处理',
     },
-    {
-      icon: require(`../../../../assets/image/icon_5@3x.png`),
-      name: '超时未处理',
-    },
+    // {
+    //   icon: require(`../../../../assets/image/icon_5@3x.png`),
+    //   name: '超时未处理',
+    // },
   ];
   // 显示禁停区的名称 控制显示
   private ForbidName: string = '';
@@ -764,7 +764,7 @@ export default class center extends Vue {
           // 超时
           nowStatus = '超时未处理';
           despatchStatus = '已推送街镇城运分中心,企业';
-          icon = this.legendData[4].icon;
+          // icon = this.legendData[4].icon;
           break;
         case 0:
           // 未处理
@@ -782,7 +782,7 @@ export default class center extends Vue {
           // 已处理
           nowStatus = '已处理';
           despatchStatus = '企业处理完毕';
-          icon = this.legendData[3].icon;
+          // icon = this.legendData[3].icon;
           break;
         case 3:
           // 重新派单
@@ -794,7 +794,7 @@ export default class center extends Vue {
           // 已完成
           nowStatus = '已处理';
           despatchStatus = '企业处理完毕';
-          icon = this.legendData[3].icon;
+          // icon = this.legendData[3].icon;
           break;
       }
     }

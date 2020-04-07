@@ -3,7 +3,7 @@
         <div class="num">{{score}}<span>分</span></div>
         <!-- <div class="water w1" ></div> -->
         <!-- <div class="water w2"></div> -->
-        <div :style="{top:(100-score)+'%',background:'url('+imgBg+')  repeat-x',backgroundSize:'100% 100%',}" class="water"></div>
+        <div :style="{top:(100-score-9)+'%',background:'url('+imgBg+')  repeat-x',backgroundSize:'contain',}" class="water"></div>
     </div>
 </template>
 
@@ -24,12 +24,12 @@ export default class waterPolo extends Vue {
 <style lang="scss" scoped>
     @-webkit-keyframes move_wave {
             0% { background-position:0 0 }
-            to { background-position:90px 0 }
+            to { background-position:798px 0 }
         }
  
         @keyframes move_wave {
             0% { background-position:0 0 }
-            to { background-position:90px 0 }
+            to { background-position:798px 0 }
         }
  
         .boll {
