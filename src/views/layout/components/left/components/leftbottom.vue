@@ -99,7 +99,7 @@ export default class leftTop extends Vue {
        el:"peak",
        x:[],
        line:[{
-            name: '活跃数',
+            name: '总数',
             type: 'line',
             stack: '总量',
             symbolSize : 8,
@@ -111,10 +111,10 @@ export default class leftTop extends Vue {
             data: []
         },
         {
-            name: '总数',
+            name: '活跃数',
             type: 'line',
             symbolSize : 8,
-            stack: '总量',
+            stack: '总量1',
             data: []
         }],
        color:["#FFDB5C","#1EE5AE"],
@@ -141,8 +141,9 @@ export default class leftTop extends Vue {
         this.signsData = cloneObj(res);
         this.signsData.yearNum.forEach((iteam:any)=>{
           this.shudata.x.push(iteam.createTime)
-          this.shudata.line[1].data.push(iteam.streetNum)
-          this.shudata.line[0].data.push(iteam.activeNum)
+          
+          this.shudata.line[1].data.push(iteam.activeNum)
+          this.shudata.line[0].data.push(iteam.streetNum)
         })
         // const echData: any=this.shudata
         console.log(this.shudata)

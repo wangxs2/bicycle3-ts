@@ -47,24 +47,24 @@ export default class center extends Vue {
   private selectLegend: number | string = -1;
   // 图例统计数据
   private legendTabHead: any[] = [
-    [
-      {
-        name: '自检时间',
-        width: 30,
-      },
-      {
-        name: '自检单位',
-        width: 26,
-      },
-      {
-        name: '整理数',
-        width: 22,
-      },
-      {
-        name: '清运数',
-        width: 22,
-      },
-    ],
+    // [
+    //   {
+    //     name: '自检时间',
+    //     width: 30,
+    //   },
+    //   {
+    //     name: '自检单位',
+    //     width: 26,
+    //   },
+    //   {
+    //     name: '整理数',
+    //     width: 22,
+    //   },
+    //   {
+    //     name: '清运数',
+    //     width: 22,
+    //   },
+    // ],
     [
       {
         name: '派单时间',
@@ -79,20 +79,7 @@ export default class center extends Vue {
         width: 33,
       },
     ],
-    [
-      {
-        name: '派单时间',
-        width: 33,
-      },
-      {
-        name: '派单对象',
-        width: 33,
-      },
-      {
-        name: '已处理企业',
-        width: 33,
-      },
-    ],
+    
     [
       {
         name: '派单时间',
@@ -113,6 +100,20 @@ export default class center extends Vue {
       {
         name: '清运数',
         width: 15,
+      },
+    ],
+    [
+      {
+        name: '派单时间',
+        width: 33,
+      },
+      {
+        name: '派单对象',
+        width: 33,
+      },
+      {
+        name: '已处理企业',
+        width: 33,
       },
     ],
     [
@@ -469,20 +470,21 @@ export default class center extends Vue {
     const sortArr: any[] = [];
     res.forEach((data: any) => {
       if (data.sheetCode.includes('-CHECK-')) {
+        return
         // 自检
-        if (data.sheetStatus === 2) {
-          // 自检只要 自检完成的
-          if (!sortArr[0]) {
-            sortArr[0] = [];
-          }
-          item = [
-            moment(data.dispatchTime).format('YYYY-MM-DD HH:mm:ss'),
-            data.dispatchOrgName,
-            data.arrangeNum,
-            data.cleanNum,
-          ];
-          sortArr[0].push(item);
-        }
+        // if (data.sheetStatus === 2) {
+        //   // 自检只要 自检完成的
+        //   if (!sortArr[0]) {
+        //     sortArr[0] = [];
+        //   }
+        //   item = [
+        //     moment(data.dispatchTime).format('YYYY-MM-DD HH:mm:ss'),
+        //     data.dispatchOrgName,
+        //     data.arrangeNum,
+        //     data.cleanNum,
+        //   ];
+        //   sortArr[0].push(item);
+        // }
       } else {
         // 督办
         switch (data.sheetStatus) {
@@ -782,7 +784,7 @@ export default class center extends Vue {
           // 已处理
           nowStatus = '已处理';
           despatchStatus = '企业处理完毕';
-          // icon = this.legendData[3].icon;
+          icon = this.legendData[2].icon;
           break;
         case 3:
           // 重新派单
