@@ -70,7 +70,7 @@ export default class rightTop extends Vue {
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
   private isshowimg: boolean =false;
   private msgvide1: string = "平台监管工单";
-  private imgBg1:any=require("../../../../../assets/water1.png");
+  private imgBg1:any=require("../../../../../assets/water.png");
   private imgBg2:any=require("../../../../../assets/water2.png");
   private borderColor1: string = "#FFC955";
   private borderColor2: string = "#36D7FF";

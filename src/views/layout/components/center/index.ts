@@ -772,13 +772,13 @@ export default class center extends Vue {
           // 未处理
           nowStatus = '已派单';
           despatchStatus = '已推送街镇城运分中心,企业';
-          icon = this.legendData[1].icon;
+          icon = this.legendData[0].icon;
           break;
         case 1:
           // 处理中
           nowStatus = '处理中';
           despatchStatus = '企业处理中';
-          icon = this.legendData[2].icon;
+          icon = this.legendData[1].icon;
           break;
         case 2:
           // 已处理
@@ -790,7 +790,7 @@ export default class center extends Vue {
           // 重新派单
           nowStatus = '已派单';
           despatchStatus = '已推送街镇城运分中心,企业';
-          icon = this.legendData[1].icon;
+          icon = this.legendData[0].icon;
           break;
         case 4:
           // 已完成

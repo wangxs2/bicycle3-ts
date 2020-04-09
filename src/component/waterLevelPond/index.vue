@@ -24,12 +24,12 @@ export default class waterPolo extends Vue {
 <style lang="scss" scoped>
     @-webkit-keyframes move_wave {
             0% { background-position:0 0 }
-            to { background-position:798px 0 }
+            to { background-position:538px 0 }
         }
  
         @keyframes move_wave {
             0% { background-position:0 0 }
-            to { background-position:798px 0 }
+            to { background-position:538px 0 }
         }
  
         .boll {

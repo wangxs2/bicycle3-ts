@@ -2,7 +2,8 @@
   <div class="right-top">
     <!-- 规则弹框 -->
     <div class="myimg" v-if="isshowimg">
-      <img class="rolesimg1" src="../../../../../assets/image/bjroles.png">
+      <img class="rolesimg1" v-if="gu1==1" src="../../../../../assets/image/bjroles.png">
+      <img class="rolesimg2" v-if="gu1==2" src="../../../../../assets/image/bjroles2.png">
       <div class="info-close iconfont iconguanbi" @click="isshowimg=false"></div>
     </div>
 
@@ -41,14 +42,14 @@
           <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">投放报警</span>
         </div>
-        <img class="gzimg" @click="isshowimg=true" src="../../../../../assets/image/gz1.png">
+        <img class="gzimg" @click="isshowimg=true,gu1=1" src="../../../../../assets/image/gz1.png">
       </div>
       <div class="rloes-box1">
         <div class="left-role">
           <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">区域预警</span>
         </div>
-        <!-- <img class="gzimg" src="../../../../../assets/image/gz2.png"> -->
+        <img class="gzimg" @click="isshowimg=true,gu1=2" src="../../../../../assets/image/gz2.png">
       </div>
       <div class="rloes-box1">
         <div class="left-role">
@@ -166,6 +167,7 @@ export default class rightTop extends Vue {
 
   };
   
+  private gu1: number =1;
   private allnum1: any =[0];
   private allnum2: any =[0];
   private allnum3: any =[];
@@ -369,6 +371,10 @@ export default class rightTop extends Vue {
       .rolesimg1{
         width:vw(257.143);
         height:vh(160);
+      }
+      .rolesimg2{
+        width:vw(548.571);
+        height:vh(477.143);
       }
       .info-close{
          position: absolute;

@@ -80,6 +80,7 @@ export default class MyEcharts {
             show:true,
             fontSize : 20 
         },
+        max:100,
         type: 'value',
         axisLine: {
           lineStyle: {

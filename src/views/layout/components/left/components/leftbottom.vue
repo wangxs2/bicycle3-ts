@@ -69,7 +69,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import borderBlock from '@/component/borderBlock/index.vue';
-import rankBlock from '@/component/rankBlock/index.vue';
+import rankBlock from '@/component/rankBlock3/index.vue';
 import Echart from './myEcharts';
 import moment from 'moment';
 import API from '@/api/index';
@@ -206,6 +206,7 @@ export default class leftTop extends Vue {
         item.percentage = percentage + '%';
         item.index = index + 1;
         item.name = item.regionName;
+        item.img = require(`@img/gtop/${index+1}@2x.png`),
         item.describe = item.bicycleNum + '辆';
 
         return item;
