@@ -4,6 +4,7 @@
     <div class="myimg" v-if="isshowimg">
       <img class="rolesimg1" v-if="gu1==1" src="../../../../../assets/image/bjroles.png">
       <img class="rolesimg2" v-if="gu1==2" src="../../../../../assets/image/bjroles2.png">
+      <img class="rolesimg3" v-if="gu1==3" src="../../../../../assets/image/bjroles3.png">
       <div class="info-close iconfont iconguanbi" @click="isshowimg=false"></div>
     </div>
 
@@ -18,7 +19,10 @@
               <tr>
                 <th><span class="glabfont">序号</span></th>
                 <th><span class="glabfont">预警时间</span></th>
+                <th v-if="numxianshi==2"><span class="glabfont">车辆数</span></th>
+                <th v-if="numxianshi==2"><span class="glabfont">预警上限</span></th>
                 <th><span class="glabfont">区域名称</span></th>
+                <th><span class="glabfont">处理结果</span></th>
                 <th><span class="glabfont">详情</span></th>
               </tr>
             </thead>
@@ -26,7 +30,10 @@
               <tr v-for="(item,index) in dataTable" :key="index">
                 <td><span class="glabfont">{{index+1}}</span></td>
                 <td><span class="glabfont">{{item.discoverTime}}</span></td>
+                <td v-if="numxianshi==2"><span class="glabfont">{{item.predictNum}}</span></td>
+                <td v-if="numxianshi==2"><span class="glabfont">{{item.maxNum}}</span></td>
                 <td><span class="glabfont">{{item.name}}</span></td>
+                <td><span class="glabfont">{{item.hdlDetail}}</span></td>
                 <td><span class="glabfont">{{item.detail}}</span></td>
               </tr>
             </tbody>
@@ -56,7 +63,7 @@
           <img class="lbimg" src="../../../../../assets/image/lb.png">
           <span class="glabfont rolefont">违规停放</span>
         </div>
-        <img src="" alt="" srcset="">
+        <img class="gzimg" @click="isshowimg=true,gu1=3" src="../../../../../assets/image/gz3.png">
       </div>
     </div>
     <div class="roles cumulative">
@@ -70,7 +77,7 @@
         <div class="scrollnumsa"><scroll-num :datanum='allnum2'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
       </div>
-      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList3)">
+      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList3,1)">
         <span class="ljnum glabfont">本月发现</span>
         <div class="scrollnumsa"><scroll-num :datanum='allnum3'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
@@ -82,7 +89,7 @@
         <div class="scrollnumsa"><scroll-num :datanum='allnum4'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
       </div>
-      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList2)">
+      <div class="rloes-box1 cumulativebox" @click="showtableData(allowList2,2)">
         <span class="ljnum glabfont">今日发现</span>
         <div class="scrollnumsa"><scroll-num :datanum='allnum5'></scroll-num></div>
         <span class="ljnum glabfont">起</span>
@@ -167,6 +174,7 @@ export default class rightTop extends Vue {
 
   };
   
+  private numxianshi: number =1;
   private gu1: number =1;
   private allnum1: any =[0];
   private allnum2: any =[0];
@@ -256,9 +264,11 @@ export default class rightTop extends Vue {
   }
 
 
-  private showtableData(data:any): void {
+  private showtableData(data:any,num:number): void {
     this.isshowtable=true
-   this.dataTable=data
+    this.numxianshi=num
+    console.log(this.numxianshi)
+    this.dataTable=data
   }
 
 
@@ -366,8 +376,8 @@ export default class rightTop extends Vue {
     .myimg{
       position: absolute;
       z-index: 10;
-      left:0;
-      top:0;
+      left:vw(8);
+      top:vh(50);
       .rolesimg1{
         width:vw(257.143);
         height:vh(160);
@@ -375,6 +385,10 @@ export default class rightTop extends Vue {
       .rolesimg2{
         width:vw(548.571);
         height:vh(477.143);
+      }
+       .rolesimg3{
+        width:vw(548.571);
+        height:vh(213.714);
       }
       .info-close{
          position: absolute;

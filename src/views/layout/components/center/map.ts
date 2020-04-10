@@ -222,7 +222,7 @@ class MyMap {
                     justify-content:center;
                     align-items: center;">
           <p style="margin:0;padding-bottom:10px">${row.name}</p>
-          <p style="margin:0">总量:${row.bicycleNum}</p>
+          <p style="margin:0">总量:${row.streetNum}</p>
           <p style="margin:0;margin-top:5px;">活跃率:${row.activeNum}</p>
         </div>
       </div>

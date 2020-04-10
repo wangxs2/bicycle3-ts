@@ -18,6 +18,7 @@ interface DataFormat {
   gisLevel?: number; // 放大级别
   name: string; // 区域名称
   bicycleNum: number; // 车辆数
+  streetNum: number; // 车辆数
   activeNum: number; // 活跃数
   activeRate?: number; // 活跃率
   warningFlag?: number; // 预警状态
@@ -957,6 +958,7 @@ export default class center extends Vue {
                 lat: subItem.centerLatitude,
                 name: subItem.name,
                 bicycleNum: subItem.bicycleNum,
+                streetNum: subItem.streetNum,
                 activeNum: refinedCal(`${subItem.activeRate}*100`, 2) + '%',
               };
             }
@@ -970,6 +972,7 @@ export default class center extends Vue {
                 lat: subItem.centerLatitude,
                 name: subItem.name,
                 bicycleNum: subItem.bicycleNum,
+                streetNum: subItem.streetNum,
                 activeNum: refinedCal(`${subItem.activeRate}*100`, 2) + '%',
                 state: subItem.warningFlag,
               });

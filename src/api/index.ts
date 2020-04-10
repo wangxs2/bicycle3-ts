@@ -135,7 +135,7 @@ export default {
   //收集区的数据 http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1003&areaId=1057
 
   getCollect(): Promise<{}> {
-    return http('http://106.14.198.128:18181/sharebikesclean/countJieZhen/getPointMsg?regionId=1003&areaId=1057');
+    return http('http://106.14.198.128:18181/sharebikesclean/countJieZhen/getAreaPointMsg1?regionId=1003&areaId=1057');
   },
 
   /**
