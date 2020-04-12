@@ -1,8 +1,59 @@
 <template>
   <div class="center-content">
     <div class="center-top" id="mapContainer" ref="fullScreenTarget">
-      <div class="workemag">
-        <rightWork></rightWork>
+      <div class="workemag" v-if="isShowWorkOrderDispose">
+        <div class="myWork">
+            <div class="info-close iconfont iconguanbi" @click="isShowWorkOrderDispose=false"></div>
+            <div class="header-tit">
+              <span class="glabfont">工单详情</span>
+            </div>
+            <div class="msgList" v-for="(item,index) in workOrderDisposeData.detailsTexts" :key="index">
+              <span class="left-f glabfont">{{item.key}}：</span>
+              <span class="left-r glabfont">{{item.val}}</span>
+            </div>
+            <div class="msgList">
+              <span class="left-f glabfont">状态：</span>
+              <span class="left-r glabfont">{{workOrderDisposeData.despatchStatus}}</span>
+            </div>
+            <div class="msgList" v-if="workOrderDisposeData.detailsImgs1.length>0">
+              <span class="left-f glabfont">处理前：</span>
+              <div class="left-r">
+                 <div style="margin-right:6px;" v-for="(item,index) in workOrderDisposeData.detailsImgs1" :key="index">
+                    <el-image 
+                      style="width:40px; height:64px"
+                      :src="item" 
+                      :preview-src-list="workOrderDisposeData.detailsImgs1">
+                    </el-image>
+                  </div>
+              </div>
+            </div>
+            <div class="msgList" v-if="workOrderDisposeData.detailsImgs2.length>0">
+              <span class="left-f glabfont">处理后：</span>
+              <div class="left-r">
+                  <div style="margin-right:6px;" v-for="(item,index) in workOrderDisposeData.detailsImgs2" :key="index">
+                    <el-image 
+                      style="width:40px; height:64px"
+                      :src="item" 
+                      :preview-src-list="workOrderDisposeData.detailsImgs2">
+                    </el-image>
+                  </div>
+                
+              </div>
+            </div>
+            <div class="msgList" v-if="workOrderDisposeData.detailsImgs3.length>0">
+              <span class="left-f glabfont">派单照片：</span>
+              <div class="left-r">
+                 <div style="margin-right:6px;" v-for="(item,index) in workOrderDisposeData.detailsImgs3" :key="index">
+                    <el-image 
+                      style="width:40px; height:64px"
+                      :src="item" 
+                      :preview-src-list="workOrderDisposeData.detailsImgs3">
+                    </el-image>
+                  </div>
+              </div>
+              
+            </div>
+        </div>
       </div>
       <!-- 全屏按钮 S -->
       <div class="full-screen-btn" @click="fullScreen">
@@ -98,7 +149,7 @@
 
     <!-- 工单详情 S -->
     <transition name="fade">
-      <div class="workOrder-details" v-if="isShowWorkOrderDispose">
+      <!-- <div class="workOrder-details" >
         <div
           class="workOrder-details-close iconfont iconguanbi"
           @click="isShowWorkOrderDispose = false"
@@ -129,7 +180,7 @@
           </p>
         </div>
         <div class="dispose-status"><span class="glabfont">{{workOrderDisposeData.despatchStatus}}</span></div>
-      </div>
+      </div> -->
     </transition>
     <!-- 工单详情 E -->
 

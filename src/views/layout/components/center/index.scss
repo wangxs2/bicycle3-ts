@@ -8,6 +8,62 @@
       z-index: 20;
       right: vw(125);
       top:vh(9);
+      .myWork{
+        width:vw(350);
+        background:rgba(12,58,111,1);
+        border:1px solid rgba(50,134,217,1);
+        box-shadow: rgba(12,58,111,0.6) 0 0 vw(10) vw(4) inset;
+        .info-close{
+            position: absolute;
+            z-index: 10;
+            right:vw(6);
+            top:vh(8);
+            color:#ffffff;
+            cursor:pointer;
+        }
+        .header-tit{
+          width:100%;
+          height:vh(25);
+          background:rgba(245,247,250,0.07);
+          display:flex;
+          align-items: center;
+          justify-content: center;
+          span{
+            font-size:vw(11);
+            color:#ffffff;
+          }
+        }
+        .msgList{
+          box-sizing:border-box;
+          padding:vh(8) vw(8);
+          display: flex;
+          justify-content: flex-start;
+          border-bottom: 1px solid rgba(245,247,250,0.07);
+          align-items: flex-start;
+          img{
+            width: vw(38);
+            height: vh(38);
+            margin-right:vw(6);
+            cursor: pointer;
+          }
+          .left-f{
+            display:inline-block;
+            width:25%;
+            font-size:vw(10);
+            color:#65C6FC;
+            text-align:left;
+          }
+          .left-r{
+            display:inline-block;
+            width:75%;
+            font-size:vw(10);
+            color:#ffffff;
+            text-align:left;
+            display: flex;
+          justify-content: flex-start;
+          }
+        }
+    }
     }
     .center-top{
        width: 100%;

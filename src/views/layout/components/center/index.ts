@@ -1,4 +1,4 @@
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue,Watch } from 'vue-property-decorator';
 import slideshow from '@/component/slideshow/index.vue';
 import centerBottom from './centerBottom.vue';
 import rightWork from './rightWork.vue';
@@ -82,7 +82,7 @@ export default class center extends Vue {
         width: 33,
       },
     ],
-    
+
     [
       {
         name: '派单时间',
@@ -264,9 +264,21 @@ export default class center extends Vue {
     },
     {
       state: true,
-      name:"收集区"
+      name: "收集区"
     }
   ];
+
+
+  @Watch("$store.state.workeObj")
+  public onchanged(val: any, oldVal: any) {
+    if (val) {
+      console.log(val)
+      this.isShowWorkOrderDispose=true
+      this.workOrderDisposeData=val
+    }
+  }
+
+
   public mounted() {
     myMap = new MyMap({ el: 'mapContainer' });
     this.getBicyClePosition();
@@ -305,10 +317,10 @@ export default class center extends Vue {
         res.data.forEach((item: any) => {
           item.geom = this.FormatGolygon(item.polygonGeom);
           item.regionTypeName = "禁停区";
-          item.sumBicycle=item.bicycleNum
+          item.sumBicycle = item.bicycleNum
           if (this.ForbidData[item.regionName]) {
             // 更新
-            myMap.upDataForbid(item,1);
+            myMap.upDataForbid(item, 1);
           } else {
             // 添加
             myMap.addOverlayGroup(
@@ -334,26 +346,26 @@ export default class center extends Vue {
   // 收集区
   public getCollectData(): void {
     API.getCollect().then((res: any) => {
-        res.data.forEach((item: any) => {
-          item.geom = this.FormatGolygon(item.polygonGeom);
-          if (this.ForbidData[item.regionName]) {
-            // 更新
-            myMap.upDataForbid(item,3);
-          } else {
-            // 添加
-            myMap.addOverlayGroup(
-              'collectGroup',
-              myMap.createCollect(
-                item,
-                this.isForbid,
-              ),
-            );
-          }
-          this.ForbidData[item.regionName] = item;
-        });
-        myMap.forbidGroupEvent3((data: any) => {
-          this.ForbidName = data;
-        });
+      res.data.forEach((item: any) => {
+        item.geom = this.FormatGolygon(item.polygonGeom);
+        if (this.ForbidData[item.regionName]) {
+          // 更新
+          myMap.upDataForbid(item, 3);
+        } else {
+          // 添加
+          myMap.addOverlayGroup(
+            'collectGroup',
+            myMap.createCollect(
+              item,
+              this.isForbid,
+            ),
+          );
+        }
+        this.ForbidData[item.regionName] = item;
+      });
+      myMap.forbidGroupEvent3((data: any) => {
+        this.ForbidName = data;
+      });
       // 定时任务
     });
   }
@@ -365,7 +377,7 @@ export default class center extends Vue {
       item.geom = this.FormatGolygon(item.polygonGeom);
       if (this.ForbidData[item.regionName]) {
         // 更新
-        myMap.upDataForbid(item,2);
+        myMap.upDataForbid(item, 2);
       } else {
         // 添加
         myMap.addOverlayGroup(
@@ -400,7 +412,7 @@ export default class center extends Vue {
 
       myMap.forbidGroupEvent2((data: any) => {
         this.ForbidName = data;
-        
+
       });
 
       // 定时任务
@@ -583,8 +595,11 @@ export default class center extends Vue {
     const data: any = this.workOrderObjData[code];
 
     const statusData: any = this.judgeStatus(code, data.sheetStatus); // 格式状态
-
     let detailsTexts: any = [
+      {
+        key: '单号',
+        val: data.sheetCode,
+      },
       {
         key: statusData.isDespatch ? '派单时间' : '自检时间',
         val: moment(data.dispatchTime).format('YYYY-MM-DD HH:mm:ss'),
@@ -599,7 +614,9 @@ export default class center extends Vue {
       },
     ];
 
-    let detailsImgs: any[] = [];
+    let detailsImgs3: any[] = [];
+    let detailsImgs1: any[] = [];
+    let detailsImgs2: any[] = [];
     let roundRobinimg: any = null;
 
     if (
@@ -610,11 +627,8 @@ export default class center extends Vue {
     ) {
       if (type === 1) {
         // 工单详情的图片数组
-        detailsImgs = data.dispatchPhotoURLs.map((item: any) => {
-          return {
-            text: '派单照片',
-            url: 'http://106.14.198.128:18088/' + item,
-          };
+        detailsImgs3 = data.dispatchPhotoURLs.map((item: any) => {
+          return 'http://106.14.198.128:18088/' + item;
         });
 
         if (data.sheetStatus === -1) {
@@ -629,6 +643,10 @@ export default class center extends Vue {
       }
     } else if (data.sheetStatus === 2 || data.sheetStatus === 4) {
       const addDetailsTexts = [
+        // {
+        //   key: '单号',
+        //   val: data.sheetCode,
+        // },
         {
           key: '处理时间',
           val: moment(data.voList[data.voList.length - 1].handleTime).format(
@@ -648,23 +666,19 @@ export default class center extends Vue {
 
       if (type === 1) {
         // 工单详情的图片数组
-        detailsImgs = [];
+        // let detailsImgs1 = [];
+        // let detailsImgs2 = [];
+        // detailsImgs = [];
         let dispatchReceive = '';
         data.voList.forEach((item: any) => {
           dispatchReceive = statusData.isDespatch
             ? item.dispatchReceive
             : item.dispatchOrgName;
           item.dispatchBeforePhotoURLs.forEach((beforeItem: any) => {
-            detailsImgs.push({
-              text: `${dispatchReceive}处理前`,
-              url: 'http://106.14.198.128:18088/' + beforeItem,
-            });
+            detailsImgs1.push('http://106.14.198.128:18088/' + beforeItem);
           });
           item.dispatchAfterPhotoURLs.forEach((afterItem: any) => {
-            detailsImgs.push({
-              text: `${dispatchReceive}处理后`,
-              url: 'http://106.14.198.128:18088/' + afterItem,
-            });
+            detailsImgs2.push('http://106.14.198.128:18088/' + afterItem);
           });
         });
       } else {
@@ -681,16 +695,17 @@ export default class center extends Vue {
         nowStatus: statusData.nowStatus, // 当前状态
         despatchStatus: statusData.despatchStatus, // 处理的状态
         classTimestamp: `container${Date.now()}`,
-        detailsImgs, // 处理照片
+        detailsImgs1, // 处理照片
+        detailsImgs2, // 处理照片
+        detailsImgs3, // 处理照片
         detailsTexts, // 处理记录
       };
-
       this.$nextTick(function () {
-        this.workOrderDisposeOptions = {
-          autoplay: true, // 可选选项，自动滑动
-          simulateTouch: false,
-          loop: detailsImgs.length > 1,
-        };
+        // this.workOrderDisposeOptions = {
+        //   autoplay: true, // 可选选项，自动滑动
+        //   simulateTouch: false,
+        //   loop: detailsImgs.length > 1,
+        // };
         this.isShowWorkOrderDispose = true;
       });
     } else {
@@ -841,13 +856,13 @@ export default class center extends Vue {
 
         this.workOrderObjData[item.sheetCode] = item;
         icon = this.judgeStatus(item.sheetCode, item.sheetStatus).icon;
-        if(item.lng&&item.lat){
+        if (item.lng && item.lat) {
           myMap.addOverlayGroup(
             'workOrderGroup',
             myMap.createWorkPoint(item, icon),
           ); // 直接添加
         }
-        
+
 
         // 治理轮循 添加数据
         this.roundRobinData.push(
