@@ -1,6 +1,9 @@
 <template>
   <div class="center-content">
     <div class="center-top" id="mapContainer" ref="fullScreenTarget">
+      <div class="workemag">
+        <rightWork></rightWork>
+      </div>
       <!-- 全屏按钮 S -->
       <div class="full-screen-btn" @click="fullScreen">
         <img src="../../../../assets/image/qunping.png">
@@ -132,6 +135,7 @@
 
 
     </div>
+    
     <div class="center-bottom">
        <borderBlock :msg="msgconcat"></borderBlock>
        <div class="tableox">

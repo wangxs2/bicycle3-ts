@@ -1,6 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import slideshow from '@/component/slideshow/index.vue';
 import centerBottom from './centerBottom.vue';
+import rightWork from './rightWork.vue';
 import forbidInfo from './forbidInfo.vue';
 import screenfull from 'screenfull';
 const virsuData = require('./virsu.json');
@@ -32,6 +33,7 @@ import borderBlock from '@/component/borderBlock/index.vue';
     centerBottom,
     borderBlock,
     slideshow,
+    rightWork,
     forbidInfo
   },
 })
@@ -839,11 +841,13 @@ export default class center extends Vue {
 
         this.workOrderObjData[item.sheetCode] = item;
         icon = this.judgeStatus(item.sheetCode, item.sheetStatus).icon;
-
-        myMap.addOverlayGroup(
-          'workOrderGroup',
-          myMap.createWorkPoint(item, icon),
-        ); // 直接添加
+        if(item.lng&&item.lat){
+          myMap.addOverlayGroup(
+            'workOrderGroup',
+            myMap.createWorkPoint(item, icon),
+          ); // 直接添加
+        }
+        
 
         // 治理轮循 添加数据
         this.roundRobinData.push(

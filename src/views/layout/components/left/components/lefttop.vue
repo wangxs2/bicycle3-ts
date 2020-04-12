@@ -54,7 +54,7 @@ import API from '@/api/index';
 })
 export default class leftTop extends Vue {
   private msgconcat: string = "指挥体系";
-   private msgvide: string = "街镇活跃排名TOP10"; 
+   private msgvide: string = "街镇车辆活跃度排名TOP10"; 
    // 街镇数据
   private townData: Array<{}> = [];
    // 重点区排名数据

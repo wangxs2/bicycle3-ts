@@ -7,6 +7,7 @@
     </div>
 
     <!-- 弹框 -->
+    
     <div class="header-top">
       <borderBlock :msg="msgconcat1"></borderBlock>
       <div class="pfroles" @click="isshowimg=true"><span class="glabfont">评分规则</span></div>
@@ -25,7 +26,7 @@
               <span class="fonsinum2 glabfont">分</span> -->
             </div>
             <div class="imgfraction1">
-              <waterPond :score="48" :imgBg="imgBg2" :borderColor="borderColor2"></waterPond>
+              <waterPond :score="score2" :imgBg="imgBg2" :borderColor="borderColor2"></waterPond>
               <!-- <span class="fonsinum1 glabfont">48</span>
               <span class="fonsinum2 glabfont">分</span> -->
             </div>
@@ -67,19 +68,26 @@ export default class rightTop extends Vue {
 
   };
   private score1: number=0;
+  private score2: number=0;
   private msgconcat1: string = "企业工单处置得分 (历史7天)";
   private isshowimg: boolean =false;
+  private isshowimg1: boolean =false;
   private msgvide1: string = "平台监管工单";
-  private imgBg1:any=require("../../../../../assets/water.png");
-  private imgBg2:any=require("../../../../../assets/water2.png");
-  private borderColor1: string = "#FFC955";
-  private borderColor2: string = "#36D7FF";
+  private imgBg1:any=null;
+  private imgBg2:any=null;
+  private borderColor1: string = "";
+  private borderColor2: string = "";
   
   public mounted() {
     
     this.$nextTick(function() {
         this.getnumEchart()
         this.score1=52
+        this.score2=48
+        this.borderColor1="#FFC955"
+        this.borderColor2="#36D7FF"
+        this.imgBg1=require("../../../../../assets/water.png")
+        this.imgBg2=require("../../../../../assets/water2.png")
     })
   }
 
@@ -126,6 +134,7 @@ export default class rightTop extends Vue {
           cursor:pointer;
       }
     }
+    
     .header-top{
       display:flex;
       justify-content: flex-start;

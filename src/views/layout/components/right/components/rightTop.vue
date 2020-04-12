@@ -19,9 +19,10 @@
               <tr>
                 <th><span class="glabfont">序号</span></th>
                 <th><span class="glabfont">预警时间</span></th>
-                <th v-if="numxianshi==2"><span class="glabfont">车辆数</span></th>
-                <th v-if="numxianshi==2"><span class="glabfont">预警上限</span></th>
                 <th><span class="glabfont">区域名称</span></th>
+                <th v-if="numxianshi==2"><span class="glabfont">预测车辆数</span></th>
+                <th v-if="numxianshi==2"><span class="glabfont">预警上限</span></th>
+                <th v-if="numxianshi==2"><span class="glabfont">需清运车辆数</span></th>
                 <th><span class="glabfont">处理结果</span></th>
                 <th><span class="glabfont">详情</span></th>
               </tr>
@@ -30,9 +31,10 @@
               <tr v-for="(item,index) in dataTable" :key="index">
                 <td><span class="glabfont">{{index+1}}</span></td>
                 <td><span class="glabfont">{{item.discoverTime}}</span></td>
+                <td><span class="glabfont">{{item.name}}</span></td>
                 <td v-if="numxianshi==2"><span class="glabfont">{{item.predictNum}}</span></td>
                 <td v-if="numxianshi==2"><span class="glabfont">{{item.maxNum}}</span></td>
-                <td><span class="glabfont">{{item.name}}</span></td>
+                <td v-if="numxianshi==2"><span class="glabfont">{{item.cleanNum}}</span></td>
                 <td><span class="glabfont">{{item.hdlDetail}}</span></td>
                 <td><span class="glabfont">{{item.detail}}</span></td>
               </tr>
@@ -47,7 +49,7 @@
       <div class="rloes-box1">
         <div class="left-role">
           <img class="lbimg" src="../../../../../assets/image/lb.png">
-          <span class="glabfont rolefont">投放报警</span>
+          <span class="glabfont rolefont">总量报警</span>
         </div>
         <img class="gzimg" @click="isshowimg=true,gu1=1" src="../../../../../assets/image/gz1.png">
       </div>
@@ -358,6 +360,7 @@ export default class rightTop extends Vue {
           th{
             padding:vh(7.5) vw(8);
             border:vw(1) solid rgba(50,134,217,1);
+            border-left:none;
           }
             box-shadow: rgba(12,58,111,0.6) 0 0 vw(10) vw(4) inset;
 

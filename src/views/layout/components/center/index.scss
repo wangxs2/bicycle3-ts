@@ -3,6 +3,12 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    .workemag{
+      position: absolute;
+      z-index: 20;
+      right: vw(125);
+      top:vh(9);
+    }
     .center-top{
        width: 100%;
        height: vh(400);

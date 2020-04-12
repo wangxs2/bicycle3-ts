@@ -11,7 +11,7 @@
         <div class="thead thead7"><span class="glabfont">处理状态</span></div>
     </div>
     <div class="tablebody">
-        <div class="swiper-container righttable" id="swipertable">
+        <div class="swiper-container righttable" id="swipertable"  @mouseenter="on_bot_enter" @mouseleave="on_bot_leave">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"
                     v-for="(iteam,index) in findVisible"
@@ -71,6 +71,14 @@
 
       },300)
       
+    }
+
+
+    private on_bot_enter(): void {
+        this.swipertable.autoplay.stop()
+    }
+    private on_bot_leave(): void {
+        this.swipertable.autoplay.start()
     }
 
     public getWorkData(): void {
@@ -168,6 +176,7 @@
                     justify-content: space-between;
                     align-items: center;
                     border-bottom:1px solid rgba(9,28,93,1);
+                    cursor:pointer;
                     .table-foncom{
                         display: flex;
                         justify-content: center;

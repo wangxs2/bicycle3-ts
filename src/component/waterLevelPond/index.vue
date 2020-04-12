@@ -1,8 +1,6 @@
 <template>
      <div class="boll" :style="{borderColor:borderColor}">
         <div class="num">{{score}}<span>分</span></div>
-        <!-- <div class="water w1" ></div> -->
-        <!-- <div class="water w2"></div> -->
         <div :style="{top:(100-score-9)+'%',background:'url('+imgBg+')  repeat-x',backgroundSize:'contain',}" class="water"></div>
     </div>
 </template>
@@ -10,13 +8,22 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
-export default class waterPolo extends Vue {
-  @Prop() private score: number=0;
-  @Prop() private borderColor: string="";
-  @Prop() private imgBg: any=null;
-  
+export default class waterLevelPond extends Vue {
+  @Prop() 
+  private score: number=0;
+
+  @Prop() 
+  private borderColor: string="";
+
+  @Prop() 
+  private imgBg: any=null;
+
   private context: any=null
-  
+
+   public mounted() {
+    
+    console.log(this.score)
+  }
 
 }
 </script>
