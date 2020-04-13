@@ -207,7 +207,7 @@ export default class leftTop extends Vue {
         item.index = index + 1;
         item.name = item.regionName;
         item.img = require(`@img/gtop/${index+1}@2x.png`),
-        item.describe = item.bicycleNum + '辆';
+        item.describe = item.bicycleNum+'/'+item.regionBerth + '辆';
 
         return item;
       },

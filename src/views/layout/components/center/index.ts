@@ -274,7 +274,7 @@ export default class center extends Vue {
     if (val) {
       console.log(val)
       this.isShowWorkOrderDispose=true
-      this.workOrderDisposeData=val
+      this.disposeWorkOrderDetails(val,1)
     }
   }
 

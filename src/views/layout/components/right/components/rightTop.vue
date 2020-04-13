@@ -382,8 +382,8 @@ export default class rightTop extends Vue {
       left:vw(8);
       top:vh(50);
       .rolesimg1{
-        width:vw(257.143);
-        height:vh(160);
+        width:vw(388.571);
+        height:vh(111.43);
       }
       .rolesimg2{
         width:vw(548.571);
