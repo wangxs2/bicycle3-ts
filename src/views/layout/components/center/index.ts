@@ -148,6 +148,7 @@ export default class center extends Vue {
   private openTownName: string = '';
   // 单车曲线是否展示
   private isBicyTrend: boolean = false
+  private isshowtable: boolean = false
   // 十五天单车曲线数据
   private bicyActiveData: any = {};
   private cityPointData: any = {}; // 市级点数据
@@ -178,6 +179,7 @@ export default class center extends Vue {
   private townCompanyData: any = null;
   // 不同状态的工单数据 点击图例用
   private sheetWorkOrder: any[] = [];
+  private dataTable: any[] = [];
   private legendData: Array<{ icon: any; name: string }> = [
     // {
     //   icon: require(`../../../../assets/image/icon_1@3x.png`),
@@ -730,6 +732,8 @@ export default class center extends Vue {
       (res: any): void => {
         if (res.status === 0) {
           // 数据处理
+          console.log(res.data)
+          this.dataTable=res.data
           this.refreshPointData(res.data);
           // 分拣不同状态工单
           this.sortOutWorkOrder(res.data);
@@ -746,7 +750,25 @@ export default class center extends Vue {
     );
   }
 
-
+  private dateFormat(fmt:any, date:any) {
+    let ret;
+    const opt = {
+        "Y+": date.getFullYear().toString(),        // 年
+        "m+": (date.getMonth() + 1).toString(),     // 月
+        "d+": date.getDate().toString(),            // 日
+        "H+": date.getHours().toString(),           // 时
+        "M+": date.getMinutes().toString(),         // 分
+        "S+": date.getSeconds().toString()          // 秒
+        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+    };
+    for (let k in opt) {
+        ret = new RegExp("(" + k + ")").exec(fmt);
+        if (ret) {
+            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+        };
+    };
+    return fmt;
+}
   /**
  * 判断工单状态
  * @param {String} code 工单编号

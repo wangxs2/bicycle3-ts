@@ -70,6 +70,80 @@
        height: vh(400);
        position: relative;
        border:vw(1) solid rgba(18,85,154,1);
+       .wokr-btn{
+        position: absolute;
+        z-index: 10;
+        left: vw(0);
+        top: vh(0);
+        img{
+          width:vw(21);
+          height:vh(21);
+         }
+       }
+
+       .mytable{
+        position: absolute;
+        z-index: 14;
+        left:0;
+        top:vh(0);
+        width:vw(731);
+        height:vh(400);
+        background:rgba(12,58,111,1);
+        border:1px solid rgba(50,134,217,1);
+        .info-close{
+           position: absolute;
+            z-index: 10;
+            right:vw(6);
+            top:vh(4);
+            cursor:pointer;
+            color: #ffffff;
+        }
+        .table-tit{
+          font-size:vw(11);
+          color:#fff;
+          text-align:left;
+          margin:vh(7.5);
+        }
+       .tabscroll{
+         width:100%;
+         height:96%;
+         overflow:hidden;
+         overflow-y:scroll;
+         box-sizing:border-box;
+         padding:vh(16) vw(16);
+        }
+        .tabscroll::-webkit-scrollbar {
+            display: none; //Safari and Chrome
+            -ms-overflow-style: none; //IE 10+
+            overflow: -moz-scrollbars-none; //Firefox
+            width: 0 !important 
+        }
+        table{
+          width:100%;
+          color:#fff;
+          font-size:vw(10);
+          border:vw(1) solid rgba(50,134,217,1);
+          
+          thead{
+            th{
+              padding:vh(7.5) vw(8);
+              border:vw(1) solid rgba(50,134,217,1);
+              border-left:none;
+            }
+              box-shadow: rgba(12,58,111,0.6) 0 0 vw(10) vw(4) inset;
+  
+          }
+          tbody{
+            td{
+              padding:vh(7.5) vw(8);
+              border:vw(1) solid rgba(50,134,217,1);
+              border-top:none;
+              border-left:none;
+            }
+          }
+          
+        }
+      }
        .full-screen-btn {
          position: absolute;
          z-index: 10;

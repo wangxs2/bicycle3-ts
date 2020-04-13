@@ -1,5 +1,6 @@
 import mathjs from 'mathjs';
 
+
 /**
  * 格式化数字（每三位加逗号）
  * @param {Number,Str}

@@ -12,13 +12,13 @@
     <!-- 表格的弹框 -->
     <div class="mytable" v-if="isshowtable">
       <div class="info-close iconfont iconguanbi" @click="isshowtable=false"></div>
-      <div class="table-tit"><span class="glabfont">预警播报列表</span></div>
+      <div class="table-tit"><span class="glabfont">{{numxianshi==2?"预警播报列表":"违规停放列表"}}</span></div>
       <div class="tabscroll">
         <table cellspacing="0" cellpadding="0">
             <thead>
               <tr>
                 <th><span class="glabfont">序号</span></th>
-                <th><span class="glabfont">预警时间</span></th>
+                <th><span class="glabfont">{{numxianshi==2?"预警时间":"报警时间"}}</span></th>
                 <th><span class="glabfont">区域名称</span></th>
                 <th v-if="numxianshi==2"><span class="glabfont">预测车辆数</span></th>
                 <th v-if="numxianshi==2"><span class="glabfont">预警上限</span></th>
