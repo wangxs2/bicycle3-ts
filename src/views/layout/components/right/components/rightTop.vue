@@ -140,7 +140,18 @@
         </div>
         <div class="right-list">
           <span class="gont1 glabfont">昨日街道派单排名</span>
-          <img src="../../../../../assets/image/paiming.png">
+          <!-- <img src="../../../../../assets/image/paiming.png"> -->
+          <div class="font2 font3">
+            <el-tooltip class="item" effect="light" :content="threenum[1].num" placement="top-start">
+              <img  class="num1" src="../../../../../assets/image/n2.png">
+            </el-tooltip>
+            <el-tooltip class="item" effect="light" :content="threenum[0].num" placement="top-start">
+              <img  class="num2" src="../../../../../assets/image/n1.png">
+            </el-tooltip>
+            <el-tooltip class="item" effect="light" :content="threenum[2].num" placement="top-start">
+              <img  class="num3" src="../../../../../assets/image/n3.png">
+            </el-tooltip>
+          </div>
           <div class="font2">
             <span class="gont2 glabfont">{{topnum1}}</span>
             <span class="gont2 glabfont">{{topnum2}}</span>
@@ -254,6 +265,7 @@ export default class rightTop extends Vue {
     API.getTownThree().then(
         (res: any): void => {
           this.threenum=cloneObj(res)
+          console.log(this.threenum)
           this.topnum1=this.threenum[1].shortName
           this.topnum2=this.threenum[0].shortName
           this.topnum3=this.threenum[2].shortName
@@ -501,13 +513,28 @@ export default class rightTop extends Vue {
           font-size: vw(11);
           margin-bottom:vh(16)
         }
+        .font3{
+          align-items: flex-end;
+        }
         .font2{
           width: 100%;
           display:flex;
           box-sizing: border-box;
           padding: 0 vw(10);
           justify-content: space-between;
-          margin-top:vh(10)
+          margin-top:vh(10);
+          .num1{
+            width: vw(41.43);
+            height: vh(46.86);
+          }
+          .num2{
+            width: vw(48.57);
+            height: vh(58.29);
+          }
+          .num3{
+            width: vw(41.143);
+            height: vh(39.43);
+          }
         }
         .gont2{
           font-size: vw(10);

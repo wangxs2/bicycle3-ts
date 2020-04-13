@@ -179,6 +179,7 @@ export default class center extends Vue {
   private townCompanyData: any = null;
   // 不同状态的工单数据 点击图例用
   private sheetWorkOrder: any[] = [];
+  private sheetd: any[] = ["未处理","处理中","已处理","重新派单","已完成"];
   private dataTable: any[] = [];
   private legendData: Array<{ icon: any; name: string }> = [
     // {

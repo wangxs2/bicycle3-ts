@@ -76,7 +76,7 @@
       <!-- 全屏按钮 E -->
       <!-- 工单详情 S -->
       <div class="wokr-btn" @click="isshowtable=true">
-        <img src="../../../../assets/image/qunping.png" />
+        <span class="glabfont" style="border:0.03vw solid #03f1fa;cursor:pointer;width:3vw;font-size:0.1vw;color:#65C6FC;background:rgba(12, 58, 111, 0.8);padding:0.2vh 0.3vw;border-radius:0.2vw">工单列表</span>
       </div>
       <!-- 工单详情 E -->
       <!-- 表格的弹框 -->
@@ -125,7 +125,7 @@
                   <span class="glabfont">{{item.dispatchReceive}}</span>
                 </td>
                 <td>
-                  <span class="glabfont">{{item.sheetStatus}}</span>
+                  <span class="glabfont" style="display:inline-block;width:2vw">{{sheetd[item.sheetStatus]}}</span>
                 </td>
                
               </tr>
