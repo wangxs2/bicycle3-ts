@@ -269,9 +269,16 @@
     </div>
 
     <div class="center-bottom">
-      <borderBlock :msg="msgconcat"></borderBlock>
+      <div class="class-right">
+        <borderBlock :msg="msgconcat"></borderBlock>
+        <div class="class-box">
+            <div class="itea-class" @click="isClass=1"><span>111</span></div>
+            <div class="itea-class" @click="isClass=2"><span>222</span></div>
+        </div>
+      </div>
       <div class="tableox">
-        <center-bottom></center-bottom>
+        <center-bottom v-if="isClass==1"></center-bottom>
+        <tableBottom v-if="isClass==2"></tableBottom>
       </div>
       <!-- <center-bottom></center-bottom> -->
     </div>

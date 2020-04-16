@@ -217,7 +217,7 @@ export default class leftTop extends Vue {
         let arry:any=[]
         res.activeRange.forEach((itam:any)=>{
           arrx.push(itam.orgName)
-          arry.push(itam.activeRate*100)
+          arry.push((itam.activeRate*100).toFixed(2))
         })
         console.log(arry)
         this.echartsOption(arrx,arry,'#33ff99','#00908e')
@@ -236,7 +236,7 @@ export default class leftTop extends Vue {
         let arry:any=[]
         res.activeRange.forEach((itam:any)=>{
           arrx.push(itam.orgName)
-          arry.push(itam.activeRate*100)
+          arry.push((itam.activeRate*100).toFixed(2))
         })
         console.log(arry)
         this.echartsOption(arrx,arry,color1,color2)

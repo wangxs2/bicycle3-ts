@@ -46,33 +46,6 @@
   export default class centerBottom extends Vue {
     private swipertable:any | null=null;
     // 工单数据
-     private legendData: Array<{ icon: any; name: string }> = [
-    // {
-    //   icon: require(`../../../../assets/image/icon_1@3x.png`),
-    //   name: '防疫重点区',
-    // },
-    // {
-    //   icon: require(`../../../../assets/image/icon_1@3x.png`),
-    //   name: '自检',
-    // },
-    {
-      icon: require(`../../../../../assets/image/icon_2@3x.png`),
-      name: '已派单',
-    },
-    {
-      icon: require(`../../../../../assets/image/icon_3@3x.png`),
-      name: '处理中',
-    },
-    {
-      icon: require(`../../../../../assets/image/icon_4@3x.png`),
-      name: '已处理',
-    },
-    // {
-    //   icon: require(`../../../../assets/image/icon_5@3x.png`),
-    //   name: '超时未处理',
-    // },
-  ];
-  
   private workOrderDisposeData: any = {};
     private workOrderObjData: any = {};
     private findVisible: any =[];

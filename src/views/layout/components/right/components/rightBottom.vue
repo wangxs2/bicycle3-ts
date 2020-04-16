@@ -39,7 +39,7 @@
     </div>
     <borderBlock :msg="msgvide1"></borderBlock>
     <div class="tableboxwork">
-      <tableBottom></tableBottom>
+      
     </div>
   </div>
 </template>
@@ -48,13 +48,12 @@ import { Component, Vue } from 'vue-property-decorator';
 import borderBlock from '@/component/borderBlock/index.vue';
 import waterPond from '@/component/waterLevelPond/index.vue';
 // import echartsLiquidfill from 'echarts-liquidfill'
-import tableBottom from './tableBottom.vue';
+
 import Echart2 from './myEchart1';
 let MyEchart3: any = null; // 自定义echarts
 @Component({
   components: {
     borderBlock,
-    tableBottom,
     waterPond
   },
 })

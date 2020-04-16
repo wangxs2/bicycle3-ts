@@ -1,6 +1,7 @@
 import { Component, Vue,Watch } from 'vue-property-decorator';
 import slideshow from '@/component/slideshow/index.vue';
 import centerBottom from './centerBottom.vue';
+import tableBottom from './tableBottom.vue';
 import rightWork from './rightWork.vue';
 import forbidInfo from './forbidInfo.vue';
 import screenfull from 'screenfull';
@@ -31,6 +32,7 @@ import borderBlock from '@/component/borderBlock/index.vue';
 @Component({
   components: {
     centerBottom,
+    tableBottom,
     borderBlock,
     slideshow,
     rightWork,
@@ -41,6 +43,8 @@ import borderBlock from '@/component/borderBlock/index.vue';
 export default class center extends Vue {
   private settingShow: boolean = true; // 设置是否打开
   private Forbidtype: number = 0; // 加载次数
+  private isClass: number = 1; 
+  
   public pageConfig: any;
   // 是否显示图例
   private isShowLegend: boolean = true;

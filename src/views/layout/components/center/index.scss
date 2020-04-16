@@ -398,6 +398,17 @@
         flex-direction: column;
         box-sizing: border-box;
         padding: vh(8) vw(8);
+        .class-right{
+          display: flex;
+          justify-content: space-between;
+          .class-box{
+            display: flex;
+            justify-content: flex-start;
+            .itea-class{
+              color:#ffffff;
+            }
+          }
+        }
         .tableox{
           flex:1;
           margin-top: vh(6);
