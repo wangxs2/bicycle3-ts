@@ -398,8 +398,8 @@ export default class rightTop extends Vue {
         justify-content: space-around;
         align-items: center;
         .echart-content {
-          width: vw(51);
-          height: vh(51);
+          width: vw(60);
+          height: vh(56);
           div{
             // height:100% !important;
           }

@@ -45,7 +45,7 @@ export default class MyEcharts {
         {
           name: '处置率',
           type: 'pie',
-          radius: ['80%', '100%'],
+          radius: ['70%', '100%'],
           avoidLabelOverlap: false,
           hoverAnimation: false,
           label: {
