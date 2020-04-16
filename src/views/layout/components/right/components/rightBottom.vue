@@ -124,7 +124,7 @@ export default class rightTop extends Vue {
       top:0;
       .rolesimg1{
         width:vw(548.57);
-        height:vh(222.857);
+        height:vh(297.143);
       }
       .info-close{
          position: absolute;
