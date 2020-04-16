@@ -142,13 +142,13 @@
           <span class="gont1 glabfont">昨日街道派单排名</span>
           <!-- <img src="../../../../../assets/image/paiming.png"> -->
           <div class="font2 font3">
-            <el-tooltip class="item" effect="light" :content="threenum[1].num" placement="top-start">
+            <el-tooltip class="item" effect="light" :content="numbor1" placement="top-start">
               <img  class="num1" src="../../../../../assets/image/n2.png">
             </el-tooltip>
-            <el-tooltip class="item" effect="light" :content="threenum[0].num" placement="top-start">
+            <el-tooltip class="item" effect="light" :content="numbor1" placement="top-start">
               <img  class="num2" src="../../../../../assets/image/n1.png">
             </el-tooltip>
-            <el-tooltip class="item" effect="light" :content="threenum[2].num" placement="top-start">
+            <el-tooltip class="item" effect="light" :content="numbor1" placement="top-start">
               <img  class="num3" src="../../../../../assets/image/n3.png">
             </el-tooltip>
           </div>
@@ -202,6 +202,10 @@ export default class rightTop extends Vue {
   private topnum1: string ="";
   private topnum2: string ="";
   private topnum3: string ="";
+  private numbor1: string ="";
+  private numbor2: string ="";
+  private numbor3: string ="";
+  
   private intelligentData: any ={};
   private allowList1: any ={};
   private allowList2: any ={};
@@ -269,7 +273,10 @@ export default class rightTop extends Vue {
           this.topnum1=this.threenum[1].shortName
           this.topnum2=this.threenum[0].shortName
           this.topnum3=this.threenum[2].shortName
-          
+
+          this.numbor1=this.threenum[1].num
+          this.numbor2=this.threenum[0].num
+          this.numbor3=this.threenum[2].num
         }
         
       );

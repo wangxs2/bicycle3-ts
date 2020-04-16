@@ -34,7 +34,7 @@ export default class MyEcharts {
       grid: {
         top: '20',
         bottom: '40',
-        right:"8",
+        right:"28",
         left:"40",
       },
       tooltip: {
@@ -106,7 +106,23 @@ export default class MyEcharts {
       series: [
         {
           data: params.data1,
+         
           type: 'bar',
+          markLine:{
+            precision:60,
+            label:{
+              show:true
+            },
+            lineStyle:{
+              color:"#4df4f7",
+              width:2,
+            },
+            data:[
+              {
+                name: '', xAxis: 0, yAxis: 60, symbol: 'circle'
+              }
+            ]
+          },
           barWidth:10,
           itemStyle: {
             normal: {

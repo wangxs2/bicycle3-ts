@@ -35,6 +35,16 @@ export default {
   getKeyArea(): Promise<{}> {
     return http('http://106.14.198.128:18181/sharebikesclean/position/findChildOrgActiveRange/jCoQfQWsUWlpRyWLQxmgdA%3D%3D' );
   },
+    /**
+   * 获取重点区域的活跃度
+   */
+  getKeyArea1(companyName: any): Promise<{}> {
+    return http('http://106.14.198.128:18181/sharebikesclean/position/findChildOrgActiveRangeByCompany/jCoQfQWsUWlpRyWLQxmgdA%3D%3D', {
+      params: {
+        companyName,
+      },
+    });
+  },
 
   /**
    * 重点区域 早晚高峰

@@ -192,6 +192,7 @@ export default class MyEcharts {
       series: [
         {
           data: params.data1,
+          
           type: 'bar',
           barWidth:10,
           itemStyle: {
