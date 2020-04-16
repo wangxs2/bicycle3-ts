@@ -401,11 +401,29 @@
         .class-right{
           display: flex;
           justify-content: space-between;
-          .class-box{
-            display: flex;
+          .box-right{
+            display:flex;
             justify-content: flex-start;
-            .itea-class{
-              color:#ffffff;
+      
+            .box-bor{
+              width:vw(126);
+              height:vh(17);
+              line-height:vh(17);
+              background:rgba(3,26,72,0.5);
+              border:1px solid rgba(18,85,154,0.8);
+              margin-right:vw(4);
+              cursor:pointer;
+            }
+            .box-bor1{
+              background:rgba(3,241,250,0.2);
+              
+              span{
+                color:#FFFFFF;
+              }
+            }
+            span{
+              font-size:vw(10);
+              color:#65C6FC;
             }
           }
         }

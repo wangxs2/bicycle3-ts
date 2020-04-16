@@ -28,7 +28,6 @@ export default class MyEcharts {
   // bar: y轴数据 柱状图
   // line: y轴数据 折线图
   // name: 数据标题
-
   public echartsOption(params: any): void {
     const option: any = {
       grid: {

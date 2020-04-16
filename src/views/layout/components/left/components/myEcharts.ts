@@ -53,6 +53,7 @@ export default class MyEcharts {
       },
       xAxis: {
         type: 'category',
+        boundaryGap:false,
         nameTextStyle: {
           verticalAlign: 'bottom',
           color: '#C3CAD9',

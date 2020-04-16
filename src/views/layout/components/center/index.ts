@@ -44,7 +44,17 @@ export default class center extends Vue {
   private settingShow: boolean = true; // 设置是否打开
   private Forbidtype: number = 0; // 加载次数
   private isClass: number = 1; 
-  
+  private shudata: any = [
+    {
+      id: 1,
+      name: "今日市民热线投诉工单",
+    },
+    {
+      id: 2,
+      name: "平台监管工单",
+    }
+  ];
+  private innum: number = 1;
   public pageConfig: any;
   // 是否显示图例
   private isShowLegend: boolean = true;
@@ -402,6 +412,16 @@ export default class center extends Vue {
     });
   }
 
+
+  private showinde(row:any):void{
+    this.innum=row.id
+    if(this.innum==1){
+      this.msgconcat="今日市民热线投诉工单"
+    }else{
+      this.msgconcat="平台监管工单"
+    }
+
+  }
   // 重点区
   public getkeyarea(): void {
     API.getKeyAreas().then((res: any) => {

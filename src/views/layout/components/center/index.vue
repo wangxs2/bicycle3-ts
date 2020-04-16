@@ -271,14 +271,17 @@
     <div class="center-bottom">
       <div class="class-right">
         <borderBlock :msg="msgconcat"></borderBlock>
-        <div class="class-box">
+        <div class="box-right">
+          <div :class="innum==iteam.id?'box-bor box-bor1':'box-bor'" @click="showinde(iteam)" v-for="(iteam,index) in shudata" :key="iteam.id"><span class="glabfont">{{iteam.name}}</span></div>
+        </div>
+        <!-- <div class="class-box">
             <div class="itea-class" @click="isClass=1"><span>111</span></div>
             <div class="itea-class" @click="isClass=2"><span>222</span></div>
-        </div>
+        </div> -->
       </div>
       <div class="tableox">
-        <center-bottom v-if="isClass==1"></center-bottom>
-        <tableBottom v-if="isClass==2"></tableBottom>
+        <center-bottom v-if="innum==1"></center-bottom>
+        <tableBottom v-if="innum==2"></tableBottom>
       </div>
       <!-- <center-bottom></center-bottom> -->
     </div>
