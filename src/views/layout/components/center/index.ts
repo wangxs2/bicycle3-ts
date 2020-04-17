@@ -57,7 +57,7 @@ export default class center extends Vue {
   private innum: number = 1;
   public pageConfig: any;
   // 是否显示图例
-  private isShowLegend: boolean = true;
+  private isShowLegend: boolean = false;
   // 是否显示表格
   private isShowLegendTab: boolean = false;
   // 当前选中的图例
@@ -268,7 +268,7 @@ export default class center extends Vue {
       name: '禁停区域',
     },
     {
-      state: true,
+      state: false,
       name: '单车治理',
     },
     {
@@ -304,6 +304,7 @@ export default class center extends Vue {
     this.getTownBoundary();
     this.getForbid();
     this.getAreaIdAndDate();
+    myMap.isWorkGroup(false);
     this.getCollectData()
     // 监听全屏事件
     fullObj.on('change', (e: any) => {
@@ -752,7 +753,6 @@ export default class center extends Vue {
   private getAreaIdAndDate(): void {
     const startTime: string = moment().format('YYYY-MM-DD');
     // let startTime = '2019-03-18'
-
     API.getAreaIdAndDate(startTime, startTime).then(
       (res: any): void => {
         if (res.status === 0) {

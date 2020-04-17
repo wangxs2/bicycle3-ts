@@ -41,7 +41,7 @@
     <div class="tableboxwork">
       <div class="left-ech" id="echLef"></div>
       <div style="width:30%">
-        <div class="fv glabfont">投诉企业百分比</div>
+        <div class="fv glabfont">企业投诉占比(近一年)</div>
         <div class="workOrderBox">
           <div class="workOrderBox-item">
             <div class="echart-content"
